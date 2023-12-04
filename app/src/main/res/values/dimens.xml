@@ -5,6 +5,9 @@
     <dimen name="header_text_size">22sp</dimen>
     <dimen name="regular_text_size">16sp</dimen>
     <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_19">19sp</dimen>
+    <dimen name="text_size_26">26sp</dimen>
+    <dimen name="text_size_38">38sp</dimen>
 
     <!--Размеры текста для отдельных элементов-->
     <dimen name="tool_bar_text_size">22sp</dimen>
