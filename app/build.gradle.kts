@@ -37,6 +37,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -54,6 +55,10 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.0")
 
     implementation("io.insert-koin:koin-android:3.3.0")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation("androidx.fragment:fragment-ktx:1.5.6")
 
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
