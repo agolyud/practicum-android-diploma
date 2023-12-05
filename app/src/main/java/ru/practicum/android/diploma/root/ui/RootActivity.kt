@@ -25,9 +25,6 @@ class RootActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-
-            }
         }
 
         // Пример использования access token для HeadHunter API
