@@ -1,12 +1,12 @@
 package ru.practicum.android.diploma.root.ui
 
-import ru.practicum.android.diploma.BuildConfig
-import ru.practicum.android.diploma.R
-import ru.practicum.android.diploma.databinding.ActivityRootBinding
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import ru.practicum.android.diploma.BuildConfig
+import ru.practicum.android.diploma.R
+import ru.practicum.android.diploma.databinding.ActivityRootBinding
 
 class RootActivity : AppCompatActivity() {
 
