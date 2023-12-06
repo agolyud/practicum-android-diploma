@@ -18,7 +18,7 @@
             android:layout_marginStart="@dimen/margin_16"
             android:fontFamily="@font/ys_display_medium"
             android:text="@string/team"
-            android:textColor="?attr/textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_size_26" />
 
     </androidx.appcompat.widget.Toolbar>
@@ -36,7 +36,7 @@
             android:layout_gravity="center_vertical"
             android:fontFamily="@font/ys_display_bold"
             android:text="@string/team_work"
-            android:textColor="?attr/textColorPrimary"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="@dimen/text_size_38" />
 
     </FrameLayout>

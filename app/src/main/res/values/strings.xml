@@ -8,6 +8,7 @@
     <string name="golyudov">Алексей Голюдов</string>
     <string name="kolesnikov">Александр Колесников</string>
     <string name="favourite">Избранное</string>
+    <string name="list_empty">Список пуст</string>
     <string name="head_searh">Поиск вакансий</string>
     <string name="enter_search">Введите запрос</string>
     <string name="no_vacancies">Таких вакансий нет</string>
