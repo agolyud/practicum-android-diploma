@@ -22,6 +22,10 @@
         <!-- Дополнительные цветовые темы певрый цвет в название для светлой темы второй для темной-->
         <item name="colorLightGreyGrey">@color/light_grey</item>
         <item name="colorGreyWhite">@color/grey</item>
+        <item name="colorbottomNavMenuActive">@color/blue</item>
+        <item name="colorbottomNavMenuNotActive">@color/grey</item>
+        <item name="colorbottomNavDivider">@color/grey</item>
+        <item name="colorbottomNavBack">@color/white</item>
     </style>
 
     <style name="Theme.PracticumAndroidDiploma" parent="Base.Theme.PracticumAndroidDiploma" />
