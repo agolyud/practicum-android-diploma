@@ -2,4 +2,8 @@
 <resources>
     <attr name="colorLightGreyGrey" format="reference"/>
     <attr name="colorGreyWhite" format="reference"/>
+    <attr name="colorbottomNavMenuActive" format="reference"/>
+    <attr name="colorbottomNavMenuNotActive" format="reference"/>
+    <attr name="colorbottomNavDivider" format="reference"/>
+    <attr name="colorbottomNavBack" format="reference"/>
 </resources>

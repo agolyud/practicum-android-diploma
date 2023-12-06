@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Base.Theme.PracticumAndroidDiploma"
-    android:paddingHorizontal="@dimen/margin_16">
+    android:paddingHorizontal="@dimen/margin_16"
+    tools:context=".favorite.presentation.FavoriteFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarFavourites"
@@ -15,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/favourite"
+        app:title="@string/favorite"
         android:background="@null"
         style="@style/Text_Header"
         android:textFontWeight="500"
