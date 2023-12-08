@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu"
-        android:background="@drawable/bottom_navigation_view_background"
+        android:background="@color/white"
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="@color/bottom_nav_item_color" />
 
