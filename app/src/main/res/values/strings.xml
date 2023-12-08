@@ -15,4 +15,12 @@
     <string name="no_list_vacancies">Не удалось получить список вакансий</string>
     <string name="error_internet">Нет интернета</string>
     <string name="main">Главная</string>
+    <string name="filters">Настройки фильтрации</string>
+    <string name="place_of_work">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="enter_amount">Введите сумму</string>
+    <string name="not_show_without_sallary">Не показывать без ЗП</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
 </resources>

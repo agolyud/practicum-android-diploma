@@ -24,7 +24,8 @@
         <item name="colorbottomNavMenuActive">@color/blue</item>
         <item name="colorbottomNavMenuNotActive">@color/grey</item>
         <item name="colorbottomNavDivider">@color/grey</item>
-        <item name="colorbottomNavBack">@color/black</item>
+        <item name="colorbottomNavBack">@color/white</item>
+        <item name="colorredbuttom">@color/white</item>
     </style>
 
     <style name="Theme.PracticumAndroidDiploma"
