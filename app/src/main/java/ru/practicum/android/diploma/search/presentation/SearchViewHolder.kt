@@ -23,8 +23,7 @@ class SearchViewHolder(private val binding: ItemViewBinding) :
             .transform(
                 RoundedCorners(
                     ImageScale.roundCorner(
-                        itemView.resources
-                            .displayMetrics.densityDpi, ROUNDING_OF_CORNERS_PX
+                        itemView.resources.displayMetrics.densityDpi, ROUNDING_OF_CORNERS_PX
                     )
                 )
             )
