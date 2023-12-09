@@ -29,7 +29,6 @@ class SearchViewModel(
         }
     }
 
-
     fun getState() = stateLiveData
 
     private fun changeState(vacancyInfo: VacancyInfo) =
