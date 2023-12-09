@@ -8,27 +8,22 @@ import ru.practicum.android.diploma.databinding.ItemViewBinding
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.ImageScale
 
-class SearchViewHolder(private val binding: ItemViewBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class SearchViewHolder(private val binding: ItemViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(vacancy: Vacancy) {
         binding.department.text = vacancy.department
         binding.salary.text = vacancy.salary
         binding.tvVacancyName.text = vacancy.name
 
-        Glide.with(binding.ivCompany)
-            .load(vacancy.employerImgUrl)
-            .placeholder(R.drawable.placeholder)
-            .centerCrop()
+        Glide.with(binding.ivCompany).load(vacancy.employerImgUrl).placeholder(R.drawable.placeholder).centerCrop()
             .transform(
                 RoundedCorners(
                     ImageScale.roundCorner(
-                        itemView.resources.displayMetrics.densityDpi, ROUNDING_OF_CORNERS_PX
+                        itemView.resources.displayMetrics.densityDpi,
+                        ROUNDING_OF_CORNERS_PX
                     )
                 )
-            )
-            .into(binding.ivCompany)
-
+            ).into(binding.ivCompany)
     }
 
     companion object {

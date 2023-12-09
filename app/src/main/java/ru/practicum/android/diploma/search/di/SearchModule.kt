@@ -10,7 +10,6 @@ import ru.practicum.android.diploma.search.presentation.SearchViewModel
 
 val searchModule = module {
 
-
     single<SearchRepository> {
         SearchRepositoryImpl(networkClient = get())
     }
@@ -26,5 +25,3 @@ val searchModule = module {
         )
     }
 }
-
-

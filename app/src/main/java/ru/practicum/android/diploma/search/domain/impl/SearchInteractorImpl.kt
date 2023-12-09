@@ -23,13 +23,11 @@ class SearchInteractorImpl(val repository: SearchRepository) : SearchInteractor 
 
                 is DtoConsumer.NoInternet -> Adapter.searchInfoCreator(ResponseCodes.NO_NET_CONNECTION, null)
             }
-
         }
-
 }
 
 object Adapter {
-    fun searchInfoCreator(responseCodes: ResponseCodes, vacancy: List<Vacancy>?)= VacancyInfo (
+    fun searchInfoCreator(responseCodes: ResponseCodes, vacancy: List<Vacancy>?) = VacancyInfo(
         responseCodes = responseCodes,
         vacancy
     )

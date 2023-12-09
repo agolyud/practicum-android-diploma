@@ -32,6 +32,7 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
                             )
                     )
                 )
+
                 ResponseCodes.NO_NET_CONNECTION -> emit(DtoConsumer.NoInternet(response.resultCode.code))
                 ResponseCodes.ERROR -> emit(DtoConsumer.Error(response.resultCode.code))
             }
@@ -39,7 +40,8 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
 }
 
 object AdapterSearch {
-    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> =  response.map {
+
+    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
         Vacancy(
             id = it.id,
             area = it.area.name,
@@ -58,15 +60,16 @@ object AdapterSearch {
 
     private fun formSalaryString(salary: Salary?): String {
         if (salary == null) return " "
-        return "от  ${salary.from.toString()}  до  ${salary.to.toString()} ${salary.currency}"
+        return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
     }
 
-    private fun makeHasMap (filter: Filter): HashMap<String,String> {
-        val request =HashMap<String,String>()
+    private fun makeHasMap(filter: Filter): HashMap<String, String> {
+        val request = HashMap<String, String>()
         request["text"] = filter.request
         if (filter.area != null) request["area"] = filter.area
         if (filter.industry != null) request["industry"] = filter.industry
         if (filter.salary != null) request["area"] = filter.salary.toString()
+
         return request
     }
 }

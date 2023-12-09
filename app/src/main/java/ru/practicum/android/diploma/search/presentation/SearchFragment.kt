@@ -24,8 +24,7 @@ import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.presentation.models.SearchStates
 
-class SearchFragment : Fragment() {
-
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private lateinit var binding: FragmentSearchBinding
     private var filter: Filter = Filter(
@@ -43,18 +42,16 @@ class SearchFragment : Fragment() {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSearchBinding.inflate(inflater,container,false)
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.R)
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val recyclerView = binding.rvSearch
         val adapter = SearchAdapter { _ -> Unit }
@@ -73,6 +70,7 @@ class SearchFragment : Fragment() {
                         tvRvHeader.visibility = GONE
                     }
                 }
+
                 is SearchStates.ServerError -> {
                     binding.apply {
                         rvSearch.visibility = GONE
@@ -83,6 +81,7 @@ class SearchFragment : Fragment() {
                         tvRvHeader.visibility = GONE
                     }
                 }
+
                 is SearchStates.ConnectionError -> {
                     binding.apply {
                         rvSearch.visibility = GONE
@@ -94,9 +93,10 @@ class SearchFragment : Fragment() {
                         tvRvHeader.visibility = GONE
                     }
                 }
+
                 is SearchStates.InvalidRequest -> {
                     binding.apply {
-                       rvSearch.visibility = GONE
+                        rvSearch.visibility = GONE
                         placeholderImage.setImageResource(R.drawable.image_error_favorite)
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = VISIBLE
@@ -105,8 +105,9 @@ class SearchFragment : Fragment() {
                         tvRvHeader.setText(R.string.vacancy_mismatch)
                     }
                 }
+
                 is SearchStates.Success -> {
-                    setSuccessScreen(state.trackList.count()) //Передать общее кол-во найденных вакансий
+                    setSuccessScreen(state.trackList.count()) // Передать общее кол-во найденных вакансий
                     adapter.vacancyList = state.trackList.toMutableList()
                     adapter.notifyDataSetChanged()
                 }
@@ -125,13 +126,10 @@ class SearchFragment : Fragment() {
 
         binding.etSearch.addTextChangedListener(tWCreator())
 
-
         binding.btClear.setOnClickListener {
             clearText()
         }
-
     }
-
 
     private fun setSuccessScreen(amount: Int) {
         binding.rvSearch.visibility = VISIBLE
@@ -162,7 +160,6 @@ class SearchFragment : Fragment() {
                     delay(SEARCH_DEBOUNCE_DELAY_MILS)
                     filter.request = s?.toString() ?: ""
                     viewModel.loadVacancy()
-
                 }
             }
         }
@@ -170,12 +167,10 @@ class SearchFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             changeVisBottomNav(VISIBLE)
         }
-
     }
 
     private fun changeVisBottomNav(state: Int) {
-        val bottomNav =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNav.visibility = state
     }
 

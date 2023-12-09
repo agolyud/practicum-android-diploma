@@ -5,5 +5,5 @@ import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 
 interface SearchInteractor {
-   suspend fun execute(filter: Filter): Flow<VacancyInfo>
+    suspend fun execute(filter: Filter): Flow<VacancyInfo>
 }
