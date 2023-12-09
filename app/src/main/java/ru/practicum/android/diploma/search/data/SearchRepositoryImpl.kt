@@ -15,7 +15,6 @@ import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.network.NetworkClient
 
-
 class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRepository {
 
     override suspend fun doRequest(
