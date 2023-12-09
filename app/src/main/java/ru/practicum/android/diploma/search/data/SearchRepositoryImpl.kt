@@ -32,17 +32,13 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
                             )
                     )
                 )
-
                 ResponseCodes.NO_NET_CONNECTION -> emit(DtoConsumer.NoInternet(response.resultCode.code))
                 ResponseCodes.ERROR -> emit(DtoConsumer.Error(response.resultCode.code))
             }
         }.flowOn(Dispatchers.IO)
-
-
 }
 
 object AdapterSearch {
-
     fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> =  response.map {
         Vacancy(
             id =it.id,
@@ -55,7 +51,6 @@ object AdapterSearch {
             type = it.type.name
         )
     }
-
 
     fun filterToVacancyReq(filter: Filter) = SearchRequest(
         makeHasMap(filter)
@@ -72,7 +67,6 @@ object AdapterSearch {
         if (filter.area != null) request["area"] = filter.area
         if (filter.industry != null) request["industry"] = filter.industry
         if (filter.salary != null) request["area"] = filter.salary.toString()
-
         return request
     }
 }
