@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/navigation_toolbar" >
 
         <EditText
-            android:id="@+id/input_edit_text"
+            android:id="@+id/et_Search"
             style="@style/YSRegular16"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -79,12 +79,13 @@
             android:layout_height="@dimen/edit_text_height"
             android:layout_margin="@dimen/margin_4">
 
-        <ImageView
-            android:id="@+id/placeholder_search"
+        <Button
+            android:id="@+id/bt_clear"
             android:layout_width="@dimen/margin_24"
             android:layout_height="@dimen/margin_24"
             android:layout_margin="@dimen/margin_12"
-            android:src="@drawable/ic_search"/>
+            android:alpha="0"
+            android:enabled="true"/>
 
         </FrameLayout>
 
@@ -102,7 +103,7 @@
         app:layout_constraintTop_toBottomOf="@id/container">
 
     <TextView
-        android:id="@+id/placeholder_text"
+        android:id="@+id/tv_rv_header"
         style="@style/YSRegular16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -110,15 +111,15 @@
         android:background="@drawable/rounder"
         android:paddingVertical="@dimen/margin_4"
         android:paddingHorizontal="@dimen/margin_12"
-        android:text="@string/no_vacancies"
+        android:text="@string/vacancy_mismatch"
         android:textColor="@color/white"
-        android:visibility="gone"
+        android:visibility="visible"
          />
     </FrameLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/search_list"
+        android:id="@+id/rv_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_24"
@@ -180,7 +181,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/margin_112"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/placeholder_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

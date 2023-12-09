@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/logo_url"
+            android:id="@+id/iv_company"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:strokeWidth="@dimen/margin_1"
@@ -39,7 +39,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <TextView
-        android:id="@+id/vacancy_name"
+        android:id="@+id/tv_vacancy_name"
         style="@style/Text_Header"
         android:textFontWeight="500"
         android:layout_width="0dp"
@@ -53,7 +53,7 @@
         tools:text="Разработчик на С++ в команду внутренних сервисов, Москва" />
 
     <TextView
-        android:id="@+id/employer_name"
+        android:id="@+id/department"
         style="@style/Text_Standard"
         android:textFontWeight="400"
         android:layout_width="0dp"
@@ -64,7 +64,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintTop_toBottomOf="@id/vacancy_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_vacancy_name"
         tools:text="Авто.ру" />
 
     <TextView
@@ -78,7 +78,7 @@
         android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card"
-        app:layout_constraintTop_toBottomOf="@id/employer_name"
+        app:layout_constraintTop_toBottomOf="@id/department"
         tools:text="от 40 000 до 80 000 ₽" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
