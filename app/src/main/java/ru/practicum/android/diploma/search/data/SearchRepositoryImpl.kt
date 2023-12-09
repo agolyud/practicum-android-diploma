@@ -63,7 +63,7 @@ object AdapterSearch {
     )
 
     private fun formSalaryString(salary: Salary?): String {
-        if (salary==null) return " "
+        if (salary == null) return " "
         return "от  ${salary.from.toString()}  до  ${salary.to.toString()} ${salary.currency}"
     }
 
