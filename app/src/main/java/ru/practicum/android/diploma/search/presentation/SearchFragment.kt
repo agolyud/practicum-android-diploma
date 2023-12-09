@@ -35,8 +35,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         salary = 1000,
         onlyWithSalary = false
     )
-    private val viewModel: SearchViewModel by viewModel { parametersOf(
-        filter) }
+    private val viewModel: SearchViewModel by viewModel {
+        parametersOf(
+            filter
+        )
+    }
     private var searchJob: Job? = null
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")

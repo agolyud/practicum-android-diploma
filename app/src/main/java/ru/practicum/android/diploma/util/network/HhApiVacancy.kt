@@ -1,7 +1,6 @@
 package ru.practicum.android.diploma.util.network
 
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.search.data.models.SearchResponse

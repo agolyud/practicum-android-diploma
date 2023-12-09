@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RegionListDto (
+data class RegionListDto(
     @SerialName("areas") val areas: List<RegionDto>? = null,
 ) {
     companion object {
