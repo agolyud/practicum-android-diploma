@@ -41,7 +41,7 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
 object AdapterSearch {
     fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> =  response.map {
         Vacancy(
-            id =it.id,
+            id = it.id,
             area = it.area.name,
             department = it.department.name,
             employerImgUrl = it.employer.url,
