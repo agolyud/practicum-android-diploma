@@ -10,7 +10,6 @@ interface HhApiVacancy {
 
     @GET("vacancies")
     fun getVacancyList(
-        @Header(HEADER_AUTH) token: String,
         @QueryMap options: HashMap<String, String>
     ): SearchResponse
 
