@@ -6,7 +6,6 @@ import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.search.data.models.SearchResponse
 
-
 interface HhApiVacancy {
 
     @Headers(
