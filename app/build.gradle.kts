@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
+    id("kotlin-kapt")
 }
 
 android {
@@ -36,10 +37,31 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
 dependencies {
+    implementation(libs.glide)
+
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+
+    implementation(libs.gson)
+
+    implementation(libs.viewpager)
+
+    implementation(libs.kotlinx.coroutines)
+
+    implementation(libs.room)
+    implementation(libs.room.ktx)
+
+    implementation(libs.koin)
+
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.fragment)
+
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
 
