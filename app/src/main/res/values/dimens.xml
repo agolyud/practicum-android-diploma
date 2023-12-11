@@ -28,6 +28,7 @@
     <dimen name="margin_12">12dp</dimen>
     <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_112">112dp</dimen>
     <dimen name="margin_150">150dp</dimen>
@@ -35,4 +36,6 @@
     <!--Размеры радиуса-->
     <dimen name="radius_8">8dp</dimen>
     <dimen name="radius_12">12dp</dimen>
+
+    <dimen name="progress_bar_size">50dp</dimen>
 </resources>
