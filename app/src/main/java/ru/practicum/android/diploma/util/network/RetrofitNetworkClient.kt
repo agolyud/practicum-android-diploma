@@ -1,7 +1,9 @@
 package ru.practicum.android.diploma.util.network
 
+import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.practicum.android.diploma.detail.data.models.DetailRequest
 import ru.practicum.android.diploma.search.data.models.Response
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
@@ -34,11 +36,26 @@ class RetrofitNetworkClient(
             }
             // Запрос пишем тут
 
-            else -> Response().apply { resultCode = ResponseCodes.ERROR }
+            is DetailRequest -> try {
+                val resp = hhService.getDetail(dto.id)
+                Log.d("TAG results", "resp $resp")
+                Response().apply {
+                    resultCode = ResponseCodes.SUCCESS
+                    data = resp
+                }
+            } catch (e: Exception) {
+                Log.d("TAG results", "error $e")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
+
+            else -> {
+                Log.d("TAG results", "error erred")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
         }
     }
 
     companion object {
-        const val BASE_HH_API = "https://hh.ru/"
+        const val BASE_HH_API = "https://api.hh.ru/"
     }
 }
