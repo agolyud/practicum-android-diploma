@@ -16,5 +16,6 @@ interface HhApiVacancy {
 
     companion object {
         const val HEADER_AUTH = "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
+        const val HH_USER = "HH-User-Agent: EmployMe (asa-tek68@mail.ru)"
     }
 }
