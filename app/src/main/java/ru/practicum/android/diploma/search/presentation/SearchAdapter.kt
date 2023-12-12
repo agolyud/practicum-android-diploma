@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemViewBinding
 import ru.practicum.android.diploma.search.domain.models.Vacancy
-class SearchAdapter(val onVacancyClickedCB: (Vacancy) -> Unit) : RecyclerView.Adapter<SearchViewHolder>() {
+class SearchAdapter(val onVacancyClickedCB: (String) -> Unit) : RecyclerView.Adapter<SearchViewHolder>() {
 
     var vacancyList = mutableListOf<Vacancy>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
@@ -24,7 +24,7 @@ class SearchAdapter(val onVacancyClickedCB: (Vacancy) -> Unit) : RecyclerView.Ad
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
         holder.bind(vacancyList[position])
         holder.itemView.setOnClickListener {
-            onVacancyClickedCB(vacancyList[position])
+            onVacancyClickedCB(vacancyList[position].id)
         }
     }
 }

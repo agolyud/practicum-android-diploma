@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.Job
@@ -21,6 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentSearchBinding
+import ru.practicum.android.diploma.detail.presentation.DetailFragment
 import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.presentation.models.SearchStates
 
@@ -57,7 +59,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         super.onViewCreated(view, savedInstanceState)
 
         val recyclerView = binding.rvSearch
-        val adapter = SearchAdapter { _ -> Unit }
+        val adapter = SearchAdapter(clickOnVacancy())
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -185,6 +187,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             null,
             endDrawable,
             null
+        )
+    }
+
+    private fun clickOnVacancy(): (String) -> Unit = { id ->
+
+        findNavController().navigate(
+            R.id.action_searchFragment_to_detailFragment,
+            DetailFragment.createArgs(id)
         )
     }
 

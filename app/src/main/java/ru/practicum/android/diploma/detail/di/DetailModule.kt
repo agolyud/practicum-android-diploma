@@ -6,7 +6,7 @@ import ru.practicum.android.diploma.detail.data.VacancyDetailRepositoryImpl
 import ru.practicum.android.diploma.detail.domain.DetailVacancyInteractor
 import ru.practicum.android.diploma.detail.domain.api.VacancyDetailRepository
 import ru.practicum.android.diploma.detail.domain.impl.DetailVacancyInteractorImpl
-
+import ru.practicum.android.diploma.detail.presentation.DetailViewModel
 
 val detailModule = module {
 
@@ -18,4 +18,10 @@ val detailModule = module {
         DetailVacancyInteractorImpl(repository = get())
     }
 
+    viewModel {
+        DetailViewModel(
+            get(),
+            get()
+        )
+    }
 }
