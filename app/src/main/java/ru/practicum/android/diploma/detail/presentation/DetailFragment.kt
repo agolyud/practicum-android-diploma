@@ -5,26 +5,34 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentDetailBinding
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
-    private val viewModel: DetailViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel {
+        parametersOf(
+            requireArguments().getString(ID)
+        )
+    }
+
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
@@ -36,7 +44,6 @@ class DetailFragment : Fragment() {
         viewModel.state.observe(viewLifecycleOwner) { result ->
             render(result)
         }
-
 
         binding.back.setOnClickListener {
             view.findNavController().popBackStack()
@@ -101,10 +108,12 @@ class DetailFragment : Fragment() {
         binding.grSkills.isVisible = !detailVacancy.keySkills.isNullOrEmpty()
         binding.keySkillsContent.text = detailVacancy.keySkills.orEmpty()
 
-        binding.contacts.isVisible = !(detailVacancy.comment == null
-            && detailVacancy.phone == null
-            && detailVacancy.email == null
-            && detailVacancy.contactName == null)
+        binding.contacts.isVisible = !(
+            detailVacancy.comment == null &&
+                detailVacancy.phone == null &&
+                detailVacancy.email == null &&
+                detailVacancy.contactName == null
+            )
 
         binding.grComment.isVisible = !detailVacancy.comment.isNullOrEmpty()
         binding.comment.text = detailVacancy.comment.orEmpty()
@@ -122,7 +131,7 @@ class DetailFragment : Fragment() {
 
         binding.progress.isVisible = false
         binding.scroll.isVisible = true
-        binding.errorPlaceholder.root.isVisible =  false
+        binding.errorPlaceholder.root.isVisible = false
         // binding.btSimilar.isVisible = !fromDB
     }
 
@@ -137,7 +146,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.btSimilar.setOnClickListener {
-            //viewModel.showSimilarVacancies(detailVacancy.id)
+            // viewModel.showSimilarVacancies(detailVacancy.id)
         }
 
         binding.share.setOnClickListener {
@@ -157,7 +166,7 @@ class DetailFragment : Fragment() {
 
     private fun actionSendEmail(email: String?) {
         val intent = Intent(Intent.ACTION_SENDTO)
-        intent.data = Uri.parse("mailto:${email}")
+        intent.data = Uri.parse("mailto:$email")
         try {
             startActivity(intent)
         } catch (_: Exception) {
@@ -165,7 +174,7 @@ class DetailFragment : Fragment() {
     }
 
     private fun actionDial(phoneNumber: String?) {
-        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:${phoneNumber}"))
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
         try {
             startActivity(intent)
         } catch (_: Exception) {
@@ -175,7 +184,7 @@ class DetailFragment : Fragment() {
     private fun showProgress() {
         binding.progress.isVisible = true
         binding.scroll.isVisible = false
-        binding.errorPlaceholder.root.isVisible =  false
+        binding.errorPlaceholder.root.isVisible = false
     }
 
     private fun showError(
@@ -189,4 +198,12 @@ class DetailFragment : Fragment() {
         binding.scroll.isVisible = false
     }
 
+    companion object {
+
+        private const val ID = "id"
+
+        fun createArgs(id: String): Bundle {
+            return bundleOf(ID to id)
+        }
+    }
 }
