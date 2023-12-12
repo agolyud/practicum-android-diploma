@@ -39,6 +39,6 @@ class RetrofitNetworkClient(
     }
 
     companion object {
-        const val BASE_HH_API = "https://hh.ru/"
+        const val BASE_HH_API = "https://api.hh.ru/"
     }
 }

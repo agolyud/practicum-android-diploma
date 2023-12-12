@@ -11,17 +11,17 @@ import ru.practicum.android.diploma.search.presentation.SearchViewModel
 val searchModule = module {
 
     single<SearchRepository> {
-        SearchRepositoryImpl(networkClient = get())
+        SearchRepositoryImpl(get())
     }
 
-    factory<SearchInteractor> {
-        SearchInteractorImpl(repository = get())
+    single<SearchInteractor> {
+        SearchInteractorImpl(get())
     }
 
     viewModel {
         SearchViewModel(
-            filter = get(),
-            searchInteractor = get()
+            get(),
+            get()
         )
     }
 }

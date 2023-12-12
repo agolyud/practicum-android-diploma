@@ -30,7 +30,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private var filter: Filter = Filter(
         page = 0,
         request = "android",
-        area = " ",
+        area = "",
         industry = "",
         salary = 1000,
         onlyWithSalary = false

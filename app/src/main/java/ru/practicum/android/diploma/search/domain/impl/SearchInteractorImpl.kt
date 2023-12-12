@@ -10,7 +10,9 @@ import ru.practicum.android.diploma.search.domain.models.ResponseCodes
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 
-class SearchInteractorImpl(val repository: SearchRepository) : SearchInteractor {
+class SearchInteractorImpl(
+    val repository: SearchRepository
+) : SearchInteractor {
     override suspend fun execute(filter: Filter): Flow<VacancyInfo> =
         repository.doRequest(filter = filter).map { result ->
             when (result) {

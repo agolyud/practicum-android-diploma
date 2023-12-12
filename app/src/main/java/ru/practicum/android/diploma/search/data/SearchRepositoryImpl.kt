@@ -66,9 +66,9 @@ object AdapterSearch {
     private fun makeHasMap(filter: Filter): HashMap<String, String> {
         val request = HashMap<String, String>()
         request["text"] = filter.request
-        if (filter.area != null) request["area"] = filter.area
-        if (filter.industry != null) request["industry"] = filter.industry
-        if (filter.salary != null) request["area"] = filter.salary.toString()
+        if (!filter.area.isNullOrBlank()) request["area"] = filter.area
+        if (!filter.industry.isNullOrBlank()) request["industry"] = filter.industry
+        if (!filter.salary.toString().isNullOrBlank()) request["salary"] = filter.salary.toString()
 
         return request
     }

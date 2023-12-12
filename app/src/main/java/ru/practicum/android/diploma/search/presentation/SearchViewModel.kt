@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.presentation
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,7 +30,7 @@ class SearchViewModel(
         }
     }
 
-    fun getState() = stateLiveData
+    fun getState(): LiveData<SearchStates> = stateLiveData
 
     private fun changeState(vacancyInfo: VacancyInfo) =
         when (vacancyInfo.responseCodes) {
