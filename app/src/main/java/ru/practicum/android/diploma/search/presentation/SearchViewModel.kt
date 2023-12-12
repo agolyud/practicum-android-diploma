@@ -1,6 +1,7 @@
 package ru.practicum.android.diploma.search.presentation
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,23 +30,26 @@ class SearchViewModel(
         }
     }
 
-    fun getState() = stateLiveData
+    fun getState(): LiveData<SearchStates> = stateLiveData
 
     private fun changeState(vacancyInfo: VacancyInfo) =
         when (vacancyInfo.responseCodes) {
             ResponseCodes.ERROR -> {
                 state = SearchStates.ServerError
+                stateLiveData.value = state
                 Log.d("server error", vacancyInfo.responseCodes.name)
             }
 
             ResponseCodes.SUCCESS -> {
                 state =
                     vacancyInfo.vacancy?.let { SearchStates.Success(it) } ?: SearchStates.InvalidRequest
+                stateLiveData.value = state
                 Log.d("success", vacancyInfo.responseCodes.name)
             }
 
             ResponseCodes.NO_NET_CONNECTION -> {
                 state = SearchStates.ConnectionError
+                stateLiveData.value = state
                 Log.d("internet error", vacancyInfo.responseCodes.name)
             }
         }

@@ -65,6 +65,10 @@ dependencies {
 
     implementation(libs.serialization.json)
 
+    implementation(libs.legacy.support)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
+
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
 
@@ -80,4 +84,6 @@ dependencies {
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
+
+    annotationProcessor(libs.glide.compiler)
 }
