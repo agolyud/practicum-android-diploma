@@ -15,7 +15,7 @@ interface HhApiVacancy {
         HH_USER
     )
     @GET("vacancies")
-    fun getVacancyList(
+    suspend fun getVacancyList(
         @QueryMap options: HashMap<String, String>
     ): SearchResponse
 
