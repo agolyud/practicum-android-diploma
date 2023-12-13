@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.search.domain.models.ResponseCodes
 class DetailViewModel(
     private val id: String,
     private val detailsInterActor: DetailVacancyInteractor,
+    //private val favoriteInterActor: FavoriteInteractor
 ) : ViewModel() {
     private val _state = MutableLiveData<DetailState>(DetailState.Loading)
     val state = _state
@@ -18,6 +19,22 @@ class DetailViewModel(
     init {
         getData()
     }
+
+/*    fun onFavoriteClick(setFavorite: Boolean){
+        viewModelScope.launch {
+            if(setFavorite){
+
+            } else {
+
+            }
+        }
+    }
+
+    fun isFavorite(id: String){
+        viewModelScope.launch {
+
+        }
+    }*/
 
     private fun getData() {
         viewModelScope.launch {
