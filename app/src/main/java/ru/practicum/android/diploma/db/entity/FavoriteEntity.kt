@@ -11,9 +11,9 @@ data class FavoriteEntity(
     val description: String?,
     val url: String?,
     // area
-    //val areaId: String,
+    // val areaId: String,
     val areaName: String,
-    //val areaUrl: String,
+    // val areaUrl: String,
     // employer
     val idEmployer: String?,
     val alternateUrlEmployer: String?,
