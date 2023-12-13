@@ -5,23 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
-    android:orientation="vertical"
     tools:context=".search.presentation.SearchFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/navigation_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/YSMedium22"
+        app:title="@string/head_searh"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            style="@style/YSMedium26"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/head_searh" />
 
         <FrameLayout
             android:id="@+id/buttonFilter"
@@ -35,61 +30,57 @@
                 android:layout_width="@dimen/margin_24"
                 android:layout_height="@dimen/margin_24"
                 android:layout_margin="@dimen/margin_12"
-                android:src="@drawable/ic_filter"
-                android:contentDescription="TODO" />
+                android:src="@drawable/ic_filter" />
 
         </FrameLayout>
 
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_16"
         android:layout_marginVertical="@dimen/margin_8"
+        app:endIconDrawable="@drawable/ic_search"
         android:background="@drawable/shape_on_search_screen"
+        android:theme="@style/ThemeOverlay.AppTheme.TextInputEditText.Outlined"
+        android:imeOptions="actionDone"
+        app:boxStrokeColor="@color/edittextlayot_box"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/navigation_toolbar" >
+        app:layout_constraintTop_toBottomOf="@id/navigation_toolbar">
 
         <EditText
             android:id="@+id/et_Search"
             style="@style/YSRegular16"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:layout_marginVertical="@dimen/margin_4"
-            android:layout_marginStart="@dimen/margin_16"
-            android:layout_marginEnd="@dimen/margin_8"
-            android:backgroundTint="@android:color/transparent"
             android:hint="@string/enter_search"
-            android:textColorHint="?attr/colorGreyWhite"
+            android:drawableEnd="@drawable/ic_search"
+            android:drawablePadding="@dimen/margin_16"
             android:imeOptions="actionDone|flagNoExtractUi"
             android:inputType="textNoSuggestions"
             android:maxLines="1"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            tools:ignore="Autofill" />
+            android:textColorHint="?attr/colorGreyWhite"/>
 
-        <FrameLayout
-            android:id="@+id/buttonSearch"
-            android:layout_width="@dimen/edit_text_height"
-            android:layout_height="@dimen/edit_text_height"
-            android:layout_margin="@dimen/margin_4">
 
-        <Button
-            android:id="@+id/bt_clear"
-            android:layout_width="@dimen/margin_24"
-            android:layout_height="@dimen/margin_24"
-            android:layout_margin="@dimen/margin_12"
-            android:alpha="0"
-            android:enabled="true"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-        </FrameLayout>
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/bt_clear"
+        android:layout_width="@dimen/edit_text_height"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginEnd="@dimen/margin_4"
+        android:alpha="0"
+        android:enabled="true"
+        app:layout_constraintBottom_toBottomOf="@id/container"
+        app:layout_constraintEnd_toEndOf="@+id/container"
+        app:layout_constraintTop_toTopOf="@+id/container" />
 
 
     <FrameLayout
