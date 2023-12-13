@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 import ru.practicum.android.diploma.favorite.domain.FavoriteInteractor
 import ru.practicum.android.diploma.favorite.domain.api.FavoriteRepository
+import ru.practicum.android.diploma.favorite.presentation.models.FavoriteStates
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 class FavoriteInteractorImpl(
@@ -17,7 +18,7 @@ class FavoriteInteractorImpl(
         favoriteRepository.deleteFavorite(id)
     }
 
-    override fun getFavorites(): Flow<List<Vacancy>> {
+    override fun getFavorites(): Flow<Pair<FavoriteStates,MutableList<Vacancy>>> {
         return favoriteRepository.getFavorites()
     }
 

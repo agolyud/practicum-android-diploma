@@ -3,10 +3,11 @@ package ru.practicum.android.diploma.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import ru.practicum.android.diploma.db.dao.FavoriteDao
+import ru.practicum.android.diploma.db.entity.FavoriteEntity
 
 @Database(
     version = 1,
-    exportSchema = false
+    entities = [FavoriteEntity::class]
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao

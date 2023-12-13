@@ -57,6 +57,7 @@ kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 
 # Room
 room = "androidx.room:room-runtime:2.6.0"
+room-compiler = "androidx.room:room-compiler:2.6.0"
 room-ktx = "androidx.room:room-ktx:2.6.0"
 
 # Koin

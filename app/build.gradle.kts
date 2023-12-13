@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines)
 
     implementation(libs.room)
+    kapt(libs.room.compiler)
     implementation(libs.room.ktx)
 
     implementation(libs.koin)
