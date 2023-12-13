@@ -74,8 +74,8 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun setFavorite(isFavorite: Boolean){
-        //binding.favorite
+    private fun setFavorite(isFavorite: Boolean) {
+        // binding.favorite
     }
 
     @SuppressLint("SetTextI18n")
@@ -160,7 +160,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.favorite.setOnClickListener {
-            //viewModel.onFavoriteClick()
+            // viewModel.onFavoriteClick()
         }
     }
 
