@@ -61,6 +61,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:hint="@string/enter_search"
+            android:textColor="@color/black"
             android:drawableEnd="@drawable/ic_search"
             android:drawablePadding="@dimen/margin_16"
             android:imeOptions="actionDone|flagNoExtractUi"
