@@ -22,7 +22,7 @@ class FavoriteInteractorImpl(
         return favoriteRepository.getFavorites()
     }
 
-    override fun getFavorite(id: String): Flow<DetailVacancy> {
+    override fun getFavorite(id: String): Flow<List<DetailVacancy>> {
         return favoriteRepository.getFavorite(id)
     }
 }
