@@ -11,7 +11,7 @@ import ru.practicum.android.diploma.search.domain.models.ResponseCodes
 class DetailViewModel(
     private val id: String,
     private val detailsInterActor: DetailVacancyInteractor,
-    //private val favoriteInterActor: FavoriteInteractor
+    // private val favoriteInterActor: FavoriteInteractor
 ) : ViewModel() {
     private val _state = MutableLiveData<DetailState>(DetailState.Loading)
     val state = _state
