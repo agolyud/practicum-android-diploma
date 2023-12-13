@@ -77,7 +77,7 @@ class FavoriteDbConverter {
         )
     }
 
-    fun map2(favoriteVacancy: FavoriteEntity) : Vacancy{
+    fun map2(favoriteVacancy: FavoriteEntity): Vacancy {
         return Vacancy(
             id = favoriteVacancy.id,
             area = favoriteVacancy.areaName,
