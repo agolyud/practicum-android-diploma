@@ -23,4 +23,5 @@ data class DetailVacancy(
     val email: String?,
     val comment: String?,
     val url: String?
+
 )

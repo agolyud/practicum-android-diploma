@@ -6,9 +6,7 @@ import ru.practicum.android.diploma.detail.domain.models.CurrencyDetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.SalaryDetailVacancy
 
-
 fun DetailVacancyDto.mapToDetailVacancy(): DetailVacancy {
-
     val comment = if (!contactsDetailVacancyDto?.phoneDetailVacancyDtos.isNullOrEmpty()) {
         contactsDetailVacancyDto?.phoneDetailVacancyDtos?.first()?.comment
     } else null
