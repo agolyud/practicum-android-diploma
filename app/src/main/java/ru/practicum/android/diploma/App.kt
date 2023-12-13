@@ -4,6 +4,7 @@ import android.app.Application
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import ru.practicum.android.diploma.detail.di.detailModule
+import ru.practicum.android.diploma.favorite.di.favoriteModule
 import ru.practicum.android.diploma.search.di.searchModule
 import ru.practicum.android.diploma.util.UtilModule
 import ru.practicum.android.diploma.util.network.netModule
@@ -15,7 +16,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(UtilModule, searchModule, detailModule, netModule)
+            modules(UtilModule, searchModule, detailModule, netModule, favoriteModule)
         }
     }
 }
