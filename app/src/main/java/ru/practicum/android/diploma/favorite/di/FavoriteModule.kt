@@ -37,5 +37,4 @@ val favoriteModule = module {
             get()
         )
     }
-
 }

@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+
 import ru.practicum.android.diploma.db.entity.FavoriteEntity
+
 
 @Dao
 interface FavoriteDao {
