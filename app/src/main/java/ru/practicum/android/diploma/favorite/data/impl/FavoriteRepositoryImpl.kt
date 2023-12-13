@@ -38,8 +38,10 @@ class FavoriteRepositoryImpl(
         }
     }
 
-    override fun getFavorite(id: String): Flow<DetailVacancy> = flow {
-        val favorite = appDatabase.favoriteDao().getFavorite(id)
-        emit(favoriteDbConverter.map(favorite))
+    override fun getFavorite(id: String): Flow<List<DetailVacancy>> = flow {
+        val favorites = appDatabase.favoriteDao().getFavorite(id)
+        emit(favorites.map {
+                favorite -> favoriteDbConverter.map(favorite)
+        })
     }
 }

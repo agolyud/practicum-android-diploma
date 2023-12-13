@@ -21,5 +21,5 @@ interface FavoriteDao {
     suspend fun getFavorites(): List<FavoriteEntity>
 
     @Query("SELECT * FROM favorite_table WHERE id LIKE :id")
-    suspend fun getFavorite(id: String): FavoriteEntity
+    suspend fun getFavorite(id: String): List<FavoriteEntity>
 }

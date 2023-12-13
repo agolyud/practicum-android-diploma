@@ -29,6 +29,8 @@ class DetailFragment : Fragment() {
     }
 
     private val binding get() = _binding!!
+    private var isFavorite = false
+    private lateinit var detailVacancy: DetailVacancy
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,6 +56,8 @@ class DetailFragment : Fragment() {
         when (state) {
             is DetailState.Success -> {
                 setData(state.data)
+                viewModel.isFavorite(state.data.id)
+                detailVacancy = state.data
             }
 
             is DetailState.Error -> {
@@ -75,7 +79,12 @@ class DetailFragment : Fragment() {
     }
 
     private fun setFavorite(isFavorite: Boolean) {
-        // binding.favorite
+        this@DetailFragment.isFavorite = isFavorite
+        if(isFavorite){
+            Glide.with(binding.favorite).load(R.drawable.favorite).into(binding.favorite)
+        } else {
+            Glide.with(binding.favorite).load(R.drawable.not_favorite2).into(binding.favorite)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -160,7 +169,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.favorite.setOnClickListener {
-            // viewModel.onFavoriteClick()
+            viewModel.onFavoriteClick(detailVacancy, !isFavorite)
         }
     }
 
