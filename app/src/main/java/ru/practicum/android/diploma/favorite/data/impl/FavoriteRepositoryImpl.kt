@@ -6,6 +6,7 @@ import ru.practicum.android.diploma.db.AppDatabase
 import ru.practicum.android.diploma.db.converter.FavoriteDbConverter
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 import ru.practicum.android.diploma.favorite.domain.api.FavoriteRepository
+import ru.practicum.android.diploma.favorite.presentation.models.FavoriteStates
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 
 class FavoriteRepositoryImpl(
@@ -20,11 +21,21 @@ class FavoriteRepositoryImpl(
         appDatabase.favoriteDao().deleteFavorite(id)
     }
 
-    override fun getFavorites(): Flow<List<Vacancy>> = flow {
-        val favorites = appDatabase.favoriteDao().getFavorites()
-        emit(favorites.map {
-            favorite -> favoriteDbConverter.map2(favorite)
-        })
+    override fun getFavorites(): Flow<Pair<FavoriteStates,MutableList<Vacancy>>> = flow {
+        try {
+            val favorites = appDatabase.favoriteDao().getFavorites()
+            if(favorites.isEmpty()){
+                emit(Pair(FavoriteStates.Empty, mutableListOf()))
+            } else {
+                val mappedFavorites = ArrayList<Vacancy>()
+                favorites.forEach {
+                    mappedFavorites.add(favoriteDbConverter.map2(it))
+                }
+                emit(Pair(FavoriteStates.Success, mappedFavorites.toMutableList()))
+            }
+        } catch (e: Exception){
+            emit(Pair(FavoriteStates.Error, mutableListOf()))
+        }
     }
 
     override fun getFavorite(id: String): Flow<DetailVacancy> = flow {
