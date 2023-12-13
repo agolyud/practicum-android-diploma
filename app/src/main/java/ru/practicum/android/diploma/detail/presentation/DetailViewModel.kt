@@ -46,6 +46,19 @@ class DetailViewModel(
         }
     }
 
+    private fun getVacancyFromDB(id: String){
+        _state.value = DetailState.Loading
+        viewModelScope.launch {
+            favoriteInterActor.getFavorite(id).collect{
+                if (it.isEmpty()){
+                    _state.value = DetailState.NoConnect(ResponseCodes.NO_NET_CONNECTION.name)
+                } else {
+                    _state.value = DetailState.Success(it[0])
+                }
+            }
+        }
+    }
+
     private fun getData() {
         viewModelScope.launch {
             val resultData = detailsInterActor.execute(id)
@@ -60,7 +73,8 @@ class DetailViewModel(
                 }
 
                 ResponseCodes.NO_NET_CONNECTION -> {
-                    _state.value = DetailState.NoConnect(resultData.responseCodes.name)
+                    getVacancyFromDB(id)
+                    //_state.value = DetailState.NoConnect(resultData.responseCodes.name)
                 }
             }
         }
