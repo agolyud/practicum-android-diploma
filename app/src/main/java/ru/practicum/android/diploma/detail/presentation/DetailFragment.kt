@@ -67,7 +67,15 @@ class DetailFragment : Fragment() {
             is DetailState.NoConnect -> {
                 showError(state.message)
             }
+
+            is DetailState.IsFavorite -> {
+                setFavorite(state.isFavorite)
+            }
         }
+    }
+
+    private fun setFavorite(isFavorite: Boolean) {
+        // binding.favorite
     }
 
     @SuppressLint("SetTextI18n")
@@ -152,7 +160,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.favorite.setOnClickListener {
-            // viewModel.onFavouriteClick()
+            // viewModel.onFavoriteClick()
         }
     }
 
