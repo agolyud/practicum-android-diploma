@@ -4,12 +4,15 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+
 import ru.practicum.android.diploma.db.entity.FavoriteEntity
+
 
 @Dao
 interface FavoriteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+
     suspend fun addFavorite(favorite: FavoriteEntity)
 
     @Query("DELETE FROM favorite_table WHERE id LIKE :id")
