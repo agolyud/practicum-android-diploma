@@ -9,14 +9,14 @@ import ru.practicum.android.diploma.filter.data.model.RegionDto
 class SharedPrefStorageClient(
     private val sharedPref: SharedPreferences,
 ): StorageClient {
-    override fun saveCountry(country: String) {
+    override suspend fun saveCountry(country: String) {
         val json = Gson().toJson(country)
         sharedPref.edit()
             .putString(FILTER_COUNTRY, json)
             .apply()
     }
 
-    private fun getCountry(): String? {
+    private fun getCountry(): String {
         var country = ""
         val json = sharedPref.getString(FILTER_COUNTRY, null)
         if (json !== null) {
@@ -28,13 +28,13 @@ class SharedPrefStorageClient(
         return country
     }
 
-    override fun deleteCountry() {
+    override suspend fun deleteCountry() {
         sharedPref.edit()
             .remove(FILTER_COUNTRY)
             .apply()
     }
 
-    override fun saveArea(area: RegionDto) {
+    override suspend fun saveArea(area: RegionDto) {
         val json = Gson().toJson(area)
         sharedPref.edit()
             .putString(FILTER_AREA, json)
@@ -53,20 +53,20 @@ class SharedPrefStorageClient(
         return area!!
     }
 
-    override fun deleteArea() {
+    override suspend fun deleteArea() {
         sharedPref.edit()
             .remove(FILTER_AREA)
             .apply()
     }
 
-    override fun saveIndustries(industries: ArrayList<IndustryDto>) {
+    override suspend fun saveIndustries(industries: ArrayList<IndustryDto>) {
         val json = Gson().toJson(industries)
         sharedPref.edit()
             .putString(FILTER_INDUSTRY, json)
             .apply()
     }
 
-    override fun deleteIndustries() {
+    override suspend fun deleteIndustries() {
         sharedPref.edit()
             .remove(FILTER_INDUSTRY)
             .apply()
@@ -84,7 +84,7 @@ class SharedPrefStorageClient(
         return industries
     }
 
-    override fun setFilter(salary: String?, onlyWithSalary: Boolean) {
+    override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
         val filter = FilterSettingsDto(
             salary,
             onlyWithSalary,
@@ -100,13 +100,13 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    override fun clearFilter() {
+    override suspend fun clearFilter() {
         sharedPref.edit()
             .remove(FILTER_SETTINGS)
             .apply()
     }
 
-    override fun getFilter(): FilterSettingsDto {
+    override suspend fun getFilter(): FilterSettingsDto {
         var filter: FilterSettingsDto? = null
         val json = sharedPref.getString(FILTER_SETTINGS, null)
         if (json !== null) {
