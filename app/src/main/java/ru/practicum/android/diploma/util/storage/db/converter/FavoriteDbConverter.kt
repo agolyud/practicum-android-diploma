@@ -1,6 +1,6 @@
-package ru.practicum.android.diploma.db.converter
+package ru.practicum.android.diploma.util.storage.db.converter
 
-import ru.practicum.android.diploma.db.entity.FavoriteEntity
+import ru.practicum.android.diploma.util.storage.db.entity.FavoriteEntity
 import ru.practicum.android.diploma.detail.domain.models.CurrencyDetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.SalaryDetailVacancy
