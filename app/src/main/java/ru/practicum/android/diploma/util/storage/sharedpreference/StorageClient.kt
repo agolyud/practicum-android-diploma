@@ -5,13 +5,13 @@ import ru.practicum.android.diploma.filter.data.model.IndustryDto
 import ru.practicum.android.diploma.filter.data.model.RegionDto
 
 interface StorageClient {
-    fun saveCountry(country: String)
-    fun deleteCountry()
-    fun saveArea(area: RegionDto)
-    fun deleteArea()
-    fun saveIndustries(industries: ArrayList<IndustryDto>)
-    fun deleteIndustries()
-    fun setFilter(salary: String?, onlyWithSalary: Boolean)
-    fun clearFilter()
-    fun getFilter(): FilterSettingsDto
+    suspend fun saveCountry(country: String)
+    suspend fun deleteCountry()
+    suspend fun saveArea(area: RegionDto)
+    suspend fun deleteArea()
+    suspend fun saveIndustries(industries: ArrayList<IndustryDto>)
+    suspend fun deleteIndustries()
+    suspend fun setFilter(salary: String?, onlyWithSalary: Boolean)
+    suspend fun clearFilter()
+    suspend fun getFilter(): FilterSettingsDto
 }
