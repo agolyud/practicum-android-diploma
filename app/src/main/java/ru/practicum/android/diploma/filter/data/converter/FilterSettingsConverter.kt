@@ -8,7 +8,7 @@ class FilterSettingsConverter {
         return FilterSettings(
             salary = filterSettings.salary,
             onlyWithSalary = filterSettings.onlyWithSalary,
-            industries = IndustryConverter.map(filterSettings.industries) ,
+            industries = IndustryConverter.mapFromDto(filterSettings.industries) ,
             country = filterSettings.country,
             area = AreaConverter.map(filterSettings.area)
         )
@@ -18,7 +18,7 @@ class FilterSettingsConverter {
         return FilterSettingsDto(
             salary = filterSettings.salary,
             onlyWithSalary = filterSettings.onlyWithSalary,
-            industries = IndustryConverter.map(filterSettings.industries),
+            industries = IndustryConverter.mapToDto(filterSettings.industries),
             country = filterSettings.country,
             area = AreaConverter.map(filterSettings.area)
         )

@@ -4,7 +4,7 @@ import ru.practicum.android.diploma.filter.data.model.IndustryDto
 import ru.practicum.android.diploma.search.data.models.Industry
 
 object IndustryConverter {
-    fun map(industry: IndustryDto): Industry {
+    fun mapToDto(industry: IndustryDto): Industry {
         return Industry(
             id = industry.id,
             name = industry.name
@@ -19,17 +19,17 @@ object IndustryConverter {
         )
     }
 
-    fun map(industries: ArrayList<IndustryDto>): ArrayList<Industry>{
+    fun mapFromDto(industries: ArrayList<IndustryDto>): ArrayList<Industry>{
         val _industries = arrayListOf<Industry>()
 
         industries.forEach{
-            _industries.add(map(it))
+            _industries.add(mapToDto(it))
         }
 
         return _industries
     }
 
-    fun map(industries: ArrayList<Industry>): ArrayList<IndustryDto>{
+    fun mapToDto(industries: ArrayList<Industry>): ArrayList<IndustryDto>{
         val _industries = arrayListOf<IndustryDto>()
 
         industries.forEach{

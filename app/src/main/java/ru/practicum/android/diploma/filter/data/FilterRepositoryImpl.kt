@@ -29,7 +29,7 @@ class FilterRepositoryImpl(
     }
 
     override suspend fun saveIndustriesFilter(industries: ArrayList<Industry>) {
-        storageClient.saveIndustries(IndustryConverter.map(industries))
+        storageClient.saveIndustries(IndustryConverter.mapToDto(industries))
     }
 
     override suspend fun deleteIndustriesFilter() {
