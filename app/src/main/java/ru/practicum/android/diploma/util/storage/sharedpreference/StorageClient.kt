@@ -9,8 +9,8 @@ interface StorageClient {
     suspend fun deleteCountry()
     suspend fun saveArea(area: RegionDto)
     suspend fun deleteArea()
-    suspend fun saveIndustries(industries: ArrayList<IndustryDto>)
-    suspend fun deleteIndustries()
+    suspend fun saveIndustry(industry: IndustryDto)
+    suspend fun deleteIndustry()
     suspend fun setFilter(salary: String?, onlyWithSalary: Boolean)
     suspend fun clearFilter()
     suspend fun getFilter(): FilterSettingsDto

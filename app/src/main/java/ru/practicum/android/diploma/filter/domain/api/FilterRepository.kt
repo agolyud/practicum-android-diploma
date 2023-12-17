@@ -9,8 +9,8 @@ interface FilterRepository {
     suspend fun deleteCountryFilter()
     suspend fun saveAreaFilter(area: Region)
     suspend fun deleteAreaFilter()
-    suspend fun saveIndustriesFilter(industries: ArrayList<Industry>)
-    suspend fun deleteIndustriesFilter()
+    suspend fun saveIndustryFilter(industry: Industry)
+    suspend fun deleteIndustryFilter()
     suspend fun setFilter(salary: String?, onlyWithSalary: Boolean)
     suspend fun clearFilter()
     suspend fun getFilter(): FilterSettings
