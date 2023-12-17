@@ -1,4 +1,4 @@
-package ru.practicum.android.diploma.db.entity
+package ru.practicum.android.diploma.util.storage.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -1,9 +1,9 @@
-package ru.practicum.android.diploma.db
+package ru.practicum.android.diploma.util.storage.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import ru.practicum.android.diploma.db.dao.FavoriteDao
-import ru.practicum.android.diploma.db.entity.FavoriteEntity
+import ru.practicum.android.diploma.util.storage.db.dao.FavoriteDao
+import ru.practicum.android.diploma.util.storage.db.entity.FavoriteEntity
 
 @Database(
     version = 1,

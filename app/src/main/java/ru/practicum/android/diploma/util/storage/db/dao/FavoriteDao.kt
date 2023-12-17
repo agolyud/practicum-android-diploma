@@ -1,11 +1,11 @@
-package ru.practicum.android.diploma.db.dao
+package ru.practicum.android.diploma.util.storage.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
-import ru.practicum.android.diploma.db.entity.FavoriteEntity
+import ru.practicum.android.diploma.util.storage.db.entity.FavoriteEntity
 
 
 @Dao
