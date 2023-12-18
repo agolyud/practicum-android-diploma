@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.search.data.models.SearchResponse
 import ru.practicum.android.diploma.detail.data.dto.DetailVacancyDto
 import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
+import ru.practicum.android.diploma.filter.data.model.RegionDto
 
 interface HhApiVacancy {
 
@@ -47,6 +48,22 @@ interface HhApiVacancy {
     )
     @GET("areas/countries")
     suspend fun getCountries(): List<CountryDto>
+
+    //Запрос списка регионов
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("areas")
+    suspend fun getRegions(): List<RegionDto>
+
+    //Запрос списка регионов по стране
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("areas/{area_id}")
+    suspend fun getRegionsByCountry(@Path("area_id") id: String): RegionDto
 
     companion object {
         const val HEADER_AUTH = "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
