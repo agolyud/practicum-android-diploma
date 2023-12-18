@@ -28,12 +28,12 @@ class FilterRepositoryImpl(
         storageClient.deleteArea()
     }
 
-    override suspend fun saveIndustriesFilter(industries: ArrayList<Industry>) {
-        storageClient.saveIndustries(IndustryConverter.mapToDto(industries))
+    override suspend fun saveIndustryFilter(industry: Industry) {
+        storageClient.saveIndustry(IndustryConverter.map(industry))
     }
 
-    override suspend fun deleteIndustriesFilter() {
-        storageClient.deleteIndustries()
+    override suspend fun deleteIndustryFilter() {
+        storageClient.deleteIndustry()
     }
 
     override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {

@@ -59,36 +59,36 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    override suspend fun saveIndustries(industries: ArrayList<IndustryDto>) {
-        val json = Gson().toJson(industries)
+    override suspend fun saveIndustry(industry: IndustryDto) {
+        val json = Gson().toJson(industry)
         sharedPref.edit()
             .putString(FILTER_INDUSTRY, json)
             .apply()
     }
 
-    override suspend fun deleteIndustries() {
+    override suspend fun deleteIndustry() {
         sharedPref.edit()
             .remove(FILTER_INDUSTRY)
             .apply()
     }
 
-    private fun getIndustries(): ArrayList<IndustryDto> {
-        val industries = arrayListOf<IndustryDto>()
+    private fun getIndustry(): IndustryDto {
+        var industry: IndustryDto? = null
         val json = sharedPref.getString(FILTER_INDUSTRY, null)
         if (json !== null) {
-            val industriesFromJson = Gson().fromJson(json, Array<IndustryDto>::class.java)
+            val industryFromJson = Gson().fromJson(json, IndustryDto::class.java)
 
-            industries.addAll(industriesFromJson)
+            industry = industryFromJson
         }
 
-        return industries
+        return industry!!
     }
 
     override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
         val filter = FilterSettingsDto(
             salary,
             onlyWithSalary,
-            getIndustries(),
+            getIndustry(),
             getCountry(),
             getArea()
         )
