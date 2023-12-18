@@ -29,7 +29,19 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="ru.practicum.android.diploma.detail.presentation.DetailFragment"
+        android:name="ru.practicum.android.diploma.detail.presentation.detail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_similarFragment"
+            app:destination="@id/similarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarFragment"
+        android:name="ru.practicum.android.diploma.detail.presentation.similar.SimilarFragment"
+        android:label="SimilarFragment" >
+        <action
+            android:id="@+id/action_similarFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

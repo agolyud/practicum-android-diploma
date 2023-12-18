@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFavoriteBinding
-import ru.practicum.android.diploma.detail.presentation.DetailFragment
+import ru.practicum.android.diploma.detail.presentation.detail.DetailFragment
 import ru.practicum.android.diploma.favorite.presentation.models.FavoriteStates
 
 class FavoriteFragment : Fragment() {

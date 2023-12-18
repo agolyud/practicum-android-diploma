@@ -2,11 +2,35 @@ package ru.practicum.android.diploma.detail.data.mapper
 
 import ru.practicum.android.diploma.detail.data.dto.DetailVacancyDto
 import ru.practicum.android.diploma.detail.data.dto.KeySkillDetailVacancyDto
+import ru.practicum.android.diploma.detail.data.dto.SimilarVacanciesDto
 import ru.practicum.android.diploma.detail.domain.models.CurrencyDetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
 import ru.practicum.android.diploma.detail.domain.models.SalaryDetailVacancy
+import ru.practicum.android.diploma.detail.domain.models.SimilarVacancy
+
+fun SimilarVacanciesDto.mapToSimillarVacancies(): List<SimilarVacancy> {
+
+    return this.itemSimillarVacancyDtos.map { itemSimillarVacancyDto ->
+        val salary = SalaryDetailVacancy(
+            from = itemSimillarVacancyDto.salary?.from,
+            to = itemSimillarVacancyDto.salary?.to,
+            currency = CurrencyDetailVacancy.getCurrency(itemSimillarVacancyDto.salary?.currency.toString())
+        )
+        SimilarVacancy(
+            id = itemSimillarVacancyDto.id,
+            name = itemSimillarVacancyDto.name,
+            address = itemSimillarVacancyDto.area.name,
+            idEmployer = itemSimillarVacancyDto.employer.id,
+            nameEmployer = itemSimillarVacancyDto.employer.name,
+            logoUrlsEmployerOriginal = itemSimillarVacancyDto.employer.logoUrlsDetailVacancyDto?.original,
+            salary = salary
+        )
+    }
+}
+
 
 fun DetailVacancyDto.mapToDetailVacancy(): DetailVacancy {
+
     val comment = if (!contactsDetailVacancyDto?.phoneDetailVacancyDtos.isNullOrEmpty()) {
         contactsDetailVacancyDto?.phoneDetailVacancyDtos?.first()?.comment
     } else null

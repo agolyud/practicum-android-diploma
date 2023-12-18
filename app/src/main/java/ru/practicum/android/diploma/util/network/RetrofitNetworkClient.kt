@@ -4,6 +4,7 @@ import android.util.Log
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.detail.data.models.DetailRequest
+import ru.practicum.android.diploma.detail.data.models.SimilarRequest
 import ru.practicum.android.diploma.search.data.models.Response
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
@@ -38,6 +39,18 @@ class RetrofitNetworkClient(
 
             is DetailRequest -> try {
                 val resp = hhService.getDetail(dto.id)
+                Log.d("TAG results", "resp $resp")
+                Response().apply {
+                    resultCode = ResponseCodes.SUCCESS
+                    data = resp
+                }
+            } catch (e: Exception) {
+                Log.d("TAG results", "error $e")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
+
+            is SimilarRequest -> try {
+                val resp = hhService.getSimilarVacancies(dto.vacancy)
                 Log.d("TAG results", "resp $resp")
                 Response().apply {
                     resultCode = ResponseCodes.SUCCESS

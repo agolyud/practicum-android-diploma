@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.detail.data.dto.DetailVacancyDto
 import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
 import ru.practicum.android.diploma.filter.data.model.RegionDto
+import ru.practicum.android.diploma.detail.data.dto.SimilarVacanciesDto
 
 interface HhApiVacancy {
 
@@ -32,6 +33,15 @@ interface HhApiVacancy {
     suspend fun getDetail(
         @Path("vacancy_id") vacancy: String
     ): DetailVacancyDto
+
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("vacancies/{vacancy_id}/similar_vacancies")
+    suspend fun getSimilarVacancies(
+        @Path("vacancy_id") vacancy: String
+    ): SimilarVacanciesDto
 
     //Запрос списка отраслей
     @Headers(
