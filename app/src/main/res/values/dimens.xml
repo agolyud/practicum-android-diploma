@@ -39,4 +39,5 @@
     <dimen name="radius_12">12dp</dimen>
 
     <dimen name="progress_bar_size">50dp</dimen>
+    <dimen name="button_back_height">48dp</dimen>
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.PracticumAndroidDiploma"
-    tools:context=".detail.presentation.DetailFragment">
+    tools:context=".detail.presentation.detail.DetailFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/back"
@@ -22,12 +22,11 @@
         android:id="@+id/favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:src="@drawable/not_favorite2"
+        android:layout_marginEnd="@dimen/margin_12"
+        android:src="@drawable/trailing_icon_2__1_"
         app:layout_constraintBottom_toBottomOf="@id/vacancy"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/vacancy"
-        app:layout_constraintVertical_bias="0.19" />
+        app:layout_constraintTop_toTopOf="@id/vacancy" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/share"
