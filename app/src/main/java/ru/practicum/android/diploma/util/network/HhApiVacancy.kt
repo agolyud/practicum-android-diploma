@@ -7,6 +7,7 @@ import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.search.data.models.SearchResponse
 import ru.practicum.android.diploma.detail.data.dto.DetailVacancyDto
+import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
 
 interface HhApiVacancy {
@@ -38,6 +39,14 @@ interface HhApiVacancy {
     )
     @GET("industries")
     suspend fun getIndustries(): List<IndustryDto>
+
+    //Запрос списка стран
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("areas/countries")
+    suspend fun getCountries(): List<CountryDto>
 
     companion object {
         const val HEADER_AUTH = "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
