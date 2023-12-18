@@ -63,7 +63,7 @@ interface HhApiVacancy {
         HH_USER
     )
     @GET("areas/{area_id}")
-    suspend fun getRegionsByCountry(@Path("area_id") id: String): List<RegionDto>
+    suspend fun getRegionsByCountry(@Path("area_id") id: String): RegionDto
 
     companion object {
         const val HEADER_AUTH = "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}"
