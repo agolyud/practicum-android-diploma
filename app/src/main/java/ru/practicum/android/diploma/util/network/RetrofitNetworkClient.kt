@@ -86,6 +86,30 @@ class RetrofitNetworkClient(
                 Response().apply { resultCode = ResponseCodes.ERROR }
             }
 
+            is FilterRequest.Regions -> try {
+                val resp = hhService.getRegions()
+                Log.d("TAG results", "resp $resp")
+                Response().apply {
+                    resultCode = ResponseCodes.SUCCESS
+                    data = resp
+                }
+            } catch (e: Exception) {
+                Log.d("TAG results", "error $e")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
+
+            is FilterRequest.RegionsByCountry -> try {
+                val resp = hhService.getRegionsByCountry(dto.countryId)
+                Log.d("TAG results", "resp $resp")
+                Response().apply {
+                    resultCode = ResponseCodes.SUCCESS
+                    data = resp
+                }
+            } catch (e: Exception) {
+                Log.d("TAG results", "error $e")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
+
             else -> {
                 Log.d("TAG results", "error erred")
                 Response().apply { resultCode = ResponseCodes.ERROR }

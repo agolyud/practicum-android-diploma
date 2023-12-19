@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.filter.data.converter.IndustryConverter
 import ru.practicum.android.diploma.filter.data.model.CountriesResponse
 import ru.practicum.android.diploma.filter.data.model.FilterRequest
 import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
+import ru.practicum.android.diploma.filter.data.model.RegionsResponse
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
 import ru.practicum.android.diploma.filter.domain.models.Region
@@ -86,6 +87,44 @@ class FilterRepositoryImpl(
                 DtoConsumer.Success(
                     (response.data as CountriesResponse).items.map {
                         CountryConverter.map(it)
+                    }
+                )
+            )
+            ResponseCodes.NO_NET_CONNECTION -> {
+                emit(DtoConsumer.NoInternet(response.resultCode.code))
+            }
+            ResponseCodes.ERROR -> {
+                emit(DtoConsumer.Error(response.resultCode.code))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getRegions(): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
+        val response = networkClient.doRequest(FilterRequest.Regions)
+        when (response.resultCode){
+            ResponseCodes.SUCCESS -> emit(
+                DtoConsumer.Success(
+                    (response.data as RegionsResponse).items.map {
+                        RegionConverter.map(it)
+                    }
+                )
+            )
+            ResponseCodes.NO_NET_CONNECTION -> {
+                emit(DtoConsumer.NoInternet(response.resultCode.code))
+            }
+            ResponseCodes.ERROR -> {
+                emit(DtoConsumer.Error(response.resultCode.code))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getRegionsByCountry(countryId: String): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
+        val response = networkClient.doRequest(FilterRequest.RegionsByCountry(countryId))
+        when (response.resultCode){
+            ResponseCodes.SUCCESS -> emit(
+                DtoConsumer.Success(
+                    (response.data as RegionsResponse).items.map {
+                        RegionConverter.map(it)
                     }
                 )
             )
