@@ -33,7 +33,7 @@ val detailModule = module {
 
     viewModel {
         DetailViewModel(
-            get(), get()
+            get(), get(), get()
         )
     }
 

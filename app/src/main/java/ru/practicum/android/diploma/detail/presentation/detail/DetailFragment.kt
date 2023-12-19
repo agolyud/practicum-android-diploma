@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentDetailBinding
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
@@ -26,8 +27,15 @@ import ru.practicum.android.diploma.detail.presentation.similar.VACANCY
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
-    private val viewModel: DetailViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel {
+        parametersOf(
+            requireArguments().getString(ID)
+        )
+    }
+
     private val binding get() = _binding!!
+    private var isFavorite = false
+    private lateinit var detailVacancy: DetailVacancy
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +62,8 @@ class DetailFragment : Fragment() {
         when (state) {
             is Success -> {
                 setData(state.data)
+                viewModel.isFavorite(state.data.id)
+                detailVacancy = state.data
             }
 
             is Error -> {
@@ -73,6 +83,20 @@ class DetailFragment : Fragment() {
                     image = R.drawable.error_server_1
                 )
             }
+
+            is DetailState.IsFavorite -> {
+                setFavorite(state.isFavorite)
+            }
+
+        }
+    }
+
+    private fun setFavorite(isFavorite: Boolean) {
+        this@DetailFragment.isFavorite = isFavorite
+        if(isFavorite){
+            Glide.with(binding.favorite).load(R.drawable.favorite).into(binding.favorite)
+        } else {
+            Glide.with(binding.favorite).load(R.drawable.not_favorite2).into(binding.favorite)
         }
     }
 
@@ -157,9 +181,9 @@ class DetailFragment : Fragment() {
             }
         }
 
-        /*binding.favorite.setOnClickListener {
-           viewModel.onFavouriteClick()
-        }*/
+        binding.favorite.setOnClickListener {
+            viewModel.onFavoriteClick(detailVacancy, !isFavorite)
+        }
     }
 
     private fun actionSendEmail(email: String?) {

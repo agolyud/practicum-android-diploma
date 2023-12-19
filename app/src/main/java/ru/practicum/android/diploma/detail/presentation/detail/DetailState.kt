@@ -13,5 +13,9 @@ sealed interface DetailState {
         val message: String
     ) : DetailState
 
+    data class IsFavorite(
+        val isFavorite: Boolean
+    ) : DetailState
+
     data class Success(val data: DetailVacancy) : DetailState
 }
