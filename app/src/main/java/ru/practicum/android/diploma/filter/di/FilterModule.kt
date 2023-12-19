@@ -6,6 +6,6 @@ import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 
 val filterModule = module {
     single<FilterRepository> {
-        FilterRepositoryImpl(get())
+        FilterRepositoryImpl(get(), get())
     }
 }
