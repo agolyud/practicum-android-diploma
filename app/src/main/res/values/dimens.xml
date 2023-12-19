@@ -30,6 +30,7 @@
     <dimen name="margin_20">20dp</dimen>
     <dimen name="margin_24">24dp</dimen>
     <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_60">60dp</dimen>
     <dimen name="margin_112">112dp</dimen>
