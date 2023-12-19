@@ -18,4 +18,6 @@ interface FilterRepository {
     suspend fun getFilter(): FilterSettings
     suspend fun getIndustries(): Flow<DtoConsumer<List<Industry>>>
     suspend fun getCountries(): Flow<DtoConsumer<List<Region>>>
+    suspend fun getRegions(): Flow<DtoConsumer<List<Region>>>
+    suspend fun getRegionsByCountry(countryId: String): Flow<DtoConsumer<List<Region>>>
 }
