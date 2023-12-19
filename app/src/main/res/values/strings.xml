@@ -11,7 +11,6 @@
     <string name="list_empty">Список пуст</string>
     <string name="head_searh">Поиск вакансий</string>
     <string name="enter_search">Введите запрос</string>
-    <string name="no_vacancies">Таких вакансий нет</string>
     <string name="no_list_vacancies">Не удалось получить список вакансий</string>
     <string name="error_internet">Нет интернета</string>
     <string name="main">Главная</string>
@@ -27,4 +26,24 @@
     <string name="country">Страна</string>
     <string name="region">Регион</string>
     <string name="choose">Выбрать</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="internet_connection_issue">Нет интернета</string>
+    <string name="vacancy_mismatch">Таких вакансий нет</string>
+    <string name="vacancy_name">vacancy name</string>
+    <string name="employer_name">Пятерка</string>
+    <string name="from">от</string>
+    <string name="to">до</string>
+    <string name="required_experience">Требуемый опыт</string>
+    <string name="vacancy">Вакансия</string>
+    <string name="not_salary">Зарплата не указана</string>
+    <string name="vacancy_description">Описание вакансии</string>
+    <string name="key_skills">Ключевые навыки</string>
+    <string name="share_message_title">Поделиться ссылкой</string>
+    <string name="contacts">Контакты</string>
+    <string name="contact_name">Контактное лицо</string>
+    <string name="e_mail">E-mail</string>
+    <string name="phone">Телефон</string>
+    <string name="comment">Комментарий</string>
+    <string name="similar_vacancies">Похожие вакансии</string>
+    <string name="unknown_error">Неизвестная ошибка</string>
 </resources>

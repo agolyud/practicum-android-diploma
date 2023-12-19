@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("ru.practicum.android.diploma.plugins.developproperties")
     id("kotlin-kapt")
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
 }
 
 android {
@@ -42,23 +43,32 @@ android {
 }
 
 dependencies {
-    implementation("com.github.bumptech.glide:glide:4.15.1")
+    implementation(libs.glide)
 
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
 
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation(libs.gson)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-    implementation("androidx.room:room-runtime:2.6.0")
-    implementation("androidx.room:room-ktx:2.6.0")
+    implementation(libs.viewpager)
 
-    implementation("io.insert-koin:koin-android:3.3.0")
+    implementation(libs.kotlinx.coroutines)
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
-    implementation("androidx.fragment:fragment-ktx:1.5.6")
+    implementation(libs.room)
+    kapt(libs.room.compiler)
+    implementation(libs.room.ktx)
+
+    implementation(libs.koin)
+
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
+    implementation(libs.fragment)
+
+    implementation(libs.serialization.json)
+
+    implementation(libs.legacy.support)
+    implementation(libs.lifecycle.livedata)
+    implementation(libs.lifecycle.viewmodel)
 
     implementation(libs.androidX.core)
     implementation(libs.androidX.appCompat)
@@ -75,4 +85,6 @@ dependencies {
     androidTestImplementation(libs.uiTests.junitExt)
     androidTestImplementation(libs.uiTests.espressoCore)
     // endregion
+
+    annotationProcessor(libs.glide.compiler)
 }
