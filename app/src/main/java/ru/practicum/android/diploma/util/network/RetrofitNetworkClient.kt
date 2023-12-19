@@ -74,6 +74,18 @@ class RetrofitNetworkClient(
                 Response().apply { resultCode = ResponseCodes.ERROR }
             }
 
+            is FilterRequest.Countries -> try {
+                val resp = hhService.getCountries()
+                Log.d("TAG results", "resp $resp")
+                Response().apply {
+                    resultCode = ResponseCodes.SUCCESS
+                    data = resp
+                }
+            } catch (e: Exception) {
+                Log.d("TAG results", "error $e")
+                Response().apply { resultCode = ResponseCodes.ERROR }
+            }
+
             else -> {
                 Log.d("TAG results", "error erred")
                 Response().apply { resultCode = ResponseCodes.ERROR }

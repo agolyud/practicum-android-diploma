@@ -4,9 +4,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import ru.practicum.android.diploma.filter.data.converter.AreaConverter
+import ru.practicum.android.diploma.filter.data.converter.CountryConverter
+import ru.practicum.android.diploma.filter.data.converter.RegionConverter
 import ru.practicum.android.diploma.filter.data.converter.FilterSettingsConverter
 import ru.practicum.android.diploma.filter.data.converter.IndustryConverter
+import ru.practicum.android.diploma.filter.data.model.CountriesResponse
 import ru.practicum.android.diploma.filter.data.model.FilterRequest
 import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
@@ -31,7 +33,7 @@ class FilterRepositoryImpl(
     }
 
     override suspend fun saveAreaFilter(area: Region) {
-        storageClient.saveArea(AreaConverter.map(area))
+        storageClient.saveArea(RegionConverter.map(area))
     }
 
     override suspend fun deleteAreaFilter() {
@@ -65,6 +67,25 @@ class FilterRepositoryImpl(
                 DtoConsumer.Success(
                     (response.data as IndustriesResponse).items.map {
                         IndustryConverter.map(it)
+                    }
+                )
+            )
+            ResponseCodes.NO_NET_CONNECTION -> {
+                emit(DtoConsumer.NoInternet(response.resultCode.code))
+            }
+            ResponseCodes.ERROR -> {
+                emit(DtoConsumer.Error(response.resultCode.code))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getCountries(): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
+        val response = networkClient.doRequest(FilterRequest.Countries)
+        when (response.resultCode){
+            ResponseCodes.SUCCESS -> emit(
+                DtoConsumer.Success(
+                    (response.data as CountriesResponse).items.map {
+                        CountryConverter.map(it)
                     }
                 )
             )
