@@ -36,6 +36,10 @@ class FilterPlaceWorkFragment : Fragment() {
         binding.chooseCountryBottom.setOnClickListener {
             findNavController().navigate(R.id.action_filterPlaceWorkFragment_to_filterCountryFragment)
         }
+
+        binding.regionButton.setOnClickListener {
+            findNavController().navigate(R.id.action_filterPlaceWorkFragment_to_filterRegionFragment)
+        }
     }
 }
 
