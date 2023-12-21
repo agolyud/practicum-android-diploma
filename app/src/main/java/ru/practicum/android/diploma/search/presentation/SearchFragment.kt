@@ -129,11 +129,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             }
         }
 
-        binding.etSearch.addTextChangedListener(tWCreator())
-
-        binding.btClear.setOnClickListener {
-            clearText()
-        }
+        initListeners()
     }
 
     private fun setSuccessScreen(amount: Int) {
@@ -188,6 +184,19 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             endDrawable,
             null
         )
+    }
+
+    private fun initListeners(){
+
+        binding.etSearch.addTextChangedListener(tWCreator())
+
+        binding.btClear.setOnClickListener {
+            clearText()
+        }
+
+        binding.buttonFilter.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment_to_filterFragment)
+        }
     }
 
     private fun clickOnVacancy(): (String) -> Unit = { id ->
