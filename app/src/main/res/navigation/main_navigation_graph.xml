@@ -55,10 +55,26 @@
         <action
             android:id="@+id/action_filterFragment_to_filterPlaceWorkFragment"
             app:destination="@id/filterPlaceWorkFragment" />
+        <action
+            android:id="@+id/action_filterFragment_to_filterIndustryFragment"
+            app:destination="@id/filterIndustryFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterPlaceWorkFragment"
         android:name="ru.practicum.android.diploma.filter.presentation.FilterPlaceWorkFragment"
         android:label="fragment_filter_place_work"
-        tools:layout="@layout/fragment_filter_place_work" />
+        tools:layout="@layout/fragment_filter_place_work" >
+        <action
+            android:id="@+id/action_filterPlaceWorkFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/filterIndustryFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.FilterIndustryFragment"
+        android:label="fragment_filter_industry"
+        tools:layout="@layout/fragment_filter_industry" >
+        <action
+            android:id="@+id/action_filterIndustryFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
+    </fragment>
 </navigation>
