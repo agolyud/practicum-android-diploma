@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterBinding
-import ru.practicum.android.diploma.databinding.FragmentSearchBinding
 
 class FilterFragment : Fragment() {
     private lateinit var binding: FragmentFilterBinding
