@@ -49,5 +49,6 @@
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="choose_of_country">Выбор страны</string>
     <string name="there_is_no_such_region">Такого региона нет</string>
 </resources>
