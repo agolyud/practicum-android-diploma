@@ -25,6 +25,7 @@
     <string name="choose_place_of_work">Выбор места работы</string>
     <string name="choosing_region">Выбор региона</string>
     <string name="enter_region">Введите регион</string>
+    <string name="enter_industry">Введите отрасль</string>
     <string name="country">Страна</string>
     <string name="region">Регион</string>
     <string name="choose">Выбрать</string>
@@ -51,4 +52,6 @@
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="choose_of_country">Выбор страны</string>
     <string name="there_is_no_such_region">Такого региона нет</string>
+    <string name="there_is_no_such_industry">Такой отрасли нет</string>
+    <string name="choosing_industry">Выбор отрасли</string>
 </resources>
