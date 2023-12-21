@@ -32,11 +32,13 @@ class FilterFragment : Fragment() {
         initListeners()
     }
 
-
-    private fun initListeners(){
+    private fun initListeners() {
         binding.placeOfWorkButton.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_filterPlaceWorkFragment)
         }
-    }
 
+        binding.industryButton.setOnClickListener {
+            findNavController().navigate(R.id.action_filterFragment_to_filterIndustryFragment)
+        }
+    }
 }
