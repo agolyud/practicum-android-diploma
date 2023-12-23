@@ -17,7 +17,7 @@ class FilterSettingsConverter {
     fun map(filterSettings: FilterSettings): FilterSettingsDto{
         return FilterSettingsDto(
             salary = filterSettings.salary,
-            onlyWithSalary = filterSettings.onlyWithSalary,
+            onlyWithSalary = filterSettings?.onlyWithSalary,
             industry = IndustryConverter.map(filterSettings.industry),
             country = filterSettings.country,
             area = RegionConverter.map(filterSettings.area)

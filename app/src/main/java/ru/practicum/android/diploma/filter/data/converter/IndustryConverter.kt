@@ -1,13 +1,14 @@
 package ru.practicum.android.diploma.filter.data.converter
 
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
-import ru.practicum.android.diploma.search.data.models.Industry
+import ru.practicum.android.diploma.filter.domain.models.Industry
 
 object IndustryConverter {
     fun map(industry: IndustryDto): Industry {
         return Industry(
-            id = industry.id,
-            name = industry.name
+            id = industry.id!!,
+            name = industry.name!!,
+            isChecked = false
         )
     }
 

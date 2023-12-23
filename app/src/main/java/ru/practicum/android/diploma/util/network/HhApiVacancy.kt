@@ -49,7 +49,7 @@ interface HhApiVacancy {
         HH_USER
     )
     @GET("industries")
-    suspend fun getIndustries(): List<IndustryDto>
+    suspend fun getIndustries(): ArrayList<IndustryDto>
 
     //Запрос списка стран
     @Headers(

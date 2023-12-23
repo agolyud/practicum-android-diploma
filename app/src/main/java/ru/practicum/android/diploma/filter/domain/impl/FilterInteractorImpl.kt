@@ -3,8 +3,8 @@ package ru.practicum.android.diploma.filter.domain.impl
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
+import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.domain.models.Region
-import ru.practicum.android.diploma.search.data.models.Industry
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 
 class FilterInteractorImpl(private val repository: FilterRepository) : FilterInteractor {
@@ -32,6 +32,10 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.deleteIndustryFilter()
     }
 
+    override suspend fun getIndustryFilter(): Industry {
+        return repository.getIndustryFilter()
+    }
+
     override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
         repository.setFilter(salary, onlyWithSalary)
     }
@@ -40,7 +44,7 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.clearFilter()
     }
 
-    override suspend fun getFilter(): FilterSettings {
+    override suspend fun getFilter(): FilterSettings? {
         return repository.getFilter()
     }
 
@@ -58,6 +62,10 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
 
     override suspend fun getRegionsByCountry(countryId: String): Flow<DtoConsumer<List<Region>>> {
         return  repository.getRegionsByCountry(countryId)
+    }
+
+    override suspend fun getIndustriesByName(industry: String): Flow<DtoConsumer<List<Industry>>> {
+        return repository.getIndustriesByName(industry)
     }
 
 }

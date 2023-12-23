@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
-        android:name="ru.practicum.android.diploma.filter.presentation.FilterFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.fragment.FilterFragment"
         android:label="fragment_filter"
         tools:layout="@layout/fragment_filter" >
         <action
@@ -61,7 +61,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterPlaceWorkFragment"
-        android:name="ru.practicum.android.diploma.filter.presentation.FilterPlaceWorkFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.fragment.FilterPlaceWorkFragment"
         android:label="fragment_filter_place_work"
         tools:layout="@layout/fragment_filter_place_work" >
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterIndustryFragment"
-        android:name="ru.practicum.android.diploma.filter.presentation.FilterIndustryFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.fragment.FilterIndustryFragment"
         android:label="fragment_filter_industry"
         tools:layout="@layout/fragment_filter_industry" >
         <action
@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterCountryFragment"
-        android:name="ru.practicum.android.diploma.filter.presentation.FilterCountryFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.fragment.FilterCountryFragment"
         android:label="FilterCountryFragment" >
         <action
             android:id="@+id/action_filterCountryFragment_to_filterPlaceWorkFragment"
@@ -93,7 +93,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterRegionFragment"
-        android:name="ru.practicum.android.diploma.filter.presentation.FilterRegionFragment"
+        android:name="ru.practicum.android.diploma.filter.presentation.fragment.FilterRegionFragment"
         android:label="fragment_filter_region"
         tools:layout="@layout/fragment_filter_region" >
         <action
