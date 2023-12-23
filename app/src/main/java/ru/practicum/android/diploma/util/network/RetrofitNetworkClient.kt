@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.detail.data.models.DetailRequest
 import ru.practicum.android.diploma.detail.data.models.SimilarRequest
 import ru.practicum.android.diploma.filter.data.model.FilterRequest
+import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.search.data.models.Response
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
@@ -65,9 +66,9 @@ class RetrofitNetworkClient(
             is FilterRequest.Industries -> try {
                 val resp = hhService.getIndustries()
                 Log.d("TAG results", "resp $resp")
-                Response().apply {
+                val response = IndustriesResponse(resp)
+                response.apply {
                     resultCode = ResponseCodes.SUCCESS
-                    data = resp
                 }
             } catch (e: Exception) {
                 Log.d("TAG results", "error $e")

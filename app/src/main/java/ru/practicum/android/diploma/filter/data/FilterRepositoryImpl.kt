@@ -14,15 +14,15 @@ import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.filter.data.model.RegionsResponse
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
+import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.domain.models.Region
-import ru.practicum.android.diploma.search.data.models.Industry
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 import ru.practicum.android.diploma.util.network.NetworkClient
-import ru.practicum.android.diploma.util.storage.sharedpreference.SharedPrefStorageClient
+import ru.practicum.android.diploma.util.storage.sharedpreference.StorageClient
 
 class FilterRepositoryImpl(
-    private val storageClient: SharedPrefStorageClient,
+    private val storageClient: StorageClient,
     private val networkClient: NetworkClient,
 ): FilterRepository {
     override suspend fun saveCountryFilter(country: String) {
@@ -49,6 +49,10 @@ class FilterRepositoryImpl(
         storageClient.deleteIndustry()
     }
 
+    override suspend fun getIndustryFilter(): Industry {
+        return IndustryConverter.map(storageClient.getIndustry())
+    }
+
     override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
         storageClient.setFilter(salary, onlyWithSalary)
     }
@@ -64,13 +68,37 @@ class FilterRepositoryImpl(
     override suspend fun getIndustries(): Flow<DtoConsumer<List<Industry>>> = flow {
         val response = networkClient.doRequest(FilterRequest.Industries)
         when (response.resultCode){
-            ResponseCodes.SUCCESS -> emit(
-                DtoConsumer.Success(
-                    (response.data as IndustriesResponse).items.map {
+            ResponseCodes.SUCCESS -> {
+                val industries = mutableListOf<Industry>()
+                (response as IndustriesResponse).items.forEach {
+                    industries.add(
                         IndustryConverter.map(it)
+                    )
+                    it.industries?.forEach {
+                        industries.add(
+                            IndustryConverter.map(it)
+                        )
                     }
+                }
+                industries.sortBy { it.name }
+                industries.distinct()
+
+                val industryFilter = getIndustryFilter()
+                if (industryFilter.id.isNotEmpty()){
+                    industries.forEach {
+                        if (it.id.equals(industryFilter.id)){
+                            it.isChecked = true
+                        }
+                    }
+                }
+
+                emit(
+                    DtoConsumer.Success(
+                        industries.toList()
+                    )
                 )
-            )
+            }
+
             ResponseCodes.NO_NET_CONNECTION -> {
                 emit(DtoConsumer.NoInternet(response.resultCode.code))
             }
@@ -128,6 +156,51 @@ class FilterRepositoryImpl(
                     }
                 )
             )
+            ResponseCodes.NO_NET_CONNECTION -> {
+                emit(DtoConsumer.NoInternet(response.resultCode.code))
+            }
+            ResponseCodes.ERROR -> {
+                emit(DtoConsumer.Error(response.resultCode.code))
+            }
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override suspend fun getIndustriesByName(industry: String): Flow<DtoConsumer<List<Industry>>> = flow {
+        val response = networkClient.doRequest(FilterRequest.Industries)
+        when (response.resultCode){
+            ResponseCodes.SUCCESS -> {
+                val industries = mutableListOf<Industry>()
+                val filteredIndustries = mutableListOf<Industry>()
+                (response as IndustriesResponse).items.forEach {
+                    industries.add(
+                        IndustryConverter.map(it)
+                    )
+                    it.industries?.forEach {
+                        industries.add(
+                            IndustryConverter.map(it)
+                        )
+                    }
+                }
+                filteredIndustries.addAll(industries.filter { it.name.contains(industry, ignoreCase = true) })
+                filteredIndustries.sortBy { it.name }
+                filteredIndustries.distinct()
+
+                val industryFilter = getIndustryFilter()
+                if (industryFilter.id.isNotEmpty()){
+                    filteredIndustries.forEach {
+                        if (it.id.equals(industryFilter.id)){
+                            it.isChecked = true
+                        }
+                    }
+                }
+
+                emit(
+                    DtoConsumer.Success(
+                        filteredIndustries.toList()
+                    )
+                )
+            }
+
             ResponseCodes.NO_NET_CONNECTION -> {
                 emit(DtoConsumer.NoInternet(response.resultCode.code))
             }

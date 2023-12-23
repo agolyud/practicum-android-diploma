@@ -4,10 +4,10 @@ import ru.practicum.android.diploma.filter.data.model.RegionDto
 import ru.practicum.android.diploma.filter.domain.models.Region
 
 object RegionConverter {
-    fun map(area: RegionDto): Region {
+    fun map(area: RegionDto?): Region {
         return Region(
-            id = area.id,
-            name = area.name
+            id = area?.id,
+            name = area?.name
         )
     }
 

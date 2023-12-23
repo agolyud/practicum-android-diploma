@@ -16,7 +16,7 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    private fun getCountry(): String {
+    override suspend fun getCountry(): String {
         var country = ""
         val json = sharedPref.getString(FILTER_COUNTRY, null)
         if (json !== null) {
@@ -41,7 +41,7 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    private fun getArea(): RegionDto {
+    override suspend fun getArea(): RegionDto {
         var area: RegionDto? = null
         val json = sharedPref.getString(FILTER_AREA, null)
         if (json !== null) {
@@ -72,8 +72,12 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    private fun getIndustry(): IndustryDto {
-        var industry: IndustryDto? = null
+    override suspend fun getIndustry(): IndustryDto {
+        var industry = IndustryDto(
+            id = "",
+            name = "",
+            industries = null
+        )
         val json = sharedPref.getString(FILTER_INDUSTRY, null)
         if (json !== null) {
             val industryFromJson = Gson().fromJson(json, IndustryDto::class.java)
@@ -81,7 +85,7 @@ class SharedPrefStorageClient(
             industry = industryFromJson
         }
 
-        return industry!!
+        return industry
     }
 
     override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
@@ -107,7 +111,21 @@ class SharedPrefStorageClient(
     }
 
     override suspend fun getFilter(): FilterSettingsDto {
-        var filter: FilterSettingsDto? = null
+        var filter = FilterSettingsDto(
+            salary = "",
+            country = "",
+            onlyWithSalary = false,
+            area = RegionDto(
+                "",
+                "",
+                null
+            ),
+            industry = IndustryDto(
+                "",
+                null,
+                ""
+            )
+        )
         val json = sharedPref.getString(FILTER_SETTINGS, null)
         if (json !== null) {
             val filterFromJson = Gson().fromJson(json, FilterSettingsDto::class.java)
@@ -115,7 +133,7 @@ class SharedPrefStorageClient(
             filter = filterFromJson
         }
 
-        return filter!!
+        return filter
     }
 
 
