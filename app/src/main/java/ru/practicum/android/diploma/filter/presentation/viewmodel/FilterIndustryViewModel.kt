@@ -19,6 +19,7 @@ class FilterIndustryViewModel (
     fun getState(): LiveData<FilterIndustryStates> = stateLiveData
 
     fun getIndustries() {
+        stateLiveData.postValue(FilterIndustryStates.Loading)
         viewModelScope.launch {
             filterInteractor.getIndustries().collect{ dto ->
                 postIndustry(dto)
@@ -27,6 +28,7 @@ class FilterIndustryViewModel (
     }
 
     fun getIndustriesByName(industry: String) {
+        stateLiveData.postValue(FilterIndustryStates.Loading)
         viewModelScope.launch {
             filterInteractor.getIndustriesByName(industry).collect{ dto ->
                 postIndustry(dto)
@@ -56,7 +58,11 @@ class FilterIndustryViewModel (
                     }){
                     stateLiveData.postValue(FilterIndustryStates.HasSelected)
                 }
-                stateLiveData.postValue(FilterIndustryStates.Success(dto.data))
+                if(dto.data.size > 0){
+                    stateLiveData.postValue(FilterIndustryStates.Success(dto.data))
+                } else {
+                    stateLiveData.postValue(FilterIndustryStates.Empty)
+                }
             }
         }
     }
