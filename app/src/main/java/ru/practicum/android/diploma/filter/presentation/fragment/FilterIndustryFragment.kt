@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,7 +24,6 @@ import ru.practicum.android.diploma.filter.domain.models.FilterIndustryStates
 import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.presentation.adapter.FilterIndustryAdapter
 import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterIndustryViewModel
-import ru.practicum.android.diploma.search.presentation.SearchFragment
 
 class FilterIndustryFragment : Fragment(R.layout.fragment_filter_industry) {
     private lateinit var binding: FragmentFilterIndustryBinding

@@ -2,25 +2,31 @@ package ru.practicum.android.diploma.util.storage.sharedpreference
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
+import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.FilterSettingsDto
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
 import ru.practicum.android.diploma.filter.data.model.RegionDto
+import ru.practicum.android.diploma.filter.domain.models.Country
 
 class SharedPrefStorageClient(
     private val sharedPref: SharedPreferences,
 ): StorageClient {
-    override suspend fun saveCountry(country: String) {
+    override suspend fun saveCountry(country: CountryDto) {
         val json = Gson().toJson(country)
         sharedPref.edit()
             .putString(FILTER_COUNTRY, json)
             .apply()
     }
 
-    override suspend fun getCountry(): String {
-        var country = ""
+    override suspend fun getCountry(): CountryDto {
+        var country = CountryDto(
+            id =  "",
+            name = "",
+            areas = listOf()
+        )
         val json = sharedPref.getString(FILTER_COUNTRY, null)
         if (json !== null) {
-            val countryFromJson = Gson().fromJson(json, String::class.java)
+            val countryFromJson = Gson().fromJson(json, CountryDto::class.java)
 
             country = countryFromJson
         }
@@ -34,26 +40,30 @@ class SharedPrefStorageClient(
             .apply()
     }
 
-    override suspend fun saveArea(area: RegionDto) {
+    override suspend fun saveRegion(area: RegionDto) {
         val json = Gson().toJson(area)
         sharedPref.edit()
             .putString(FILTER_AREA, json)
             .apply()
     }
 
-    override suspend fun getArea(): RegionDto {
-        var area: RegionDto? = null
+    override suspend fun getRegion(): RegionDto {
+        var region = RegionDto(
+            id =  "",
+            name = "",
+            areas = listOf()
+        )
         val json = sharedPref.getString(FILTER_AREA, null)
         if (json !== null) {
             val areaFromJson = Gson().fromJson(json, RegionDto::class.java)
 
-            area = areaFromJson
+            region = areaFromJson
         }
 
-        return area!!
+        return region
     }
 
-    override suspend fun deleteArea() {
+    override suspend fun deleteRegion() {
         sharedPref.edit()
             .remove(FILTER_AREA)
             .apply()
@@ -76,7 +86,7 @@ class SharedPrefStorageClient(
         var industry = IndustryDto(
             id = "",
             name = "",
-            industries = null
+            industries = listOf()
         )
         val json = sharedPref.getString(FILTER_INDUSTRY, null)
         if (json !== null) {
@@ -88,13 +98,13 @@ class SharedPrefStorageClient(
         return industry
     }
 
-    override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
+    override suspend fun setFilter(salary: String, onlyWithSalary: Boolean) {
         val filter = FilterSettingsDto(
             salary,
             onlyWithSalary,
             getIndustry(),
             getCountry(),
-            getArea()
+            getRegion()
         )
 
         val json = Gson().toJson(filter)
@@ -113,16 +123,20 @@ class SharedPrefStorageClient(
     override suspend fun getFilter(): FilterSettingsDto {
         var filter = FilterSettingsDto(
             salary = "",
-            country = "",
+            country = CountryDto(
+                "",
+                "",
+                listOf()
+            ),
             onlyWithSalary = false,
             area = RegionDto(
                 "",
                 "",
-                null
+                listOf()
             ),
             industry = IndustryDto(
                 "",
-                null,
+                listOf(),
                 ""
             )
         )

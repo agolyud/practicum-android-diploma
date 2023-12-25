@@ -11,6 +11,7 @@ import ru.practicum.android.diploma.filter.domain.api.FilterRepository
 import ru.practicum.android.diploma.filter.domain.impl.FilterInteractor
 import ru.practicum.android.diploma.filter.domain.impl.FilterInteractorImpl
 import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterIndustryViewModel
+import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterRegionViewModel
 import ru.practicum.android.diploma.search.presentation.SearchViewModel
 import ru.practicum.android.diploma.util.storage.sharedpreference.SharedPrefStorageClient
 import ru.practicum.android.diploma.util.storage.sharedpreference.StorageClient
@@ -27,6 +28,12 @@ val filterModule = module {
 
     viewModel {
         FilterIndustryViewModel(
+            get()
+        )
+    }
+
+    viewModel {
+        FilterRegionViewModel(
             get()
         )
     }

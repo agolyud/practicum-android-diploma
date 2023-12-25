@@ -1,21 +1,22 @@
 package ru.practicum.android.diploma.filter.data.converter
 
 import ru.practicum.android.diploma.filter.data.model.CountryDto
+import ru.practicum.android.diploma.filter.domain.models.Country
 import ru.practicum.android.diploma.filter.domain.models.Region
 
 object CountryConverter {
-    fun map(area: CountryDto): Region {
-        return Region(
-            id = area.id,
-            name = area.name
+    fun map(country: CountryDto): Country {
+        return Country(
+            id = country.id,
+            name = country.name
         )
     }
 
-    fun map(area: Region): CountryDto {
+    fun map(country: Country): CountryDto {
         return CountryDto(
-            id = area.id,
-            name = area.name,
-            areas = listOf(null)
+            id = country.id,
+            name = country.name,
+            areas = listOf()
         )
     }
 }
