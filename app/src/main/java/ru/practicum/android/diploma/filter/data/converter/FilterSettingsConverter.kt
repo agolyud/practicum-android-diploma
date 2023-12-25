@@ -10,7 +10,7 @@ class FilterSettingsConverter {
             onlyWithSalary = filterSettings.onlyWithSalary,
             industry = IndustryConverter.map(filterSettings.industry),
             country = CountryConverter.map(filterSettings.country),
-            area = RegionConverter.map(filterSettings.area)
+            region = RegionConverter.map(filterSettings.region)
         )
     }
 
@@ -20,7 +20,7 @@ class FilterSettingsConverter {
             onlyWithSalary = filterSettings.onlyWithSalary,
             industry = IndustryConverter.map(filterSettings.industry),
             country = CountryConverter.map(filterSettings.country),
-            area = RegionConverter.map(filterSettings.area)
+            region = RegionConverter.map(filterSettings.region)
         )
     }
 }

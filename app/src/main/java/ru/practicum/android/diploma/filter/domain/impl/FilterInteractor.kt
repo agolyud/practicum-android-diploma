@@ -17,9 +17,10 @@ interface FilterInteractor {
     suspend fun saveIndustryFilter(industry: Industry)
     suspend fun deleteIndustryFilter()
     suspend fun getIndustryFilter(): Industry
-    suspend fun setFilter(salary: String, onlyWithSalary: Boolean)
-    suspend fun clearFilter()
+    suspend fun setFilterSettings(salary: String, onlyWithSalary: Boolean)
+    suspend fun clearFilterSettings()
     suspend fun getFilter(): FilterSettings?
+    suspend fun getFilterSettings(): FilterSettings?
     suspend fun getIndustries(): Flow<DtoConsumer<List<Industry>>>
     suspend fun getCountries(): Flow<DtoConsumer<List<Country>>>
     suspend fun getRegions(): Flow<DtoConsumer<List<Region>>>

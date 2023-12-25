@@ -45,16 +45,20 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         return repository.getIndustryFilter()
     }
 
-    override suspend fun setFilter(salary: String, onlyWithSalary: Boolean) {
-        repository.setFilter(salary, onlyWithSalary)
+    override suspend fun setFilterSettings(salary: String, onlyWithSalary: Boolean) {
+        repository.setFilterSettings(salary, onlyWithSalary)
     }
 
-    override suspend fun clearFilter() {
-        repository.clearFilter()
+    override suspend fun clearFilterSettings() {
+        repository.clearFilterSettings()
     }
 
     override suspend fun getFilter(): FilterSettings? {
         return repository.getFilter()
+    }
+
+    override suspend fun getFilterSettings(): FilterSettings? {
+        return repository.getFilterSettings()
     }
 
     override suspend fun getIndustries(): Flow<DtoConsumer<List<Industry>>> {

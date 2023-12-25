@@ -19,4 +19,5 @@ interface StorageClient {
     suspend fun setFilter(salary: String, onlyWithSalary: Boolean)
     suspend fun clearFilter()
     suspend fun getFilter(): FilterSettingsDto
+    suspend fun getFilterSettings(): FilterSettingsDto
 }
