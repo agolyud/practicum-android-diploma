@@ -42,6 +42,10 @@ class RootActivity : AppCompatActivity() {
                     isVisible = false
                 )
 
+                R.id.filterCountryFragment -> showBottomNavigationBar(
+                    isVisible = false
+                )
+
                 else -> showBottomNavigationBar(isVisible = true)
             }
         }

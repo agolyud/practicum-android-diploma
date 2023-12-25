@@ -5,6 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.practicum.android.diploma.detail.data.models.DetailRequest
 import ru.practicum.android.diploma.detail.data.models.SimilarRequest
+import ru.practicum.android.diploma.filter.data.model.CountriesResponse
 import ru.practicum.android.diploma.filter.data.model.FilterRequest
 import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.filter.data.model.RegionsResponse
@@ -79,9 +80,9 @@ class RetrofitNetworkClient(
             is FilterRequest.Countries -> try {
                 val resp = hhService.getCountries()
                 Log.d("TAG results", "resp $resp")
-                Response().apply {
+                val response = CountriesResponse(resp)
+                response.apply {
                     resultCode = ResponseCodes.SUCCESS
-                    data = resp
                 }
             } catch (e: Exception) {
                 Log.d("TAG results", "error $e")

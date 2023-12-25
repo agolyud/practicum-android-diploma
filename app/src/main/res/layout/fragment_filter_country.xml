@@ -46,59 +46,6 @@
         app:layout_constraintStart_toEndOf="@+id/arrow_back"
         app:layout_constraintTop_toTopOf="@+id/arrow_back" />
 
-    <EditText
-        android:id="@+id/search_edit_text"
-        style="@style/Text_Standard"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/margin_55"
-        android:background="@drawable/shape_on_search_screen"
-        android:hint="@string/choose_of_country"
-        android:inputType="textNoSuggestions"
-        android:maxLines="1"
-        android:paddingHorizontal="@dimen/margin_16"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textColorHint="?attr/colorGreyWhite"
-        android:textCursorDrawable="@drawable/rounder"
-        app:layout_constraintEnd_toEndOf="@id/right_border"
-        android:layout_marginTop="@dimen/margin_8"
-        app:layout_constraintStart_toStartOf="@id/left_border"
-        app:layout_constraintTop_toBottomOf="@+id/choose_textview"
-        android:visibility="gone"
-        />
-    <ImageView
-        android:id="@+id/edit_text_search_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="@id/search_edit_text"
-        app:layout_constraintTop_toTopOf="@id/search_edit_text"
-        android:visibility="gone"
-        />
-
-    <ImageView
-        android:id="@+id/edit_text_close_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_16"
-        android:src="@drawable/close"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/search_edit_text"
-        app:layout_constraintEnd_toEndOf="@id/search_edit_text"
-        app:layout_constraintTop_toTopOf="@id/search_edit_text" />
-    <ImageView
-        android:id="@+id/placeholder_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/image_binoculars"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_filter_country"
         android:layout_width="0dp"
@@ -109,34 +56,46 @@
         app:layout_constraintEnd_toStartOf="@+id/right_border"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/left_border"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintTop_toBottomOf="@+id/choose_textview"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:indeterminateTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="@+id/recycler_filter_country"
-        app:layout_constraintEnd_toEndOf="@+id/recycler_filter_country"
-        app:layout_constraintStart_toStartOf="@+id/recycler_filter_country"
-        app:layout_constraintTop_toBottomOf="@+id/search_edit_text" />
+    <ImageView
+        android:id="@+id/iv_error"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_0"
+        android:contentDescription="@string/error"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="223dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/image_error_favorite" />
 
     <TextView
-        android:id="@id/btn_choose"
-        style="@style/Text_Header"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/margin_60"
-        android:layout_marginBottom="@dimen/margin_24"
-        android:background="@drawable/select_btn_background"
+        android:id="@+id/tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/YSMedium22"
+        android:layout_marginTop="@dimen/margin_16"
         android:gravity="center"
-        android:text="@string/choose"
-        android:textColor="?attr/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_error"
+        tools:text="@string/there_is_no_such_region" />
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:indeterminateTint="@color/blue"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/right_border"
-        app:layout_constraintStart_toStartOf="@+id/left_border"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/choose_textview"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

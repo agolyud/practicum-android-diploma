@@ -56,7 +56,8 @@ interface HhApiVacancy {
         HEADER_AUTH,
         HH_USER
     )
-    @GET("areas/countries")
+//    @GET("areas/countries")
+    @GET("areas")
     suspend fun getCountries(): List<CountryDto>
 
     //Запрос списка регионов
