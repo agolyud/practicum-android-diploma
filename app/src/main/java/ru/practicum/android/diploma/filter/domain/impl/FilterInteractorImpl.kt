@@ -2,13 +2,14 @@ package ru.practicum.android.diploma.filter.domain.impl
 
 import kotlinx.coroutines.flow.Flow
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
+import ru.practicum.android.diploma.filter.domain.models.Country
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
 import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.domain.models.Region
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 
 class FilterInteractorImpl(private val repository: FilterRepository) : FilterInteractor {
-    override suspend fun saveCountryFilter(country: String) {
+    override suspend fun saveCountryFilter(country: Country) {
         repository.saveCountryFilter(country)
     }
 
@@ -16,12 +17,12 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.deleteCountryFilter()
     }
 
-    override suspend fun saveAreaFilter(area: Region) {
-        repository.saveAreaFilter(area)
+    override suspend fun saveRegionFilter(area: Region) {
+        repository.saveRegionFilter(area)
     }
 
     override suspend fun deleteAreaFilter() {
-        repository.deleteAreaFilter()
+        repository.deleteRegionFilter()
     }
 
     override suspend fun saveIndustryFilter(industry: Industry) {
@@ -36,7 +37,7 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         return repository.getIndustryFilter()
     }
 
-    override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
+    override suspend fun setFilter(salary: String, onlyWithSalary: Boolean) {
         repository.setFilter(salary, onlyWithSalary)
     }
 
@@ -52,7 +53,7 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         return repository.getIndustries()
     }
 
-    override suspend fun getCountries(): Flow<DtoConsumer<List<Region>>> {
+    override suspend fun getCountries(): Flow<DtoConsumer<List<Country>>> {
         return repository.getCountries()
     }
 
@@ -60,12 +61,12 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         return repository.getRegions()
     }
 
-    override suspend fun getRegionsByCountry(countryId: String): Flow<DtoConsumer<List<Region>>> {
-        return  repository.getRegionsByCountry(countryId)
-    }
-
     override suspend fun getIndustriesByName(industry: String): Flow<DtoConsumer<List<Industry>>> {
         return repository.getIndustriesByName(industry)
+    }
+
+    override suspend fun getRegionsByName(name: String): Flow<DtoConsumer<List<Region>>> {
+        return repository.getRegionsByName(name)
     }
 
 }

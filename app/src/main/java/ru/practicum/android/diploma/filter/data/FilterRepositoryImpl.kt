@@ -13,9 +13,11 @@ import ru.practicum.android.diploma.filter.data.model.FilterRequest
 import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.filter.data.model.RegionsResponse
 import ru.practicum.android.diploma.filter.domain.api.FilterRepository
+import ru.practicum.android.diploma.filter.domain.models.Country
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
 import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.domain.models.Region
+import ru.practicum.android.diploma.search.data.models.Response
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 import ru.practicum.android.diploma.util.network.NetworkClient
@@ -25,20 +27,28 @@ class FilterRepositoryImpl(
     private val storageClient: StorageClient,
     private val networkClient: NetworkClient,
 ): FilterRepository {
-    override suspend fun saveCountryFilter(country: String) {
-        storageClient.saveCountry(country)
+    override suspend fun saveCountryFilter(country: Country) {
+        storageClient.saveCountry(CountryConverter.map(country))
     }
 
     override suspend fun deleteCountryFilter() {
         storageClient.deleteCountry()
     }
 
-    override suspend fun saveAreaFilter(area: Region) {
-        storageClient.saveArea(RegionConverter.map(area))
+    override suspend fun getCountryFilter(): Country {
+        return CountryConverter.map(storageClient.getCountry())
     }
 
-    override suspend fun deleteAreaFilter() {
-        storageClient.deleteArea()
+    override suspend fun saveRegionFilter(region: Region) {
+        storageClient.saveRegion(RegionConverter.map(region))
+    }
+
+    override suspend fun deleteRegionFilter() {
+        storageClient.deleteRegion()
+    }
+
+    override suspend fun getRegionFilter(): Region {
+        return RegionConverter.map(storageClient.getRegion())
     }
 
     override suspend fun saveIndustryFilter(industry: Industry) {
@@ -53,7 +63,7 @@ class FilterRepositoryImpl(
         return IndustryConverter.map(storageClient.getIndustry())
     }
 
-    override suspend fun setFilter(salary: String?, onlyWithSalary: Boolean) {
+    override suspend fun setFilter(salary: String, onlyWithSalary: Boolean) {
         storageClient.setFilter(salary, onlyWithSalary)
     }
 
@@ -108,7 +118,7 @@ class FilterRepositoryImpl(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getCountries(): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
+    override suspend fun getCountries(): Flow<DtoConsumer<List<Country>>> = flow<DtoConsumer<List<Country>>> {
         val response = networkClient.doRequest(FilterRequest.Countries)
         when (response.resultCode){
             ResponseCodes.SUCCESS -> emit(
@@ -128,15 +138,41 @@ class FilterRepositoryImpl(
     }.flowOn(Dispatchers.IO)
 
     override suspend fun getRegions(): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
-        val response = networkClient.doRequest(FilterRequest.Regions)
+        val countryFilter = CountryConverter.map(storageClient.getCountry())
+
+        val response = if (countryFilter.id.isNotEmpty()){
+            networkClient.doRequest(FilterRequest.RegionsByCountry(countryFilter.id))
+        } else {
+            networkClient.doRequest(FilterRequest.Regions)
+        }
+
         when (response.resultCode){
-            ResponseCodes.SUCCESS -> emit(
-                DtoConsumer.Success(
-                    (response.data as RegionsResponse).items.map {
-                        RegionConverter.map(it)
+            ResponseCodes.SUCCESS -> {
+                val regions = mutableListOf<Region>()
+
+                (response as RegionsResponse).items.forEach {
+                    it.areas?.forEach {
+                        regions.addAll(RegionConverter.mapDtoToRegions(it))
                     }
+                }
+
+/*                (response as RegionsResponse).items.forEach {
+                    it.areas?.forEach {
+                        regions.add(
+                            RegionConverter.map(it)
+                        )
+                    }
+                }*/
+
+                regions.sortBy { it.name }
+                regions.distinct()
+
+                emit(
+                    DtoConsumer.Success(
+                        regions.toList()
+                    )
                 )
-            )
+            }
             ResponseCodes.NO_NET_CONNECTION -> {
                 emit(DtoConsumer.NoInternet(response.resultCode.code))
             }
@@ -146,16 +182,44 @@ class FilterRepositoryImpl(
         }
     }.flowOn(Dispatchers.IO)
 
-    override suspend fun getRegionsByCountry(countryId: String): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
-        val response = networkClient.doRequest(FilterRequest.RegionsByCountry(countryId))
+    override suspend fun getRegionsByName(name: String): Flow<DtoConsumer<List<Region>>> = flow<DtoConsumer<List<Region>>> {
+        val countryFilter = CountryConverter.map(storageClient.getCountry())
+
+        val response = if (countryFilter.id.isNotEmpty()){
+            networkClient.doRequest(FilterRequest.RegionsByCountry(countryFilter.id))
+        } else {
+            networkClient.doRequest(FilterRequest.Regions)
+        }
+
         when (response.resultCode){
-            ResponseCodes.SUCCESS -> emit(
-                DtoConsumer.Success(
-                    (response.data as RegionsResponse).items.map {
-                        RegionConverter.map(it)
+            ResponseCodes.SUCCESS -> {
+                val regions = mutableListOf<Region>()
+                val filteredRegions = mutableListOf<Region>()
+
+                (response as RegionsResponse).items.forEach {
+                    it.areas?.forEach {
+                        regions.addAll(RegionConverter.mapDtoToRegions(it))
                     }
+                }
+
+/*                (response as RegionsResponse).items.forEach {
+                    it.areas?.forEach {
+                        regions.add(
+                            RegionConverter.map(it)
+                        )
+                    }
+                }*/
+
+                filteredRegions.addAll(regions.filter { it.name.contains(name, ignoreCase = true) })
+                filteredRegions.sortBy { it.name }
+                filteredRegions.distinct()
+
+                emit(
+                    DtoConsumer.Success(
+                        filteredRegions.toList()
+                    )
                 )
-            )
+            }
             ResponseCodes.NO_NET_CONNECTION -> {
                 emit(DtoConsumer.NoInternet(response.resultCode.code))
             }
