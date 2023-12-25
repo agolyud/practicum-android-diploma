@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +36,11 @@ class FilterRegionFragment : Fragment(R.layout.fragment_filter_region) {
 
     private fun chooseRegion(region: Region) {
         viewModel.saveRegionFilter(region)
+/*        setFragmentResult(
+            "region",
+            bundleOf("id" to region.id,
+            "name" to region.name
+            ))*/
         findNavController().popBackStack()
     }
 

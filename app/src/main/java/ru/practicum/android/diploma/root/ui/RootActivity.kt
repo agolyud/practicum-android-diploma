@@ -46,6 +46,14 @@ class RootActivity : AppCompatActivity() {
                     isVisible = false
                 )
 
+                R.id.filterPlaceWorkFragment -> showBottomNavigationBar(
+                    isVisible = false
+                )
+
+                R.id.filterFragment -> showBottomNavigationBar(
+                    isVisible = false
+                )
+
                 else -> showBottomNavigationBar(isVisible = true)
             }
         }

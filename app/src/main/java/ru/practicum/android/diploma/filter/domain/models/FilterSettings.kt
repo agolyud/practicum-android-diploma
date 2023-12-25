@@ -5,5 +5,5 @@ data class FilterSettings(
     val onlyWithSalary: Boolean,
     val industry: Industry,
     val country: Country,
-    val area: Region
+    val region: Region
 )

@@ -9,6 +9,7 @@ import ru.practicum.android.diploma.filter.data.converter.RegionConverter
 import ru.practicum.android.diploma.filter.data.converter.FilterSettingsConverter
 import ru.practicum.android.diploma.filter.data.converter.IndustryConverter
 import ru.practicum.android.diploma.filter.data.model.CountriesResponse
+import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.FilterRequest
 import ru.practicum.android.diploma.filter.data.model.IndustriesResponse
 import ru.practicum.android.diploma.filter.data.model.RegionsResponse
@@ -17,7 +18,6 @@ import ru.practicum.android.diploma.filter.domain.models.Country
 import ru.practicum.android.diploma.filter.domain.models.FilterSettings
 import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.domain.models.Region
-import ru.practicum.android.diploma.search.data.models.Response
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 import ru.practicum.android.diploma.util.network.NetworkClient
@@ -41,6 +41,10 @@ class FilterRepositoryImpl(
 
     override suspend fun saveRegionFilter(region: Region) {
         storageClient.saveRegion(RegionConverter.map(region))
+        storageClient.saveCountry(CountryConverter.map(Country(
+            region.countryId,
+            region.countryName
+        )))
     }
 
     override suspend fun deleteRegionFilter() {
@@ -63,16 +67,20 @@ class FilterRepositoryImpl(
         return IndustryConverter.map(storageClient.getIndustry())
     }
 
-    override suspend fun setFilter(salary: String, onlyWithSalary: Boolean) {
+    override suspend fun setFilterSettings(salary: String, onlyWithSalary: Boolean) {
         storageClient.setFilter(salary, onlyWithSalary)
     }
 
-    override suspend fun clearFilter() {
+    override suspend fun clearFilterSettings() {
         storageClient.clearFilter()
     }
 
     override suspend fun getFilter(): FilterSettings {
         return FilterSettingsConverter().map(storageClient.getFilter())
+    }
+
+    override suspend fun getFilterSettings(): FilterSettings? {
+        return FilterSettingsConverter().map(storageClient.getFilterSettings())
     }
 
     override suspend fun getIndustries(): Flow<DtoConsumer<List<Industry>>> = flow {
@@ -163,12 +171,13 @@ class FilterRepositoryImpl(
 
                 if (countryFilter.id.isNotEmpty()){
                     (response as RegionsResponse).items.forEach {
-                        regions.addAll(RegionConverter.mapDtoToRegions(it))
+                        regions.addAll(RegionConverter.mapDtoToRegions(it, CountryDto(countryFilter.id, countryFilter.name, listOf())))
                     }
                 } else {
-                    (response as RegionsResponse).items.forEach {
-                        it.areas?.forEach {
-                            regions.addAll(RegionConverter.mapDtoToRegions(it))
+                    (response as RegionsResponse).items.forEach {country ->
+                        country.areas?.forEach {
+                            regions.addAll(RegionConverter.mapDtoToRegions(it, CountryDto(country.id.toString(),
+                                country.name.toString(), listOf())))
                         }
                     }
                 }
@@ -215,12 +224,13 @@ class FilterRepositoryImpl(
 
                 if (countryFilter.id.isNotEmpty()){
                     (response as RegionsResponse).items.forEach {
-                        regions.addAll(RegionConverter.mapDtoToRegions(it))
+                        regions.addAll(RegionConverter.mapDtoToRegions(it, CountryDto(countryFilter.id, countryFilter.name, listOf())))
                     }
                 } else {
-                    (response as RegionsResponse).items.forEach {
-                        it.areas?.forEach {
-                            regions.addAll(RegionConverter.mapDtoToRegions(it))
+                    (response as RegionsResponse).items.forEach {country ->
+                        country.areas?.forEach {
+                            regions.addAll(RegionConverter.mapDtoToRegions(it,CountryDto(country.id.toString(),
+                                country.name.toString(), listOf())))
                         }
                     }
                 }

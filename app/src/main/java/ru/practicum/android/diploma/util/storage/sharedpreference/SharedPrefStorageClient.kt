@@ -6,7 +6,6 @@ import ru.practicum.android.diploma.filter.data.model.CountryDto
 import ru.practicum.android.diploma.filter.data.model.FilterSettingsDto
 import ru.practicum.android.diploma.filter.data.model.IndustryDto
 import ru.practicum.android.diploma.filter.data.model.RegionDto
-import ru.practicum.android.diploma.filter.domain.models.Country
 
 class SharedPrefStorageClient(
     private val sharedPref: SharedPreferences,
@@ -118,9 +117,43 @@ class SharedPrefStorageClient(
         sharedPref.edit()
             .remove(FILTER_SETTINGS)
             .apply()
+
+        deleteCountry()
+        deleteIndustry()
+        deleteRegion()
     }
 
     override suspend fun getFilter(): FilterSettingsDto {
+        val country = getCountry()
+        val region = getRegion()
+        val industry = getIndustry()
+        var filter = FilterSettingsDto(
+            salary = "",
+            country = country,
+            onlyWithSalary = false,
+            region = region,
+            industry = industry
+        )
+        val json = sharedPref.getString(FILTER_SETTINGS, null)
+        if (json !== null) {
+            val filterFromJson = Gson().fromJson(json, FilterSettingsDto::class.java)
+
+            filter = filterFromJson
+            if (country.id.isNotEmpty()) {
+                filter.country = country
+            }
+            if (region.id.toString().isNotEmpty()) {
+                filter.region = region
+            }
+            if (industry.id.toString().isNotEmpty()) {
+                filter.industry = industry
+            }
+        }
+
+        return filter
+    }
+
+    override suspend fun getFilterSettings(): FilterSettingsDto {
         var filter = FilterSettingsDto(
             salary = "",
             country = CountryDto(
@@ -129,7 +162,7 @@ class SharedPrefStorageClient(
                 listOf()
             ),
             onlyWithSalary = false,
-            area = RegionDto(
+            region = RegionDto(
                 "",
                 "",
                 listOf()
