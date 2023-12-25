@@ -45,8 +45,6 @@ class FilterIndustryFragment : Fragment(R.layout.fragment_filter_industry) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.recyclerFilterIndustry.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerFilterIndustry.adapter = adapter
 

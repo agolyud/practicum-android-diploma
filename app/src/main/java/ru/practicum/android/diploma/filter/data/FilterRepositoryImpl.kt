@@ -160,9 +160,16 @@ class FilterRepositoryImpl(
             ResponseCodes.SUCCESS -> {
                 val regions = mutableListOf<Region>()
 
-                (response as RegionsResponse).items.forEach {
-                    it.areas?.forEach {
+
+                if (countryFilter.id.isNotEmpty()){
+                    (response as RegionsResponse).items.forEach {
                         regions.addAll(RegionConverter.mapDtoToRegions(it))
+                    }
+                } else {
+                    (response as RegionsResponse).items.forEach {
+                        it.areas?.forEach {
+                            regions.addAll(RegionConverter.mapDtoToRegions(it))
+                        }
                     }
                 }
 
@@ -206,19 +213,25 @@ class FilterRepositoryImpl(
                 val regions = mutableListOf<Region>()
                 val filteredRegions = mutableListOf<Region>()
 
-                (response as RegionsResponse).items.forEach {
-                    it.areas?.forEach {
+                if (countryFilter.id.isNotEmpty()){
+                    (response as RegionsResponse).items.forEach {
                         regions.addAll(RegionConverter.mapDtoToRegions(it))
+                    }
+                } else {
+                    (response as RegionsResponse).items.forEach {
+                        it.areas?.forEach {
+                            regions.addAll(RegionConverter.mapDtoToRegions(it))
+                        }
                     }
                 }
 
-/*                (response as RegionsResponse).items.forEach {
-                    it.areas?.forEach {
-                        regions.add(
-                            RegionConverter.map(it)
-                        )
-                    }
-                }*/
+                /*                (response as RegionsResponse).items.forEach {
+                                    it.areas?.forEach {
+                                        regions.add(
+                                            RegionConverter.map(it)
+                                        )
+                                    }
+                                }*/
 
                 filteredRegions.addAll(regions.filter { it.name.contains(name, ignoreCase = true) })
                 filteredRegions.sortBy { it.name }
