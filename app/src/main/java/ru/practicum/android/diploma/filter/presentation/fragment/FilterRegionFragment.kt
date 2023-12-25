@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterRegionBinding
-import ru.practicum.android.diploma.filter.domain.models.FilterRegionStates
+import ru.practicum.android.diploma.filter.presentation.states.FilterRegionStates
 import ru.practicum.android.diploma.filter.domain.models.Region
 import ru.practicum.android.diploma.filter.presentation.adapter.FilterRegionAdapter
 import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterRegionViewModel
@@ -69,7 +69,7 @@ class FilterRegionFragment : Fragment(R.layout.fragment_filter_region) {
                     binding.pbLoading.visibility = GONE
                     binding.tvError.visibility = VISIBLE
                     binding.ivError.visibility = VISIBLE
-                    binding.tvError.setText(R.string.there_is_no_such_industry)
+                    binding.tvError.setText(R.string.there_is_no_such_region)
                     binding.ivError.setImageResource(R.drawable.image_error_favorite)
                 }
                 FilterRegionStates.Loading -> {
@@ -136,7 +136,7 @@ class FilterRegionFragment : Fragment(R.layout.fragment_filter_region) {
                 if (start != before) {
                     searchJob?.cancel()
                     searchJob = viewLifecycleOwner.lifecycleScope.launch {
-                        delay(FilterIndustryFragment.SEARCH_DEBOUNCE_DELAY_MILS)
+                        delay(SEARCH_DEBOUNCE_DELAY_MILS)
 
                         viewModel.getRegionsByName(binding.etSearch.text.toString())
                     }

@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import ru.practicum.android.diploma.filter.domain.impl.FilterInteractor
-import ru.practicum.android.diploma.filter.domain.models.FilterIndustryStates
-import ru.practicum.android.diploma.filter.domain.models.FilterRegionStates
+import ru.practicum.android.diploma.filter.presentation.states.FilterRegionStates
 import ru.practicum.android.diploma.filter.domain.models.Region
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 

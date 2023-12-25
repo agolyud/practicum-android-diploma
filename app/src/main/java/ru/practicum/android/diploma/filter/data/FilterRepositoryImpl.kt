@@ -121,13 +121,23 @@ class FilterRepositoryImpl(
     override suspend fun getCountries(): Flow<DtoConsumer<List<Country>>> = flow<DtoConsumer<List<Country>>> {
         val response = networkClient.doRequest(FilterRequest.Countries)
         when (response.resultCode){
-            ResponseCodes.SUCCESS -> emit(
-                DtoConsumer.Success(
-                    (response.data as CountriesResponse).items.map {
+            ResponseCodes.SUCCESS ->{
+                val countries = mutableListOf<Country>()
+                (response as CountriesResponse).items.forEach {
+                    countries.add(
                         CountryConverter.map(it)
-                    }
+                    )
+                }
+/*                countries.sortBy { it.name }
+                countries.distinct()*/
+
+                emit(
+                    DtoConsumer.Success(
+                        countries.toList()
+                    )
                 )
-            )
+            }
+
             ResponseCodes.NO_NET_CONNECTION -> {
                 emit(DtoConsumer.NoInternet(response.resultCode.code))
             }

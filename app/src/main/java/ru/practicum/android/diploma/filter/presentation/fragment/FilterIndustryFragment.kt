@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentFilterIndustryBinding
-import ru.practicum.android.diploma.filter.domain.models.FilterIndustryStates
+import ru.practicum.android.diploma.filter.presentation.states.FilterIndustryStates
 import ru.practicum.android.diploma.filter.domain.models.Industry
 import ru.practicum.android.diploma.filter.presentation.adapter.FilterIndustryAdapter
 import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterIndustryViewModel

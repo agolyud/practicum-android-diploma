@@ -52,6 +52,7 @@
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="choose_of_country">Выбор страны</string>
     <string name="there_is_no_such_region">Такого региона нет</string>
+    <string name="there_is_no_such_country">Такой страны нет</string>
     <string name="there_is_no_such_industry">Такой отрасли нет</string>
     <string name="choosing_industry">Выбор отрасли</string>
 </resources>
