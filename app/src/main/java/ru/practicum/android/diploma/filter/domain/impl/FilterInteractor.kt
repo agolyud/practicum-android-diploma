@@ -10,8 +10,10 @@ import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 interface FilterInteractor {
     suspend fun saveCountryFilter(country: Country)
     suspend fun deleteCountryFilter()
-    suspend fun saveRegionFilter(area: Region)
-    suspend fun deleteAreaFilter()
+    suspend fun getCountryFilter(): Country
+    suspend fun saveRegionFilter(region: Region)
+    suspend fun deleteRegionFilter()
+    suspend fun getRegionFilter(): Region
     suspend fun saveIndustryFilter(industry: Industry)
     suspend fun deleteIndustryFilter()
     suspend fun getIndustryFilter(): Industry

@@ -17,12 +17,20 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.deleteCountryFilter()
     }
 
-    override suspend fun saveRegionFilter(area: Region) {
-        repository.saveRegionFilter(area)
+    override suspend fun getCountryFilter(): Country {
+        return repository.getCountryFilter()
     }
 
-    override suspend fun deleteAreaFilter() {
+    override suspend fun saveRegionFilter(region: Region) {
+        repository.saveRegionFilter(region)
+    }
+
+    override suspend fun deleteRegionFilter() {
         repository.deleteRegionFilter()
+    }
+
+    override suspend fun getRegionFilter(): Region {
+        return repository.getRegionFilter()
     }
 
     override suspend fun saveIndustryFilter(industry: Industry) {

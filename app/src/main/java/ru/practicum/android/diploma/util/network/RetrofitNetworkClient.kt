@@ -104,9 +104,9 @@ class RetrofitNetworkClient(
             is FilterRequest.RegionsByCountry -> try {
                 val resp = hhService.getRegionsByCountry(dto.countryId)
                 Log.d("TAG results", "resp $resp")
-                Response().apply {
+                val response = RegionsResponse(resp.areas!!)
+                response.apply {
                     resultCode = ResponseCodes.SUCCESS
-                    data = resp
                 }
             } catch (e: Exception) {
                 Log.d("TAG results", "error $e")
