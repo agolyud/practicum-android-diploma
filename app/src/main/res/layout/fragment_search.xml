@@ -27,6 +27,7 @@
 
 
             <ImageView
+                android:id="@+id/ivFilter"
                 android:layout_width="@dimen/margin_24"
                 android:layout_height="@dimen/margin_24"
                 android:layout_margin="@dimen/margin_12"
@@ -105,7 +106,7 @@
         android:paddingHorizontal="@dimen/margin_12"
         android:text="@string/vacancy_mismatch"
         android:textColor="@color/white"
-        android:visibility="visible"
+        android:visibility="gone"
          />
     </FrameLayout>
 

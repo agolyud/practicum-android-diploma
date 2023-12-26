@@ -74,7 +74,10 @@ object AdapterSearch {
         request["text"] = filter.request
         if (!filter.area.isNullOrBlank()) request["area"] = filter.area
         if (!filter.industry.isNullOrBlank()) request["industry"] = filter.industry
-        if (!filter.salary.toString().isNullOrBlank()) request["salary"] = filter.salary.toString()
+        if (filter.onlyWithSalary == true) request["only_with_salary"] = filter.onlyWithSalary.toString()
+
+        if (!filter.salary.toString().isNullOrBlank() &&
+            Integer.parseInt(filter.salary.toString()) > 0) request["salary"] = filter.salary.toString()
 
         return request
     }
