@@ -46,7 +46,7 @@ object AdapterSearch {
             id = it.id,
             area = it.area.name,
             // department = it.department.name,
-            employerImgUrl = it.employer.url,
+            employerImgUrl = it.employer.logoUrls?.original?: "",
             employer = it.employer.name,
             name = it.name,
             salary = formSalaryString(it.salary),
@@ -60,6 +60,12 @@ object AdapterSearch {
 
     private fun formSalaryString(salary: Salary?): String {
         if (salary == null) return " "
+        if (salary.from == null && salary.to != null) {
+            return "до  ${salary.to} ${salary.currency}"
+        }
+        if (salary.from != null && salary.to == null) {
+            return "от  ${salary.from}  ${salary.currency}"
+        }
         return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
     }
 
