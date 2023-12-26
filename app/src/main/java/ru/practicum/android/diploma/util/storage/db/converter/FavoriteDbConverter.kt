@@ -98,6 +98,15 @@ class FavoriteDbConverter {
 
     private fun formSalaryString(salary: Salary?): String {
         if (salary == null) return " "
+        if (salary.from == null && salary.to != null) {
+            return "до  ${salary.to} ${salary.currency}"
+        }
+        if (salary.from != null && salary.to == null) {
+            return "от  ${salary.from}  ${salary.currency}"
+        }
+        if (salary.from == null && salary.to == null) {
+            return " "
+        }
         return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
     }
 }
