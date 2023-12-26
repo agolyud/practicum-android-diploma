@@ -52,6 +52,7 @@ class DetailFragment : Fragment() {
             render(result)
         }
 
+        viewModel.getData()
 
         binding.back.setOnClickListener {
             view.findNavController().popBackStack()
@@ -91,14 +92,14 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun setFavorite(isFavorite: Boolean) {
-        this@DetailFragment.isFavorite = isFavorite
-        if(isFavorite){
-            Glide.with(binding.favorite).load(R.drawable.favorite).into(binding.favorite)
-        } else {
-            Glide.with(binding.favorite).load(R.drawable.not_favorite2).into(binding.favorite)
+    private fun setFavorite(isFavourite: Boolean?){
+        when (isFavourite) {
+            true -> binding.favorite.setImageResource(R.drawable.favorite)
+            else -> binding.favorite.setImageResource(R.drawable.not_favorite2)
         }
     }
+
+
 
     @SuppressLint("SetTextI18n")
     private fun setData(detailVacancy: DetailVacancy) {
@@ -150,7 +151,7 @@ class DetailFragment : Fragment() {
         setDetailsContentListeners(detailVacancy)
 
         binding.progress.isVisible = false
-        binding.scroll.isVisible = true
+      //  binding.scroll.isVisible = true
         binding.errorPlaceholder.root.isVisible = false
         // binding.btSimilar.isVisible = !fromDB
     }
@@ -205,7 +206,7 @@ class DetailFragment : Fragment() {
 
     private fun showProgress() {
         binding.progress.isVisible = true
-        binding.scroll.isVisible = false
+       // binding.scroll.isVisible = false
         binding.errorPlaceholder.root.isVisible = false
     }
 
@@ -219,7 +220,7 @@ class DetailFragment : Fragment() {
         }
         binding.errorPlaceholder.root.isVisible = true
         binding.progress.isVisible = false
-        binding.scroll.isVisible = false
+       // binding.scroll.isVisible = false
     }
     companion object{
         private const val ID = "id"

@@ -24,9 +24,7 @@ class DetailViewModel(
     private val _state = MutableLiveData<DetailState>(Loading)
     val state = _state
 
-    init {
-        getData()
-    }
+
 
     fun onFavoriteClick(vacancy: DetailVacancy, setFavorite: Boolean){
         viewModelScope.launch {
@@ -65,7 +63,7 @@ class DetailViewModel(
         }
     }
 
-    private fun getData() {
+    fun getData() {
         viewModelScope.launch {
             //val id = savedStateHandle.get<String>(VACANCY_ID) ?: return@launch
             val resultData = detailsInterActor.execute(id)
