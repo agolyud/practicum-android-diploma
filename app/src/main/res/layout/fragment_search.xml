@@ -95,19 +95,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container">
 
-    <TextView
-        android:id="@+id/tv_rv_header"
-        style="@style/YSRegular16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/rounder"
-        android:paddingVertical="@dimen/margin_4"
-        android:paddingHorizontal="@dimen/margin_12"
-        android:text="@string/vacancy_mismatch"
-        android:textColor="@color/white"
-        android:visibility="gone"
-         />
+        <TextView
+            android:id="@+id/tv_rv_header"
+            style="@style/YSRegular16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounder"
+            android:layout_marginHorizontal="@dimen/margin_88"
+            android:paddingVertical="@dimen/margin_4"
+            android:paddingHorizontal="@dimen/margin_12"
+            android:text="@string/vacancy_mismatch"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            />
     </FrameLayout>
 
 

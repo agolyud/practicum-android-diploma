@@ -19,7 +19,7 @@ class SearchViewModel(
     private val searchInteractor: SearchInteractor,
     private val filterInteractor: FilterInteractor,
 
-) : ViewModel() {
+    ) : ViewModel() {
 
     private var filter: Filter = Filter(
         page = 0,
@@ -139,8 +139,8 @@ class SearchViewModel(
                     filterSettings.industry.id.isNotEmpty() ||
                     filterSettings.onlyWithSalary ||
                     (!filterSettings.salary.isNullOrEmpty() &&
-                     Integer.getInteger(filterSettings.salary) != null &&
-                     Integer.parseInt(filterSettings.salary) > 0)
+                        Integer.getInteger(filterSettings.salary) != null &&
+                        Integer.parseInt(filterSettings.salary) > 0)
                 ) {
                     getFilterSettings()
                     state = SearchStates.HasFilter(true)
