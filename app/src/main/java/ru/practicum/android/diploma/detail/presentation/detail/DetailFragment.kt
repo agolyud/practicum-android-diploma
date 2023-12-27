@@ -179,7 +179,6 @@ class DetailFragment : Fragment() {
         }
 
         binding.favorite.setOnClickListener {
-
             viewModel.onFavoriteClick(detailVacancy, !viewModel.stateFavorite.value!!)
         }
     }

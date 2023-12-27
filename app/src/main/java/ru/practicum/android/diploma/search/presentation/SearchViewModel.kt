@@ -18,8 +18,7 @@ import ru.practicum.android.diploma.util.createDebounceFunction
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,
     private val filterInteractor: FilterInteractor,
-
-    ) : ViewModel() {
+) : ViewModel() {
 
     private var filter: Filter = Filter(
         page = 0,
@@ -52,18 +51,19 @@ class SearchViewModel(
 
     fun getState(): LiveData<SearchStates> = stateLiveData
 
-    fun getFilterSettings(){
+    fun getFilterSettings() {
         viewModelScope.launch {
             val filterSettings = filterInteractor.getFilterSettings()
             if (filterSettings != null) {
                 val salary = if (filterSettings.salary.isNotEmpty() &&
-                    Integer.parseInt(filterSettings.salary) > 0) {
+                    Integer.parseInt(filterSettings.salary) > 0
+                ) {
                     Integer.parseInt(filterSettings.salary)
                 } else {
                     0
                 }
                 val onlyWithSalary = filterSettings.onlyWithSalary
-                val industry = if (!filterSettings.industry.id.isNullOrEmpty() ) {
+                val industry = if (!filterSettings.industry.id.isNullOrEmpty()) {
                     filterSettings.industry.id
                 } else {
                     ""
@@ -77,7 +77,7 @@ class SearchViewModel(
                         ""
                     }
                 }
-                filter = Filter (
+                filter = Filter(
                     page = 0,
                     request = filter.request,
                     area = area,
@@ -86,7 +86,7 @@ class SearchViewModel(
                     onlyWithSalary = onlyWithSalary
                 )
             } else {
-                filter = Filter (
+                filter = Filter(
                     page = 0,
                     request = filter.request,
                     area = "",
@@ -134,7 +134,7 @@ class SearchViewModel(
         viewModelScope.launch {
             val filterSettings = filterInteractor.getFilterSettings()
             if (filterSettings != null) {
-                if(filterSettings.region.id.isNotEmpty() ||
+                if (filterSettings.region.id.isNotEmpty() ||
                     filterSettings.country.id.isNotEmpty() ||
                     filterSettings.industry.id.isNotEmpty() ||
                     filterSettings.onlyWithSalary ||

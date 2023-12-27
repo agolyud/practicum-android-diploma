@@ -69,7 +69,7 @@ class DetailViewModel(
                 ResponseCodes.SUCCESS -> {
                     Log.d("TAG result", "result - ${resultData.detailVacancy}")
                     _state.value = resultData.detailVacancy?.let { Success(it) }
-                    favoriteInterActor.getFavorite(id).collect{
+                    favoriteInterActor.getFavorite(id).collect {
                         _stateFavorite.value = it.isNotEmpty()
                     }
                 }
