@@ -8,7 +8,7 @@ sealed interface SearchStates {
     object ServerError : SearchStates
     object ConnectionError : SearchStates
     object InvalidRequest : SearchStates
-    data class Success(val vacancyList: List<Vacancy>) : SearchStates
+    data class Success(val vacancyList: List<Vacancy>, val found: Int) : SearchStates
     data class HasFilter(val hasFilter: Boolean) : SearchStates
 
 }

@@ -11,15 +11,17 @@ import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 
 class SearchInteractorImpl(
-    val repository: SearchRepository
+    private val repository: SearchRepository
 ) : SearchInteractor {
     override suspend fun execute(filter: Filter): Flow<VacancyInfo> =
         repository.doRequest(filter = filter).map { result ->
             when (result) {
-                is DtoConsumer.Success -> Adapter.searchInfoCreator(
+/*                is DtoConsumer.Success -> Adapter.searchInfoCreator(
                     responseCodes = ResponseCodes.SUCCESS,
                     result.data
-                )
+                )*/
+
+                is DtoConsumer.Success -> result.data
 
                 is DtoConsumer.Error -> Adapter.searchInfoCreator(ResponseCodes.ERROR, null)
 

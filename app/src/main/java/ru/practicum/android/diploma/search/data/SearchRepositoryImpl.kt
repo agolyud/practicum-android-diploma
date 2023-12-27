@@ -7,28 +7,27 @@ import kotlinx.coroutines.flow.flowOn
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
 import ru.practicum.android.diploma.search.data.models.SearchResponse
-import ru.practicum.android.diploma.search.data.models.VacancyDto
 import ru.practicum.android.diploma.search.data.models.dto.Salary
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.Vacancy
+import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 import ru.practicum.android.diploma.util.network.NetworkClient
 
 class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRepository {
 
     override suspend fun doRequest(
         filter: Filter
-    ): Flow<DtoConsumer<List<Vacancy>>> =
+    ): Flow<DtoConsumer<VacancyInfo>> =
         flow {
             val response = networkClient.doRequest(AdapterSearch.filterToVacancyReq(filter))
             when (response.resultCode) {
                 ResponseCodes.SUCCESS -> emit(
                     DtoConsumer.Success(
                         AdapterSearch
-                            .vacancyInfoDtoToVacancyInfo(
+                            .searchResponseToVacancyInfo(
                                 response = (response as SearchResponse)
-                                    .items
                             )
                     )
                 )
@@ -41,7 +40,7 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
 
 object AdapterSearch {
 
-    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
+/*    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
         Vacancy(
             id = it.id,
             area = it.area.name,
@@ -52,7 +51,30 @@ object AdapterSearch {
             salary = formSalaryString(it.salary),
             type = it.type.name
         )
-    }
+    }*/
+
+    fun searchResponseToVacancyInfo(response: SearchResponse): VacancyInfo = VacancyInfo (
+        responseCodes = when (response.resultCode.code) {
+            200 -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS }
+            500 -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS }
+            else -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS}
+        },
+        vacancy = response.items.map{
+            Vacancy(
+                id = it.id,
+                area = it.area.name,
+                // department = it.department.name,
+                employerImgUrl = it.employer.logoUrls?.original?: "",
+                employer = it.employer.name,
+                name = it.name,
+                salary = formSalaryString(it.salary),
+                type = it.type.name
+            )
+        },
+        found = response.found,
+        page = response.page,
+        pages = response.pages
+    )
 
     fun filterToVacancyReq(filter: Filter) = SearchRequest(
         makeHasMap(filter)

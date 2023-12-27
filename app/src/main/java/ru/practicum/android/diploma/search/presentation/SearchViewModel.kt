@@ -98,8 +98,12 @@ class SearchViewModel(
             }
 
             ResponseCodes.SUCCESS -> {
-                state =
-                    vacancyInfo.vacancy?.let { SearchStates.Success(it) } ?: SearchStates.InvalidRequest
+                if (vacancyInfo.vacancy == null) {
+                    state = SearchStates.InvalidRequest
+                } else {
+                    state = SearchStates.Success(vacancyInfo.vacancy, vacancyInfo.found)
+                }
+
                 stateLiveData.value = state
                 Log.d("success", vacancyInfo.responseCodes.name)
             }
