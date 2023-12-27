@@ -108,11 +108,11 @@ class SearchViewModel(
                 if (vacancyInfo.vacancy == null) {
                     state = SearchStates.InvalidRequest
                 } else {
-                    state = SearchStates.Success(vacancyInfo.vacancy, vacancyInfo.found)
                     page = vacancyInfo.page
                     maxPage = vacancyInfo.pages
                     if (page == 0)
                         founded = vacancyInfo.found
+                    state = SearchStates.Success(vacancyInfo.vacancy, founded)
                 }
 
                 stateLiveData.value = state
