@@ -5,14 +5,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-typealias DebounceFunction<T> = (T) -> Unit
-
 fun <T> createDebounceFunction(
     delayMillis: Long,
     coroutineScope: CoroutineScope,
     useLastParam: Boolean,
     action: (T) -> Unit
-): DebounceFunction<T> {
+):  (T) -> Unit {
     var debounceJob: Job? = null
     return { param: T ->
         if (useLastParam) {

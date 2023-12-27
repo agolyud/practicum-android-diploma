@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Job
@@ -109,7 +110,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
 
                 is SearchStates.Success -> {
-                    setSuccessScreen(state.vacancyList.count()) // Передать общее кол-во найденных вакансий
+                    setSuccessScreen(state.found) // Передать общее кол-во найденных вакансий
                     adapter.vacancyList = state.vacancyList.toMutableList()
                     adapter.notifyDataSetChanged()
                 }
@@ -208,6 +209,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
         binding.buttonFilter.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment_to_filterFragment)
+        }
+
+        binding.rvSearch.addOnScrollListener(initScrlLsnr())
+
+    }
+
+    private fun initScrlLsnr() = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val pos =
+                (binding.rvSearch.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            val itemsCount = recyclerView.adapter?.itemCount?: 0
+            if (pos >= itemsCount - 1) {
+                viewModel.getNewPage()
+            }
         }
     }
 

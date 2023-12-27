@@ -12,6 +12,7 @@ import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.ResponseCodes
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 import ru.practicum.android.diploma.search.presentation.models.SearchStates
+import ru.practicum.android.diploma.util.createDebounceFunction
 
 class SearchViewModel(
     private val searchInteractor: SearchInteractor,
@@ -27,6 +28,9 @@ class SearchViewModel(
         salary = 0,
         onlyWithSalary = false
     )
+    private var page = 0
+    private var maxPage = 0
+    private var founded = 0
     private var state: SearchStates = SearchStates.Default
     private val stateLiveData = MutableLiveData(state)
 
@@ -34,11 +38,14 @@ class SearchViewModel(
         filter.request = request
         if (filter.request.isBlank()) return
         stateLiveData.value = SearchStates.Loading
-        viewModelScope.launch {
-            searchInteractor.execute(filter = filter).collect { jobsInfo ->
-                changeState(jobsInfo)
+        val searchDebounce = createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
+            viewModelScope.launch {
+                searchInteractor.execute(filter = filter).collect { jobsInfo ->
+                    changeState(jobsInfo)
+                }
             }
         }
+        searchDebounce(Unit)
     }
 
     fun getState(): LiveData<SearchStates> = stateLiveData
@@ -102,6 +109,10 @@ class SearchViewModel(
                     state = SearchStates.InvalidRequest
                 } else {
                     state = SearchStates.Success(vacancyInfo.vacancy, vacancyInfo.found)
+                    page = vacancyInfo.page
+                    maxPage = vacancyInfo.pages
+                    if (page == 0)
+                        founded = vacancyInfo.found
                 }
 
                 stateLiveData.value = state
@@ -137,5 +148,25 @@ class SearchViewModel(
             }
             stateLiveData.value = state
         }
+    }
+
+    fun getNewPage() {
+        if (page < maxPage - 1) {
+            filter.page = page + 1
+            stateLiveData.value = SearchStates.Loading
+            val searchDebounce = createDebounceFunction<Unit>(PAGE_LOAD_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
+                viewModelScope.launch {
+                    searchInteractor.execute(filter = filter).collect { jobsInfo ->
+                        changeState(jobsInfo)
+                    }
+                }
+            }
+            searchDebounce(Unit)
+        }
+    }
+
+    companion object {
+        const val SEARCH_DEBOUNCE_DELAY_MILS = 2000L
+        const val PAGE_LOAD_DEBOUNCE_DELAY_MILS = 100L
     }
 }
