@@ -10,6 +10,7 @@ import ru.practicum.android.diploma.filter.domain.impl.FilterInteractor
 import ru.practicum.android.diploma.search.domain.SearchInteractor
 import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.ResponseCodes
+import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 import ru.practicum.android.diploma.search.presentation.models.SearchStates
 import ru.practicum.android.diploma.util.createDebounceFunction
@@ -33,6 +34,7 @@ class SearchViewModel(
     private var founded = 0
     private var state: SearchStates = SearchStates.Default
     private val stateLiveData = MutableLiveData(state)
+    private val vacancyList = mutableListOf<Vacancy>()
 
     fun loadVacancy(request: String) {
         filter.request = request
@@ -108,11 +110,13 @@ class SearchViewModel(
                 if (vacancyInfo.vacancy == null) {
                     state = SearchStates.InvalidRequest
                 } else {
+                    vacancyList.addAll(vacancyInfo.vacancy)
                     page = vacancyInfo.page
                     maxPage = vacancyInfo.pages
                     if (page == 0)
                         founded = vacancyInfo.found
-                    state = SearchStates.Success(vacancyInfo.vacancy, founded)
+
+                    state = SearchStates.Success(vacancyList, founded)
                 }
 
                 stateLiveData.value = state
@@ -163,6 +167,14 @@ class SearchViewModel(
             }
             searchDebounce(Unit)
         }
+    }
+
+    fun clearAll() {
+        stateLiveData.value = SearchStates.Default
+        vacancyList.clear()
+        filter.request = ""
+        maxPage = 0
+        page = 0
     }
 
     companion object {

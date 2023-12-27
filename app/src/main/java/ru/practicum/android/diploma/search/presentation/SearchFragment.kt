@@ -111,7 +111,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                 is SearchStates.Success -> {
                     setSuccessScreen(state.found) // Передать общее кол-во найденных вакансий
-                    adapter.vacancyList.addAll(state.vacancyList.toMutableList())
+                    adapter.vacancyList = state.vacancyList.toMutableList()
                     adapter.notifyDataSetChanged()
                 }
 
@@ -197,6 +197,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             endDrawable,
             null
         )
+        viewModel.clearAll()
     }
 
     private fun initListeners(){
