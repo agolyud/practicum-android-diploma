@@ -84,6 +84,25 @@
         app:layout_constraintEnd_toEndOf="@+id/container"
         app:layout_constraintTop_toTopOf="@+id/container" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/margin_24"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginStart="@dimen/margin_16"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:flow_verticalBias="0"
+        android:visibility="gone"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        tools:itemCount="3"
+        tools:listitem="@layout/item_view" />
 
     <FrameLayout
         android:id="@+id/message"
@@ -112,25 +131,6 @@
             />
     </FrameLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_24"
-        android:layout_marginStart="@dimen/margin_12"
-        android:layout_marginEnd="@dimen/margin_24"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/message"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_goneMarginTop="@dimen/margin_24"
-        tools:itemCount="100"
-        tools:listitem="@layout/item_view" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/top_guideline"
