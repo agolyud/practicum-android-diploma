@@ -85,10 +85,10 @@ object AdapterSearch {
         val symbol = CurrencyDetailVacancy.getCurrency(salary?.currency.toString()).symbol
         if (salary == null) return "зарплата не указана"
         if (salary.from == null && salary.to != null) {
-            return "до  ${salary.to} ${salary.currency}"
+            return "до  ${salary.to} $symbol"
         }
         if (salary.from != null && salary.to == null) {
-            return "от  ${salary.from}  ${salary.currency}"
+            return "от  ${salary.from}  $symbol"
         }
         return "от  ${salary.from}  до  ${salary.to} $symbol"
     }
