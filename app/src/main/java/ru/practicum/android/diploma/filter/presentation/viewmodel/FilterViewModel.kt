@@ -54,8 +54,12 @@ class FilterViewModel(
 
     fun deleteIndustryFilter() {
         viewModelScope.launch {
-            filterInteractor.deleteIndustryFilter()
-            stateLiveData.postValue(FilterStates.DeleteIndustry)
+            try {
+                filterInteractor.deleteIndustryFilter()
+                stateLiveData.postValue(FilterStates.DeleteIndustry)
+            } catch (e: Exception) {
+            }
         }
     }
+
 }

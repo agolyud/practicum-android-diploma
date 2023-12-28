@@ -55,4 +55,12 @@
     <string name="there_is_no_such_country">Такой страны нет</string>
     <string name="there_is_no_such_industry">Такой отрасли нет</string>
     <string name="choosing_industry">Выбор отрасли</string>
+    <plurals name="search_result_number">
+        <item quantity="zero">Найдено %d вакансий</item>
+        <item quantity="one">Найдена %d вакансия</item>
+        <item quantity="two">Найдено %d вакансии</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

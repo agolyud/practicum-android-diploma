@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -36,8 +38,6 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
         viewModel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 is FilterStates.HasFilters -> {
-                    binding.btnChoose.visibility = VISIBLE
-                    binding.btnRemove.visibility = VISIBLE
                     binding.salaryEditText.setText(it.salary)
                     binding.filterCheckbox.isChecked = it.onlyWithSalary
 
@@ -50,13 +50,14 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
                         binding.placeOfWorkButton.visibility = VISIBLE
                         binding.placeOfWorkClear.visibility = GONE
                     }
+                    setVisibilityForChooseBtn()
 
                     if (it.country.name.isNotEmpty() && it.region.name.isNotEmpty() ) {
                         binding.placeOfWorkEditText.setText("${it.country.name}, ${it.region.name}")
                         binding.placeOfWorkButton.visibility = GONE
                         binding.placeOfWorkClear.visibility = VISIBLE
                     }
-
+                    setVisibilityForChooseBtn()
                     if (it.industry.name.isNotEmpty()) {
                         binding.industryEditText.setText(it.industry.name)
                         binding.industryButton.visibility = GONE
@@ -66,11 +67,10 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
                         binding.industryButton.visibility = VISIBLE
                         binding.industryClear.visibility = GONE
                     }
+                    setVisibilityForChooseBtn()
                 }
 
                 FilterStates.ClearSettings -> {
-                    binding.btnChoose.visibility = GONE
-                    binding.btnRemove.visibility = GONE
                     binding.placeOfWorkEditText.setText("")
                     binding.industryEditText.setText("")
                     binding.placeOfWorkClear.visibility = GONE
@@ -86,8 +86,6 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
                 }
 
                 FilterStates.DeleteCountryAndRegion -> {
-                    binding.btnChoose.visibility = GONE
-                    binding.btnRemove.visibility = GONE
                     binding.placeOfWorkEditText.setText("")
                     binding.placeOfWorkClear.visibility = GONE
                     binding.placeOfWorkButton.visibility = VISIBLE
@@ -95,8 +93,6 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
                 }
 
                 FilterStates.DeleteIndustry -> {
-                    binding.btnChoose.visibility = GONE
-                    binding.btnRemove.visibility = GONE
                     binding.industryEditText.setText("")
                     binding.industryClear.visibility = GONE
                     binding.industryButton.visibility = VISIBLE
@@ -110,17 +106,31 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
         viewModel.getFilters()
     }
 
+
+    private fun setVisibilityForChooseBtn() {
+        if (binding.placeOfWorkClear.isVisible || binding.industryClear.isVisible || binding.filterCheckbox.isChecked || binding.salaryEditText.text.toString().isNotEmpty()) {
+            binding.btnChoose.visibility = View.VISIBLE
+            binding.btnRemove.visibility = View.VISIBLE
+        } else {
+            binding.btnChoose.visibility = View.GONE
+            binding.btnRemove.visibility = View.GONE
+        }
+    }
+
     private fun initListeners() {
         binding.placeOfWorkButton.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_filterPlaceWorkFragment)
+            setVisibilityForChooseBtn()
         }
 
         binding.industryButton.setOnClickListener {
             findNavController().navigate(R.id.action_filterFragment_to_filterIndustryFragment)
+            setVisibilityForChooseBtn()
         }
 
         binding.back.setOnClickListener {
             findNavController().popBackStack()
+            setVisibilityForChooseBtn()
         }
 
         binding.btnChoose.setOnClickListener {
@@ -129,14 +139,25 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
 
         binding.btnRemove.setOnClickListener {
             viewModel.clearFilterSettings()
+            setVisibilityForChooseBtn()
         }
 
         binding.placeOfWorkClear.setOnClickListener {
             viewModel.deleteCountryAndRegionFilter()
+            setVisibilityForChooseBtn()
         }
 
         binding.industryClear.setOnClickListener {
             viewModel.deleteIndustryFilter()
+            setVisibilityForChooseBtn()
+        }
+
+        binding.filterCheckbox.setOnCheckedChangeListener { _, _ ->
+            setVisibilityForChooseBtn()
+        }
+
+        binding.salaryEditText.doOnTextChanged { _, _, _, _ ->
+            setVisibilityForChooseBtn()
         }
     }
 

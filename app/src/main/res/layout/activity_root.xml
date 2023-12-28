@@ -24,6 +24,7 @@
         app:menu="@menu/bottom_navigation_menu"
         android:background="@color/white"
         app:itemIconTint="@color/bottom_nav_item_color"
-        app:itemTextColor="@color/bottom_nav_item_color" />
+        app:itemTextColor="@color/bottom_nav_item_color"
+        app:itemActiveIndicatorStyle="@android:color/transparent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

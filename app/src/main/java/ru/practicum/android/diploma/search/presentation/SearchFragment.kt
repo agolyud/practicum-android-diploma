@@ -147,7 +147,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding.progressBar.visibility = GONE
         binding.placeholderMessage.visibility = GONE
         binding.tvRvHeader.visibility = VISIBLE
-        binding.tvRvHeader.text = amount.toString()
+        binding.tvRvHeader.text =
+            resources.getQuantityString(R.plurals.search_result_number, amount, amount)
     }
 
     private fun tWCreator() = object : TextWatcher {
