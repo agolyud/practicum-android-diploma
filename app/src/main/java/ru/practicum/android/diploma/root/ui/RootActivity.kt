@@ -24,6 +24,7 @@ class RootActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setupWithNavController(navController)
 
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.detailFragment -> showBottomNavigationBar(
@@ -57,15 +58,8 @@ class RootActivity : AppCompatActivity() {
                 else -> showBottomNavigationBar(isVisible = true)
             }
         }
-
-        // Пример использования access token для HeadHunter API
-        //networkRequestExample(accessToken = BuildConfig.HH_ACCESS_TOKEN)
-
     }
 
-    private fun networkRequestExample(accessToken: String) {
-        // ...
-    }
 
     private fun showBottomNavigationBar(isVisible: Boolean) {
         val viewVisibility = if (isVisible) View.VISIBLE else View.GONE
