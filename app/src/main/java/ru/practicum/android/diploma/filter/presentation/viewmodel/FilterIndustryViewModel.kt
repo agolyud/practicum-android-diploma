@@ -40,6 +40,10 @@ class FilterIndustryViewModel (
         viewModelScope.launch {
             if(filterInteractor.getIndustryFilter().id.isNotEmpty() ){
                 stateLiveData.postValue(FilterIndustryStates.HasSelected)
+            } else {
+                if (selectedIndustry != null) {
+                    stateLiveData.postValue(FilterIndustryStates.HasSelected)
+                }
             }
         }
     }
@@ -53,11 +57,6 @@ class FilterIndustryViewModel (
                 stateLiveData.postValue(FilterIndustryStates.ConnectionError)
             }
             is DtoConsumer.Success -> {
-                if(dto.data.any {
-                        it.isChecked
-                    }){
-                    stateLiveData.postValue(FilterIndustryStates.HasSelected)
-                }
                 if(dto.data.size > 0){
                     stateLiveData.postValue(FilterIndustryStates.Success(dto.data))
                 } else {

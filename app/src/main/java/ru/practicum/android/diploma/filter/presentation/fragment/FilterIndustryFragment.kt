@@ -154,8 +154,13 @@ class FilterIndustryFragment : Fragment(R.layout.fragment_filter_industry) {
             } else {
                 binding.container.endIconMode = TextInputLayout.END_ICON_CUSTOM
                 binding.container.endIconDrawable = requireContext().getDrawable(R.drawable.ic_search)
-                val inputMethodManager = requireContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+                val view = requireActivity().currentFocus
+                if (view != null) {
+                    val inputMethodManager =
+                        requireContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+                    view.clearFocus()
+                }
                 viewModel.getIndustries()
             }
         }
