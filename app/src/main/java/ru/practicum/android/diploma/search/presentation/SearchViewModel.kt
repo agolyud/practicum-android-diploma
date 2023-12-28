@@ -139,8 +139,8 @@ class SearchViewModel(
                     filterSettings.industry.id.isNotEmpty() ||
                     filterSettings.onlyWithSalary ||
                     (!filterSettings.salary.isNullOrEmpty() &&
-                        Integer.getInteger(filterSettings.salary) != null &&
-                        Integer.parseInt(filterSettings.salary) > 0)
+                        filterSettings.salary.toIntOrNull() != null &&
+                        filterSettings.salary.toInt() > 0)
                 ) {
                     getFilterSettings()
                     state = SearchStates.HasFilter(true)
