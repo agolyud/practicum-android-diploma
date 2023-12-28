@@ -16,10 +16,10 @@ class SearchInteractorImpl(
     override suspend fun execute(filter: Filter): Flow<VacancyInfo> =
         repository.doRequest(filter = filter).map { result ->
             when (result) {
-/*                is DtoConsumer.Success -> Adapter.searchInfoCreator(
-                    responseCodes = ResponseCodes.SUCCESS,
-                    result.data
-                )*/
+                /*                is DtoConsumer.Success -> Adapter.searchInfoCreator(
+                                    responseCodes = ResponseCodes.SUCCESS,
+                                    result.data
+                                )*/
 
                 is DtoConsumer.Success -> result.data
 

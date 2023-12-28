@@ -27,14 +27,9 @@ import ru.practicum.android.diploma.detail.presentation.similar.VACANCY
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
-    private val viewModel: DetailViewModel by viewModel {
-        parametersOf(
-            requireArguments().getString(ID)
-        )
-    }
+    private val viewModel: DetailViewModel by viewModel()
 
     private val binding get() = _binding!!
-    private var isFavorite = false
     private lateinit var detailVacancy: DetailVacancy
 
     override fun onCreateView(
@@ -52,18 +47,21 @@ class DetailFragment : Fragment() {
             render(result)
         }
 
-        viewModel.getData()
+        viewModel.stateFavorite.observe(viewLifecycleOwner) { result ->
+            setFavorite(result)
+        }
 
         binding.back.setOnClickListener {
             view.findNavController().popBackStack()
         }
     }
 
+
+
     private fun render(state: DetailState) {
         when (state) {
             is Success -> {
                 setData(state.data)
-                viewModel.isFavorite(state.data.id)
                 detailVacancy = state.data
             }
 
@@ -85,14 +83,10 @@ class DetailFragment : Fragment() {
                 )
             }
 
-            is DetailState.IsFavorite -> {
-                setFavorite(state.isFavorite)
-            }
-
         }
     }
 
-    private fun setFavorite(isFavourite: Boolean?){
+    private fun setFavorite(isFavourite: Boolean) {
         when (isFavourite) {
             true -> binding.favorite.setImageResource(R.drawable.favorite)
             else -> binding.favorite.setImageResource(R.drawable.not_favorite2)
@@ -100,69 +94,71 @@ class DetailFragment : Fragment() {
     }
 
 
-
     @SuppressLint("SetTextI18n")
     private fun setData(detailVacancy: DetailVacancy) {
-        binding.vacancyName.text = detailVacancy.name
-        binding.salary.text = detailVacancy.salary?.getSalaryToText() ?: getString(R.string.not_salary)
+        binding.detailPlaceholder.root.isVisible = true
+        with(binding.detailPlaceholder) {
+            vacancyName.text = detailVacancy.name
+            salary.text = detailVacancy.salary?.getSalaryToText() ?: getString(R.string.not_salary)
 
-        binding.grExperience.isVisible = detailVacancy.idExperience != null
-        binding.experience.text = detailVacancy.nameExperience.orEmpty()
+            grExperience.isVisible = detailVacancy.idExperience != null
+            experience.text = detailVacancy.nameExperience.orEmpty()
 
-        binding.employment.isVisible = detailVacancy.idEmployment != null
-        binding.employment.text = detailVacancy.nameEmployment
-        binding.employerName.text = detailVacancy.nameEmployer.orEmpty()
-        binding.employerCity.text = detailVacancy.address.orEmpty()
+            employment.isVisible = detailVacancy.idEmployment != null
+            employment.text = detailVacancy.nameEmployment
+            employerName.text = detailVacancy.nameEmployer.orEmpty()
+            employerCity.text = detailVacancy.address.orEmpty()
 
-        Glide
-            .with(requireContext())
-            .load(detailVacancy.logoUrlsEmployerOriginal)
-            .placeholder(R.drawable.ic_logo)
-            .into(binding.employerLogo)
+            Glide
+                .with(requireContext())
+                .load(detailVacancy.logoUrlsEmployerOriginal)
+                .placeholder(R.drawable.ic_logo)
+                .into(employerLogo)
 
-        if (detailVacancy.description != null && detailVacancy.description != "...") {
-            binding.grDescription.isVisible = true
-            binding.description.text =
-                Html.fromHtml(detailVacancy.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
-        } else {
-            binding.grDescription.isVisible = false
+            if (detailVacancy.description != null && detailVacancy.description != "...") {
+                grDescription.isVisible = true
+                description.text =
+                    Html.fromHtml(detailVacancy.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
+            } else {
+                grDescription.isVisible = false
+            }
+
+            grSkills.isVisible = !detailVacancy.keySkills.isNullOrEmpty()
+            keySkillsContent.text = detailVacancy.keySkills.orEmpty()
+
+            contacts.isVisible = !(detailVacancy.comment == null
+                && detailVacancy.phone == null
+                && detailVacancy.email == null
+                && detailVacancy.contactName == null)
+
+            grComment.isVisible = !detailVacancy.comment.isNullOrEmpty()
+            comment.text = detailVacancy.comment.orEmpty()
+
+            grContact.isVisible = !detailVacancy.contactName.isNullOrEmpty()
+            contactName.text = detailVacancy.contactName.orEmpty()
+
+            grPhone.isVisible = !detailVacancy.phone.isNullOrEmpty()
+            phone.text = detailVacancy.phone.orEmpty()
+
+            grEmail.isVisible = !detailVacancy.email.isNullOrEmpty()
+            email.text = detailVacancy.email.orEmpty()
         }
-
-        binding.grSkills.isVisible = !detailVacancy.keySkills.isNullOrEmpty()
-        binding.keySkillsContent.text = detailVacancy.keySkills.orEmpty()
-
-        binding.contacts.isVisible = !(detailVacancy.comment == null
-            && detailVacancy.phone == null
-            && detailVacancy.email == null
-            && detailVacancy.contactName == null)
-
-        binding.grComment.isVisible = !detailVacancy.comment.isNullOrEmpty()
-        binding.comment.text = detailVacancy.comment.orEmpty()
-
-        binding.grContact.isVisible = !detailVacancy.contactName.isNullOrEmpty()
-        binding.contactName.text = detailVacancy.contactName.orEmpty()
-
-        binding.grPhone.isVisible = !detailVacancy.phone.isNullOrEmpty()
-        binding.phone.text = detailVacancy.phone.orEmpty()
-
-        binding.grEmail.isVisible = !detailVacancy.email.isNullOrEmpty()
-        binding.email.text = detailVacancy.email.orEmpty()
 
         setDetailsContentListeners(detailVacancy)
 
         binding.progress.isVisible = false
-      //  binding.scroll.isVisible = true
+        //  binding.scroll.isVisible = true
         binding.errorPlaceholder.root.isVisible = false
         // binding.btSimilar.isVisible = !fromDB
     }
 
     @SuppressLint("QueryPermissionsNeeded")
     private fun setDetailsContentListeners(detailVacancy: DetailVacancy) {
-        binding.email.setOnClickListener {
+        binding.detailPlaceholder.email.setOnClickListener {
             actionSendEmail(detailVacancy.email)
         }
 
-        binding.phone.setOnClickListener {
+        binding.detailPlaceholder.phone.setOnClickListener {
             actionDial(detailVacancy.phone)
         }
 
@@ -183,7 +179,7 @@ class DetailFragment : Fragment() {
         }
 
         binding.favorite.setOnClickListener {
-            viewModel.onFavoriteClick(detailVacancy, !isFavorite)
+            viewModel.onFavoriteClick(detailVacancy, !viewModel.stateFavorite.value!!)
         }
     }
 
@@ -206,7 +202,7 @@ class DetailFragment : Fragment() {
 
     private fun showProgress() {
         binding.progress.isVisible = true
-       // binding.scroll.isVisible = false
+        // binding.scroll.isVisible = false
         binding.errorPlaceholder.root.isVisible = false
     }
 
@@ -214,17 +210,19 @@ class DetailFragment : Fragment() {
         message: String,
         image: Int
     ) {
+        binding.detailPlaceholder.root.isVisible = false
         with(binding.errorPlaceholder) {
             tvError.text = message
             imError.setImageResource(image)
         }
         binding.errorPlaceholder.root.isVisible = true
         binding.progress.isVisible = false
-       // binding.scroll.isVisible = false
+        // binding.scroll.isVisible = false
     }
-    companion object{
+
+    companion object {
         private const val ID = "id"
-        fun createArgs(id:String):Bundle{
+        fun createArgs(id: String): Bundle {
             return bundleOf(ID to id)
         }
     }

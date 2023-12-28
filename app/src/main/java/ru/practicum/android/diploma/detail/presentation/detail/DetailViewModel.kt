@@ -2,6 +2,7 @@ package ru.practicum.android.diploma.detail.presentation.detail
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
@@ -17,35 +18,28 @@ import ru.practicum.android.diploma.search.domain.models.ResponseCodes
 const val VACANCY_ID = "id"
 
 class DetailViewModel(
-    private val id: String,
+    private val savedStateHandle: SavedStateHandle,
     private val detailsInterActor: DetailVacancyInteractor,
     private val favoriteInterActor: FavoriteInteractor,
 ) : ViewModel() {
     private val _state = MutableLiveData<DetailState>(Loading)
     val state = _state
 
+    private val _stateFavorite = MutableLiveData(false)
+    val stateFavorite = _stateFavorite
 
+    init {
+        getData()
+    }
 
     fun onFavoriteClick(vacancy: DetailVacancy, setFavorite: Boolean){
         viewModelScope.launch {
             if(setFavorite){
+                _stateFavorite.value = true
                 favoriteInterActor.addFavorite(vacancy)
-                _state.value = DetailState.IsFavorite(true)
             } else {
-                favoriteInterActor.deleteFavorite(id)
-                _state.value = DetailState.IsFavorite(false)
-            }
-        }
-    }
-
-    fun isFavorite(id: String){
-        viewModelScope.launch {
-            favoriteInterActor.getFavorite(id).collect{
-                if (it.isEmpty()){
-                    _state.value = DetailState.IsFavorite(false)
-                } else {
-                    _state.value = DetailState.IsFavorite(true)
-                }
+                _stateFavorite.value = false
+                favoriteInterActor.deleteFavorite(vacancy.id)
             }
         }
     }
@@ -63,9 +57,9 @@ class DetailViewModel(
         }
     }
 
-    fun getData() {
+    private fun getData() {
         viewModelScope.launch {
-            //val id = savedStateHandle.get<String>(VACANCY_ID) ?: return@launch
+            val id = savedStateHandle.get<String>(VACANCY_ID) ?: return@launch
             val resultData = detailsInterActor.execute(id)
             when (resultData.responseCodes) {
                 ResponseCodes.ERROR -> {
@@ -75,6 +69,9 @@ class DetailViewModel(
                 ResponseCodes.SUCCESS -> {
                     Log.d("TAG result", "result - ${resultData.detailVacancy}")
                     _state.value = resultData.detailVacancy?.let { Success(it) }
+                    favoriteInterActor.getFavorite(id).collect {
+                        _stateFavorite.value = it.isNotEmpty()
+                    }
                 }
 
                 ResponseCodes.NO_NET_CONNECTION -> {

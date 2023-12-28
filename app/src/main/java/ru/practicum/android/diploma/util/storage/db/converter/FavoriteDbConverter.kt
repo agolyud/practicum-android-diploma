@@ -28,7 +28,6 @@ class FavoriteDbConverter {
                 from = favoriteVacancy.from,
                 to = favoriteVacancy.to,
                 currency = CurrencyDetailVacancy.getCurrency(favoriteVacancy.currency!!),
-
             ),
             description = favoriteVacancy.description,
             keySkills = favoriteVacancy.keySkills,
@@ -82,16 +81,18 @@ class FavoriteDbConverter {
         return Vacancy(
             id = favoriteVacancy.id,
             area = favoriteVacancy.areaName,
-        // val department: String?,
+            // val department: String?,
             employerImgUrl = favoriteVacancy.logoUrlsEmployerOriginal!!,
             employer = favoriteVacancy.nameEmployer!!,
             name = favoriteVacancy.name,
-            salary = formSalaryString(Salary(
-                currency = favoriteVacancy.currency,
-                from = favoriteVacancy.from,
-                gross = favoriteVacancy.gross,
-                to = favoriteVacancy.to
-            )),
+            salary = formSalaryString(
+                Salary(
+                    currency = favoriteVacancy.currency,
+                    from = favoriteVacancy.from,
+                    gross = favoriteVacancy.gross,
+                    to = favoriteVacancy.to
+                )
+            ),
             type = ""
         )
     }

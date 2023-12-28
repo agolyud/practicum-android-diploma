@@ -4,6 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import ru.practicum.android.diploma.detail.domain.models.CurrencyDetailVacancy
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
 import ru.practicum.android.diploma.search.data.models.SearchResponse
@@ -40,18 +41,18 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
 
 object AdapterSearch {
 
-/*    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
-        Vacancy(
-            id = it.id,
-            area = it.area.name,
-            // department = it.department.name,
-            employerImgUrl = it.employer.logoUrls?.original?: "",
-            employer = it.employer.name,
-            name = it.name,
-            salary = formSalaryString(it.salary),
-            type = it.type.name
-        )
-    }*/
+    /*    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
+            Vacancy(
+                id = it.id,
+                area = it.area.name,
+                // department = it.department.name,
+                employerImgUrl = it.employer.logoUrls?.original?: "",
+                employer = it.employer.name,
+                name = it.name,
+                salary = formSalaryString(it.salary),
+                type = it.type.name
+            )
+        }*/
 
     fun searchResponseToVacancyInfo(response: SearchResponse): VacancyInfo = VacancyInfo (
         responseCodes = when (response.resultCode.code) {
@@ -81,14 +82,15 @@ object AdapterSearch {
     )
 
     private fun formSalaryString(salary: Salary?): String {
-        if (salary == null) return " "
+        val symbol = CurrencyDetailVacancy.getCurrency(salary?.currency.toString()).symbol
+        if (salary == null) return "зарплата не указана"
         if (salary.from == null && salary.to != null) {
             return "до  ${salary.to} ${salary.currency}"
         }
         if (salary.from != null && salary.to == null) {
             return "от  ${salary.from}  ${salary.currency}"
         }
-        return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
+        return "от  ${salary.from}  до  ${salary.to} $symbol"
     }
 
     private fun makeHasMap(filter: Filter): HashMap<String, String> {
