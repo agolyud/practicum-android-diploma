@@ -1,111 +1,119 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/Theme.PracticumAndroidDiploma"
+    android:background="?attr/colorPrimary"
     tools:context=".detail.presentation.detail.DetailFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.PracticumAndroidDiploma">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/margin_16"
+            android:paddingBottom="@dimen/margin_24"
+            tools:context=".vacancy.presentation.ui.VacancyFragment">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="@dimen/margin_0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@drawable/back"
+                    tools:contentDescription="back_btn" />
+
+                <TextView
+                    style="@style/Text_Header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_16"
+                    android:text="@string/vacancy"
+                    android:textColor="?android:attr/textColorPrimary" />
+
+                <ImageView
+                    android:id="@+id/favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/margin_4"
+                    android:src="@drawable/not_favorite2"
+                    tools:contentDescription="ic_favourites" />
+
+                <ImageView
+                    android:id="@+id/share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:src="@drawable/baseline_share_24"
+                    tools:contentDescription="ic_sharing" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <include
+                android:id="@+id/detailPlaceholder"
+                layout="@layout/detail_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+            <Button
+                android:id="@+id/btSimilar"
+                style="@style/FilterBlueButtonStyle"
+                android:layout_marginStart="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_24"
+                android:layout_marginEnd="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_24"
+                android:text="@string/similar_vacancies"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detailPlaceholder" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+    <include
+        android:id="@+id/errorPlaceholder"
+        layout="@layout/error_place_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/margin_16"
-        android:paddingBottom="@dimen/margin_24"
-        tools:context=".vacancy.presentation.ui.VacancyFragment">
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible"/>
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:contentInsetStart="@dimen/margin_0"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/blue"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:src="@drawable/back"
-                tools:contentDescription="back_btn" />
-
-            <TextView
-                style="@style/Text_Header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_16"
-                android:text="@string/vacancy"
-                android:textColor="?android:attr/textColorPrimary" />
-
-            <ImageView
-                android:id="@+id/favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/margin_4"
-                android:src="@drawable/not_favorite2"
-                tools:contentDescription="ic_favourites" />
-
-            <ImageView
-                android:id="@+id/share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:src="@drawable/baseline_share_24"
-                tools:contentDescription="ic_sharing" />
-        </androidx.appcompat.widget.Toolbar>
-
-        <include
-            android:id="@+id/detailPlaceholder"
-            layout="@layout/detail_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <Button
-            android:id="@+id/btSimilar"
-            style="@style/FilterBlueButtonStyle"
-            android:layout_marginStart="@dimen/margin_16"
-            android:layout_marginTop="@dimen/margin_24"
-            android:layout_marginEnd="@dimen/margin_16"
-            android:layout_marginBottom="@dimen/margin_24"
-            android:text="@string/similar_vacancies"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/detailPlaceholder" />
-
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_150"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/blue"
-            android:visibility="gone"
-            android:foregroundGravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar" />
-
-        <include
-            android:id="@+id/errorPlaceholder"
-            layout="@layout/error_place_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-</ScrollView>
-
-
+</androidx.constraintlayout.widget.ConstraintLayout>
 

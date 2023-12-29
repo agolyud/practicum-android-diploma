@@ -64,6 +64,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 is SearchStates.Default -> {
                     binding.apply {
                         rvSearch.visibility = GONE
+                        placeholderImage.visibility = VISIBLE
                         placeholderImage.setImageResource(R.drawable.image_binoculars)
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = GONE
@@ -75,6 +76,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 is SearchStates.ServerError -> {
                     binding.apply {
                         rvSearch.visibility = GONE
+                        placeholderImage.visibility = VISIBLE
                         placeholderImage.setImageResource(R.drawable.image_error_server_2)
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = VISIBLE
@@ -115,15 +117,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                 is SearchStates.Loading -> {
                     binding.apply {
-                        if (adapter.vacancyList.isEmpty()) {
-                            rvSearch.visibility = GONE
-                            placeholderMessage.visibility = GONE
-                            progressBar.visibility = VISIBLE
-                            placeholderMessage.visibility = GONE
-                            tvRvHeader.visibility = GONE
-                        } else {
-                            progressBar.visibility = VISIBLE
-                        }
+                        //rvSearch.visibility = GONE
+                        placeholderImage.visibility = GONE
+                        progressBar.visibility = VISIBLE
+                        placeholderMessage.visibility = GONE
+                        tvRvHeader.visibility = GONE
                     }
                 }
 
@@ -175,8 +173,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 binding.container.endIconDrawable = requireContext().getDrawable(R.drawable.ic_search)
                 val inputMethodManager = requireContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-                binding.placeholderImage.setImageResource(R.drawable.image_binoculars)
-                binding.placeholderImage.visibility = VISIBLE
+                viewModel.clearAll()
             }
         }
 

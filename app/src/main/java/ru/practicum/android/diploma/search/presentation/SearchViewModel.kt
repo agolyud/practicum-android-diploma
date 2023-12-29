@@ -178,11 +178,11 @@ class SearchViewModel(
     }
 
     fun clearAll() {
-        stateLiveData.value = SearchStates.Default
         vacancyList.clear()
         filter.request = ""
         maxPage = 0
         page = 0
+        stateLiveData.value = SearchStates.Default
     }
 
     companion object {
