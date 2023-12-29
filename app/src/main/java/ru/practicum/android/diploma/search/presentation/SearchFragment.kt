@@ -98,10 +98,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 is SearchStates.InvalidRequest -> {
                     binding.apply {
                         rvSearch.visibility = GONE
+                        placeholderImage.visibility = VISIBLE
                         placeholderImage.setImageResource(R.drawable.image_error_favorite)
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = VISIBLE
-                        placeholderMessage.setText(R.string.internet_connection_issue)
+                        placeholderMessage.setText(R.string.no_list_vacancies)
                         tvRvHeader.visibility = VISIBLE
                         tvRvHeader.setText(R.string.vacancy_mismatch)
                     }

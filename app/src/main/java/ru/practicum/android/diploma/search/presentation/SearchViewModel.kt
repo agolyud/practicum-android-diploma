@@ -108,7 +108,8 @@ class SearchViewModel(
             }
 
             ResponseCodes.SUCCESS -> {
-                if (vacancyInfo.vacancy == null) {
+                if (vacancyInfo.vacancy.isNullOrEmpty()) {
+                    vacancyList.clear()
                     state = SearchStates.InvalidRequest
                 } else {
                     vacancyList.addAll(vacancyInfo.vacancy)
