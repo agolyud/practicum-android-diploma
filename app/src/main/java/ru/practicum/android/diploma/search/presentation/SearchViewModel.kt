@@ -39,6 +39,7 @@ class SearchViewModel(
         filter.request = request
         if (filter.request.isBlank()) return
         stateLiveData.value = SearchStates.Loading
+        getFilterSettings()
         val searchDebounce = createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
             viewModelScope.launch {
                 searchInteractor.execute(filter = filter).collect { jobsInfo ->

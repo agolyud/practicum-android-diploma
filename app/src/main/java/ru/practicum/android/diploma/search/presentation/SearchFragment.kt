@@ -33,8 +33,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModel()
     private var searchJob: Job? = null
-    private var hasFilterBefore: Boolean = false
-    private var hasFilterAfter: Boolean = false
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     @RequiresApi(Build.VERSION_CODES.R)
@@ -131,7 +129,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     } else {
                         binding.ivFilter.setImageResource(R.drawable.ic_filter)
                     }
-                    hasFilterAfter = state.hasFilter
                 }
             }
         }
