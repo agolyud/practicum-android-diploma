@@ -35,19 +35,25 @@ class SearchViewModel(
     private val stateLiveData = MutableLiveData(state)
     private val vacancyList = mutableListOf<Vacancy>()
 
+    private var previousFilter: Filter? = null
+
     fun loadVacancy(request: String) {
-        filter.request = request
-        if (filter.request.isBlank()) return
-        stateLiveData.value = SearchStates.Loading
         getFilterSettings()
-        val searchDebounce = createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
-            viewModelScope.launch {
-                searchInteractor.execute(filter = filter).collect { jobsInfo ->
-                    changeState(jobsInfo)
+        if (filter.request != request || filter != previousFilter) {
+            filter.request = request
+            if (filter.request.isBlank()) return
+            stateLiveData.value = SearchStates.Loading
+            previousFilter = filter.copy()
+            val searchDebounce =
+                createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
+                    viewModelScope.launch {
+                        searchInteractor.execute(filter = filter).collect { jobsInfo ->
+                            changeState(jobsInfo)
+                        }
+                    }
                 }
-            }
+            searchDebounce(Unit)
         }
-        searchDebounce(Unit)
     }
 
     fun getState(): LiveData<SearchStates> = stateLiveData
