@@ -115,11 +115,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
                 is SearchStates.Loading -> {
                     binding.apply {
-                        rvSearch.visibility = GONE
-                        placeholderMessage.visibility = GONE
-                        progressBar.visibility = VISIBLE
-                        placeholderMessage.visibility = GONE
-                        tvRvHeader.visibility = GONE
+                        if (adapter.vacancyList.isEmpty()) {
+                            rvSearch.visibility = GONE
+                            placeholderMessage.visibility = GONE
+                            progressBar.visibility = VISIBLE
+                            placeholderMessage.visibility = GONE
+                            tvRvHeader.visibility = GONE
+                        } else {
+                            progressBar.visibility = VISIBLE
+                        }
                     }
                 }
 
