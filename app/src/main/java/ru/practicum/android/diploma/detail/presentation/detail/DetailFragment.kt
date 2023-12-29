@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 import ru.practicum.android.diploma.R
 import ru.practicum.android.diploma.databinding.FragmentDetailBinding
 import ru.practicum.android.diploma.detail.domain.models.DetailVacancy
@@ -79,7 +78,7 @@ class DetailFragment : Fragment() {
             is NoConnect -> {
                 showError(
                     message = getString(R.string.internet_connection_issue),
-                    image = R.drawable.error_server_1
+                    image = R.drawable.error_connection
                 )
             }
 
@@ -147,7 +146,7 @@ class DetailFragment : Fragment() {
         setDetailsContentListeners(detailVacancy)
 
         binding.progress.isVisible = false
-        //  binding.scroll.isVisible = true
+        binding.btSimilar.isVisible = true
         binding.errorPlaceholder.root.isVisible = false
         // binding.btSimilar.isVisible = !fromDB
     }
@@ -202,7 +201,7 @@ class DetailFragment : Fragment() {
 
     private fun showProgress() {
         binding.progress.isVisible = true
-        // binding.scroll.isVisible = false
+        binding.btSimilar.isVisible = false
         binding.errorPlaceholder.root.isVisible = false
     }
 
