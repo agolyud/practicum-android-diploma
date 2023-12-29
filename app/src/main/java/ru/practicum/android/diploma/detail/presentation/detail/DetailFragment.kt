@@ -147,7 +147,7 @@ class DetailFragment : Fragment() {
         setDetailsContentListeners(detailVacancy)
 
         binding.progress.isVisible = false
-        //  binding.scroll.isVisible = true
+        binding.btSimilar.isVisible = true
         binding.errorPlaceholder.root.isVisible = false
         // binding.btSimilar.isVisible = !fromDB
     }
@@ -202,7 +202,7 @@ class DetailFragment : Fragment() {
 
     private fun showProgress() {
         binding.progress.isVisible = true
-        // binding.scroll.isVisible = false
+        binding.btSimilar.isVisible = false
         binding.errorPlaceholder.root.isVisible = false
     }
 
