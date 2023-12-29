@@ -11,7 +11,7 @@
     <string name="list_empty">Список пуст</string>
     <string name="head_searh">Поиск вакансий</string>
     <string name="enter_search">Введите запрос</string>
-    <string name="no_list_vacancies">Не удалось получить список вакансий</string>
+    <string name="no_list_vacancies">Не удалось получить \n список вакансий</string>
     <string name="error_internet">Нет интернета</string>
     <string name="main">Главная</string>
     <string name="filters">Настройки фильтрации</string>

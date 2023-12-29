@@ -199,5 +199,34 @@
         tools:text="@string/error_internet" />
 
 
+    <ImageView
+        android:id="@+id/placeholder_error_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_112"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/placeholder_message"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container"
+        tools:src="@drawable/error_show_cat"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/placeholder_error"
+        style="@style/YSMedium22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeholder_image"
+        tools:text="@string/no_list_vacancies" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

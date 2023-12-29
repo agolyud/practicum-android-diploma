@@ -99,12 +99,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     binding.apply {
                         rvSearch.visibility = GONE
                         placeholderImage.visibility = VISIBLE
-                        placeholderImage.setImageResource(R.drawable.image_error_favorite)
+                        placeholderImage.setImageResource(R.drawable.error_show_cat)
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = VISIBLE
                         placeholderMessage.setText(R.string.no_list_vacancies)
-                        tvRvHeader.visibility = VISIBLE
-                        tvRvHeader.setText(R.string.vacancy_mismatch)
+                        tvRvHeader.visibility = GONE
                     }
                 }
 
