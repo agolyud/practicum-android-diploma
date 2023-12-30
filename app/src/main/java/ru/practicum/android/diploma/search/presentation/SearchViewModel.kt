@@ -34,25 +34,35 @@ class SearchViewModel(
     private var state: SearchStates = SearchStates.Default
     private val stateLiveData = MutableLiveData(state)
     private val vacancyList = mutableListOf<Vacancy>()
-
     private var previousFilter: Filter? = null
 
+    val hasFilterState = MutableLiveData(false)
+    private var lastText = ""
+
     fun loadVacancy(request: String) {
-        getFilterSettings()
-        if (filter.request != request || filter != previousFilter) {
-            filter.request = request
-            if (filter.request.isBlank()) return
-            stateLiveData.value = SearchStates.Loading
-            previousFilter = filter.copy()
-            val searchDebounce =
-                createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
-                    viewModelScope.launch {
-                        searchInteractor.execute(filter = filter).collect { jobsInfo ->
-                            changeState(jobsInfo)
+        if (lastText != request || hasFilterState.value == true) {
+            lastText = request
+
+            if (hasFilterState.value == true) {
+                lastText = ""
+            }
+            getFilterSettings()
+            if (filter.request != request || filter != previousFilter) {
+
+                filter.request = request
+                if (filter.request.isBlank()) return
+                stateLiveData.value = SearchStates.Loading
+                previousFilter = filter.copy()
+                val searchDebounce =
+                    createDebounceFunction<Unit>(SEARCH_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
+                        viewModelScope.launch {
+                            searchInteractor.execute(filter = filter).collect { jobsInfo ->
+                                changeState(jobsInfo)
+                            }
                         }
                     }
-                }
-            searchDebounce(Unit)
+                searchDebounce(Unit)
+            }
         }
     }
 
@@ -151,14 +161,13 @@ class SearchViewModel(
                         filterSettings.salary.toInt() > 0)
                 ) {
                     getFilterSettings()
-                    state = SearchStates.HasFilter(true)
+                    hasFilterState.postValue(true)
                 } else {
-                    state = SearchStates.HasFilter(false)
+                    hasFilterState.postValue(false)
                 }
             } else {
-                state = SearchStates.HasFilter(false)
+                hasFilterState.postValue(false)
             }
-            stateLiveData.value = state
         }
     }
 
