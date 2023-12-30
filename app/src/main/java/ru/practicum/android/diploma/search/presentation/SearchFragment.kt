@@ -165,7 +165,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     searchJob?.cancel()
                     searchJob = viewLifecycleOwner.lifecycleScope.launch {
                         delay(SEARCH_DEBOUNCE_DELAY_MILS)
-                        binding.placeholderImage.visibility = GONE
                         viewModel.loadVacancy(binding.etSearch.text.toString())
                     }
                 }
