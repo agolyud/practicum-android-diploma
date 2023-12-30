@@ -124,20 +124,22 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         tvRvHeader.visibility = GONE
                     }
                 }
-
-                is SearchStates.HasFilter -> {
-                    if (state.hasFilter) {
-                        binding.ivFilter.setImageResource(R.drawable.filter_blue)
-                    } else {
-                        binding.ivFilter.setImageResource(R.drawable.ic_filter)
-                    }
-                }
             }
         }
 
 
 
         initListeners()
+        observeFilterState()
+    }
+
+    private fun observeFilterState() {
+        viewModel.hasFilterState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                true -> binding.ivFilter.setImageResource(R.drawable.filter_blue)
+                else -> binding.ivFilter.setImageResource(R.drawable.ic_filter)
+            }
+        }
     }
 
     private fun setSuccessScreen(amount: Int) {
@@ -156,14 +158,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (!binding.etSearch.text.toString().isNullOrEmpty()){
+            if (!binding.etSearch.text.toString().isNullOrEmpty()) {
                 binding.container.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                 binding.container.endIconDrawable = requireContext().getDrawable(R.drawable.ic_clear)
-                if (start != before || count > 0) {
+                if ((s?.length ?: 0) > 0) {
                     searchJob?.cancel()
                     searchJob = viewLifecycleOwner.lifecycleScope.launch {
                         delay(SEARCH_DEBOUNCE_DELAY_MILS)
-
                         binding.placeholderImage.visibility = GONE
                         viewModel.loadVacancy(binding.etSearch.text.toString())
                     }
@@ -171,7 +172,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             } else {
                 binding.container.endIconMode = TextInputLayout.END_ICON_CUSTOM
                 binding.container.endIconDrawable = requireContext().getDrawable(R.drawable.ic_search)
-                val inputMethodManager = requireContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
+                val inputMethodManager =
+                    requireContext().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
                 viewModel.clearAll()
             }
@@ -199,7 +201,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         viewModel.clearAll()
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
 
         binding.etSearch.addTextChangedListener(tWCreator())
 
@@ -220,7 +222,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             super.onScrolled(recyclerView, dx, dy)
             val pos =
                 (binding.rvSearch.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-            val itemsCount = recyclerView.adapter?.itemCount?: 0
+            val itemsCount = recyclerView.adapter?.itemCount ?: 0
             if (pos >= itemsCount - 1) {
                 viewModel.getNewPage()
             }
