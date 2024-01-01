@@ -71,7 +71,7 @@ class FilterRepositoryImpl(
         storageClient.setFilter(salary, onlyWithSalary)
     }
 
-    override suspend fun clearFilterSettings() {
+    override suspend fun clearFilter() {
         storageClient.clearFilter()
     }
 
