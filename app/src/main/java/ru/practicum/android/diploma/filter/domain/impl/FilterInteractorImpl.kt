@@ -49,8 +49,8 @@ class FilterInteractorImpl(private val repository: FilterRepository) : FilterInt
         repository.setFilterSettings(salary, onlyWithSalary)
     }
 
-    override suspend fun clearFilterSettings() {
-        repository.clearFilterSettings()
+    override suspend fun clearFilter() {
+        repository.clearFilter()
     }
 
     override suspend fun getFilter(): FilterSettings? {

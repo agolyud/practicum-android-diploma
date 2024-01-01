@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -20,6 +19,7 @@ import ru.practicum.android.diploma.filter.presentation.viewmodel.FilterViewMode
 class FilterFragment : Fragment(R.layout.fragment_filter) {
     private lateinit var binding: FragmentFilterBinding
     private val viewModel: FilterViewModel by viewModel()
+    private var hasFilterSettings = false
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     @RequiresApi(Build.VERSION_CODES.R)
@@ -38,47 +38,62 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
         viewModel.getState().observe(viewLifecycleOwner) {
             when (it) {
                 is FilterStates.HasFilters -> {
-                    binding.salaryEditText.setText(it.salary)
-                    binding.filterCheckbox.isChecked = it.onlyWithSalary
+                    hasFilterSettings = it.hasFilterSettings
+                    binding.apply {
+                        salaryEditText.setText(it.salary)
+                        filterCheckbox.isChecked = it.onlyWithSalary
+                    }
 
                     if (it.country.name.isNotEmpty()) {
-                        binding.placeOfWorkEditText.setText(it.country.name)
-                        binding.placeOfWorkButton.visibility = GONE
-                        binding.placeOfWorkClear.visibility = VISIBLE
+                        binding.apply {
+                            placeOfWorkEditText.setText(it.country.name)
+                            placeOfWorkButton.visibility = GONE
+                            placeOfWorkClear.visibility = VISIBLE
+                        }
                     } else {
-                        binding.placeOfWorkEditText.setText("")
-                        binding.placeOfWorkButton.visibility = VISIBLE
-                        binding.placeOfWorkClear.visibility = GONE
+                        binding.apply {
+                            placeOfWorkEditText.setText("")
+                            placeOfWorkButton.visibility = VISIBLE
+                            placeOfWorkClear.visibility = GONE
+                        }
                     }
                     setVisibilityForChooseBtn()
 
                     if (it.country.name.isNotEmpty() && it.region.name.isNotEmpty() ) {
-                        binding.placeOfWorkEditText.setText("${it.country.name}, ${it.region.name}")
-                        binding.placeOfWorkButton.visibility = GONE
-                        binding.placeOfWorkClear.visibility = VISIBLE
+                        binding.apply {
+                            placeOfWorkEditText.setText("${it.country.name}, ${it.region.name}")
+                            placeOfWorkButton.visibility = GONE
+                            placeOfWorkClear.visibility = VISIBLE
+                        }
                     }
                     setVisibilityForChooseBtn()
                     if (it.industry.name.isNotEmpty()) {
-                        binding.industryEditText.setText(it.industry.name)
-                        binding.industryButton.visibility = GONE
-                        binding.industryClear.visibility = VISIBLE
+                        binding.apply {
+                            industryEditText.setText(it.industry.name)
+                            industryButton.visibility = GONE
+                            industryClear.visibility = VISIBLE
+                        }
                     } else {
-                        binding.industryEditText.setText("")
-                        binding.industryButton.visibility = VISIBLE
-                        binding.industryClear.visibility = GONE
+                        binding.apply {
+                            industryEditText.setText("")
+                            industryButton.visibility = VISIBLE
+                            industryClear.visibility = GONE
+                        }
                     }
                     setVisibilityForChooseBtn()
                 }
 
                 FilterStates.ClearSettings -> {
-                    binding.placeOfWorkEditText.setText("")
-                    binding.industryEditText.setText("")
-                    binding.placeOfWorkClear.visibility = GONE
-                    binding.placeOfWorkButton.visibility = VISIBLE
-                    binding.industryClear.visibility = GONE
-                    binding.industryButton.visibility = VISIBLE
-                    binding.salaryEditText.setText("")
-                    binding.filterCheckbox.isChecked = false
+                    binding.apply {
+                        placeOfWorkEditText.setText("")
+                        industryEditText.setText("")
+                        placeOfWorkClear.visibility = GONE
+                        placeOfWorkButton.visibility = VISIBLE
+                        industryClear.visibility = GONE
+                        industryButton.visibility = VISIBLE
+                        salaryEditText.setText("")
+                        filterCheckbox.isChecked = false
+                    }
                 }
 
                 FilterStates.SaveSettings -> {
@@ -86,17 +101,23 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
                 }
 
                 FilterStates.DeleteCountryAndRegion -> {
-                    binding.placeOfWorkEditText.setText("")
-                    binding.placeOfWorkClear.visibility = GONE
-                    binding.placeOfWorkButton.visibility = VISIBLE
-                    viewModel.getFilters()
+                    binding.apply {
+                        placeOfWorkEditText.setText("")
+                        placeOfWorkClear.visibility = GONE
+                        placeOfWorkButton.visibility = VISIBLE
+                    }
+                    setVisibilityForChooseBtn()
+                    //viewModel.getFilters()
                 }
 
                 FilterStates.DeleteIndustry -> {
-                    binding.industryEditText.setText("")
-                    binding.industryClear.visibility = GONE
-                    binding.industryButton.visibility = VISIBLE
-                    viewModel.getFilters()
+                    binding.apply {
+                        industryEditText.setText("")
+                        industryClear.visibility = GONE
+                        industryButton.visibility = VISIBLE
+                    }
+                    setVisibilityForChooseBtn()
+                    //viewModel.getFilters()
                 }
             }
         }
@@ -108,12 +129,20 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
 
 
     private fun setVisibilityForChooseBtn() {
-        if (binding.placeOfWorkClear.isVisible || binding.industryClear.isVisible || binding.filterCheckbox.isChecked || binding.salaryEditText.text.toString().isNotEmpty()) {
-            binding.btnChoose.visibility = View.VISIBLE
-            binding.btnRemove.visibility = View.VISIBLE
+        if (binding.placeOfWorkEditText.text.toString().isNotEmpty() ||
+            binding.industryEditText.text.toString().isNotEmpty() ||
+            binding.filterCheckbox.isChecked ||
+            binding.salaryEditText.text.toString().isNotEmpty() ||
+            hasFilterSettings) {
+            binding.apply {
+                btnChoose.visibility = View.VISIBLE
+                btnRemove.visibility = View.VISIBLE
+            }
         } else {
-            binding.btnChoose.visibility = View.GONE
-            binding.btnRemove.visibility = View.GONE
+            binding.apply {
+                btnChoose.visibility = View.GONE
+                btnRemove.visibility = View.GONE
+            }
         }
     }
 
@@ -138,7 +167,7 @@ class FilterFragment : Fragment(R.layout.fragment_filter) {
         }
 
         binding.btnRemove.setOnClickListener {
-            viewModel.clearFilterSettings()
+            viewModel.clearFilter()
             setVisibilityForChooseBtn()
         }
 

@@ -114,9 +114,9 @@ class SharedPrefStorageClient(
     }
 
     override suspend fun clearFilter() {
-        sharedPref.edit()
+/*        sharedPref.edit()
             .remove(FILTER_SETTINGS)
-            .apply()
+            .apply()*/
 
         deleteCountry()
         deleteIndustry()
@@ -178,6 +178,15 @@ class SharedPrefStorageClient(
             val filterFromJson = Gson().fromJson(json, FilterSettingsDto::class.java)
 
             filter = filterFromJson
+            if (filter.country.name.toString().isNotEmpty()) {
+                saveCountry(filter.country)
+            }
+            if (filter.industry.name.toString().isNotEmpty()) {
+                saveIndustry(filter.industry)
+            }
+            if (filter.region.name.toString().isNotEmpty()) {
+                saveRegion(filter.region)
+            }
         }
 
         return filter

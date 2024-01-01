@@ -85,13 +85,14 @@ class SearchViewModel(
                 } else {
                     ""
                 }
-                val area = if (!filterSettings.region.id.isNullOrEmpty()) {
-                    filterSettings.region.id
+                var area = ""
+                if (!filterSettings.region.id.isNullOrEmpty()) {
+                    area = filterSettings.region.id
                 } else {
-                    if (!filterSettings.region.id.isNullOrEmpty()) {
-                        filterSettings.country.id
+                    if (!filterSettings.country.id.isNullOrEmpty()) {
+                        area =filterSettings.country.id
                     } else {
-                        ""
+                        area = ""
                     }
                 }
                 filter = Filter(
@@ -128,7 +129,12 @@ class SearchViewModel(
                     vacancyList.clear()
                     state = SearchStates.InvalidRequest
                 } else {
-                    vacancyList.addAll(vacancyInfo.vacancy)
+                    if (vacancyInfo.page > 0) {
+                        vacancyList.addAll(vacancyInfo.vacancy)
+                    } else {
+                        vacancyList.clear()
+                        vacancyList.addAll(vacancyInfo.vacancy)
+                    }
                     page = vacancyInfo.page
                     maxPage = vacancyInfo.pages
                     if (page == 0)
