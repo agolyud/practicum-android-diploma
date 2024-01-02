@@ -105,7 +105,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         progressBar.visibility = GONE
                         placeholderMessage.visibility = VISIBLE
                         placeholderMessage.setText(R.string.no_list_vacancies)
-                        tvRvHeader.visibility = GONE
+                        tvRvHeader.visibility = VISIBLE
+                        tvRvHeader.setText(R.string.vacancy_mismatch)
                     }
                 }
 
