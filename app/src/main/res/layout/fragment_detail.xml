@@ -74,9 +74,7 @@
             <Button
                 android:id="@+id/btSimilar"
                 style="@style/FilterBlueButtonStyle"
-                android:layout_marginStart="@dimen/margin_16"
                 android:layout_marginTop="@dimen/margin_24"
-                android:layout_marginEnd="@dimen/margin_16"
                 android:layout_marginBottom="@dimen/margin_24"
                 android:text="@string/similar_vacancies"
                 app:layout_constraintBottom_toBottomOf="parent"
