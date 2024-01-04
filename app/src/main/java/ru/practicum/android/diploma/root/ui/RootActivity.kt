@@ -64,5 +64,6 @@ class RootActivity : AppCompatActivity() {
     private fun showBottomNavigationBar(isVisible: Boolean) {
         val viewVisibility = if (isVisible) View.VISIBLE else View.GONE
         binding.bottomNavigationView.visibility = viewVisibility
+        binding.greyLine.visibility = viewVisibility
     }
 }
