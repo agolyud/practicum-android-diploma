@@ -35,7 +35,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/placeholder"
             app:shapeAppearanceOverlay="@style/rounded_12"
-            android:background="?attr/colorOnPrimaryFixed"/>
+            android:background="@color/bottom_nav_back"/>
     </com.google.android.material.card.MaterialCardView>
 
     <TextView

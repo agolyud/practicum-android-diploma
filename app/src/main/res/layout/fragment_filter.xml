@@ -240,11 +240,12 @@
         android:layout_marginBottom="@dimen/margin_24"
         android:gravity="center"
         android:text="@string/reset"
-        android:textColor="?attr/colorredbuttom"
+        android:textColor="@color/filter_reset_btn"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/right_border"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/left_border" />
+        app:layout_constraintStart_toStartOf="@+id/left_border"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
