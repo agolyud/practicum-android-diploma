@@ -104,6 +104,13 @@
         <item name="android:textSize">@dimen/header_text_size</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+    <style name="BottomNavigation">
+        <item name="android:background">@color/white</item>
+        <item name="itemBackground">?attr/bottomNavigationViewBackground</item>
+        <item name="itemIconTint">@color/bottom_nav_item_color</item>
+        <item name="itemTextColor">@color/bottom_nav_item_color</item>
+    </style>
+    <attr name="bottomNavigationViewBackground" format="color" />
 
     <style name="FilterCheckboxStyle">
         <item name="buttonTint">@color/blue</item>
