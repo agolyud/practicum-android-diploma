@@ -180,7 +180,7 @@ class SearchViewModel(
     fun getNewPage() {
         if (page < maxPage - 1) {
             filter.page = page + 1
-            stateLiveData.value = SearchStates.Loading
+            stateLiveData.value = SearchStates.LoadingAddData
             val searchDebounce = createDebounceFunction<Unit>(PAGE_LOAD_DEBOUNCE_DELAY_MILS, viewModelScope, true) {
                 viewModelScope.launch {
                     searchInteractor.execute(filter = filter).collect { jobsInfo ->

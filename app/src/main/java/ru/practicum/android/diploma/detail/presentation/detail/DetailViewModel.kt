@@ -50,8 +50,10 @@ class DetailViewModel(
             favoriteInterActor.getFavorite(id).collect{
                 if (it.isEmpty()){
                     _state.value = NoConnect(ResponseCodes.NO_NET_CONNECTION.name)
+                    _stateFavorite.value = false
                 } else {
                     _state.value = Success(it[0])
+                    _stateFavorite.value = true
                 }
             }
         }
@@ -67,7 +69,6 @@ class DetailViewModel(
                 }
 
                 ResponseCodes.SUCCESS -> {
-                    Log.d("TAG result", "result - ${resultData.detailVacancy}")
                     _state.value = resultData.detailVacancy?.let { Success(it) }
                     favoriteInterActor.getFavorite(id).collect {
                         _stateFavorite.value = it.isNotEmpty()

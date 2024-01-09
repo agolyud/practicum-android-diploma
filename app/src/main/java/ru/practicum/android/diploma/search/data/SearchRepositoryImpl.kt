@@ -15,6 +15,9 @@ import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 import ru.practicum.android.diploma.util.network.NetworkClient
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRepository {
 
@@ -82,15 +85,19 @@ object AdapterSearch {
     )
 
     private fun formSalaryString(salary: Salary?): String {
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.groupingSeparator = ' '
+        val formatter = DecimalFormat("#,###", symbols)
         val symbol = CurrencyDetailVacancy.getCurrency(salary?.currency.toString()).symbol
+
         if (salary == null) return "зарплата не указана"
         if (salary.from == null && salary.to != null) {
-            return "до  ${salary.to} $symbol"
+            return "до  ${formatter.format(salary.to)} $symbol"
         }
         if (salary.from != null && salary.to == null) {
-            return "от  ${salary.from}  $symbol"
+            return "от  ${formatter.format(salary.from)}  $symbol"
         }
-        return "от  ${salary.from}  до  ${salary.to} $symbol"
+        return "от  ${formatter.format(salary.from)}  до  ${formatter.format(salary.to)} $symbol"
     }
 
     private fun makeHasMap(filter: Filter): HashMap<String, String> {
