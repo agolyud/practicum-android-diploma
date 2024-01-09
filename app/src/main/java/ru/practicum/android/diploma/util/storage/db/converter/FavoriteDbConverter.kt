@@ -6,6 +6,7 @@ import ru.practicum.android.diploma.detail.domain.models.SalaryDetailVacancy
 import ru.practicum.android.diploma.search.data.models.dto.Salary
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.storage.db.entity.FavoriteEntity
+import java.text.DecimalFormat
 
 class FavoriteDbConverter {
     fun map(favoriteVacancy: FavoriteEntity): DetailVacancy {
@@ -97,16 +98,18 @@ class FavoriteDbConverter {
     }
 
     private fun formSalaryString(salary: Salary?): String {
-        if (salary == null) return " "
+        val formatter = DecimalFormat("#,###")
+
+        if (salary == null) return "зарплата не указана"
         if (salary.from == null && salary.to != null) {
-            return "до  ${salary.to} ${salary.currency}"
+            return "до ${formatter.format(salary.to)} ${salary.currency}"
         }
         if (salary.from != null && salary.to == null) {
-            return "от  ${salary.from}  ${salary.currency}"
+            return "от ${formatter.format(salary.from)} ${salary.currency}"
         }
         if (salary.from == null && salary.to == null) {
-            return " "
+            return "зарплата не указана"
         }
-        return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
+        return "от ${formatter.format(salary.from)} до ${formatter.format(salary.to)} ${salary.currency}"
     }
 }
