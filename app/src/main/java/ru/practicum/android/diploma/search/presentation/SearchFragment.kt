@@ -122,7 +122,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                         placeholderImage.visibility = GONE
                         progressBar.visibility = VISIBLE
                         placeholderMessage.visibility = GONE
-                        tvRvHeader.visibility = GONE
+                        tvRvHeader.visibility = VISIBLE
                     }
                 }
             }
