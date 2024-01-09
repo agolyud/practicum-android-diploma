@@ -7,6 +7,7 @@ import ru.practicum.android.diploma.search.data.models.dto.Salary
 import ru.practicum.android.diploma.search.domain.models.Vacancy
 import ru.practicum.android.diploma.util.storage.db.entity.FavoriteEntity
 import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 
 class FavoriteDbConverter {
     fun map(favoriteVacancy: FavoriteEntity): DetailVacancy {
@@ -98,18 +99,26 @@ class FavoriteDbConverter {
     }
 
     private fun formSalaryString(salary: Salary?): String {
-        val formatter = DecimalFormat("#,###")
+        val df = DecimalFormat()
+        df.isGroupingUsed = true
+        df.groupingSize = 3
+
+        val decimalFormatSymbols = DecimalFormatSymbols()
+        decimalFormatSymbols.setDecimalSeparator(',')
+        decimalFormatSymbols.setGroupingSeparator(' ')
+
+        df.decimalFormatSymbols = decimalFormatSymbols
 
         if (salary == null) return "зарплата не указана"
         if (salary.from == null && salary.to != null) {
-            return "до ${formatter.format(salary.to)} ${salary.currency}"
+            return "до ${df.format(salary.to)} ${salary.currency}"
         }
         if (salary.from != null && salary.to == null) {
-            return "от ${formatter.format(salary.from)} ${salary.currency}"
+            return "от ${df.format(salary.from)} ${salary.currency}"
         }
         if (salary.from == null && salary.to == null) {
             return "зарплата не указана"
         }
-        return "от ${formatter.format(salary.from)} до ${formatter.format(salary.to)} ${salary.currency}"
+        return "от ${df.format(salary.from)} до ${df.format(salary.to)} ${salary.currency}"
     }
 }
