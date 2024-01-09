@@ -26,15 +26,14 @@
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
         android:background="@color/light_grey" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
-        app:menu="@menu/bottom_navigation_menu"
-        style="@style/BottomNavigation"
+        style="@style/Widget.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:itemActiveIndicatorStyle="@android:color/transparent"/>
+        app:menu="@menu/bottom_navigation_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
