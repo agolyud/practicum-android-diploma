@@ -4,31 +4,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import ru.practicum.android.diploma.detail.domain.models.CurrencyDetailVacancy
 import ru.practicum.android.diploma.search.data.models.ResponseCodes
 import ru.practicum.android.diploma.search.data.models.SearchRequest
 import ru.practicum.android.diploma.search.data.models.SearchResponse
-import ru.practicum.android.diploma.search.data.models.VacancyDto
 import ru.practicum.android.diploma.search.data.models.dto.Salary
 import ru.practicum.android.diploma.search.domain.api.DtoConsumer
 import ru.practicum.android.diploma.search.domain.api.SearchRepository
 import ru.practicum.android.diploma.search.domain.models.Filter
 import ru.practicum.android.diploma.search.domain.models.Vacancy
+import ru.practicum.android.diploma.search.domain.models.VacancyInfo
 import ru.practicum.android.diploma.util.network.NetworkClient
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRepository {
 
     override suspend fun doRequest(
         filter: Filter
-    ): Flow<DtoConsumer<List<Vacancy>>> =
+    ): Flow<DtoConsumer<VacancyInfo>> =
         flow {
             val response = networkClient.doRequest(AdapterSearch.filterToVacancyReq(filter))
             when (response.resultCode) {
                 ResponseCodes.SUCCESS -> emit(
                     DtoConsumer.Success(
                         AdapterSearch
-                            .vacancyInfoDtoToVacancyInfo(
+                            .searchResponseToVacancyInfo(
                                 response = (response as SearchResponse)
-                                    .items
                             )
                     )
                 )
@@ -41,34 +44,72 @@ class SearchRepositoryImpl(private val networkClient: NetworkClient) : SearchRep
 
 object AdapterSearch {
 
-    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
-        Vacancy(
-            id = it.id,
-            area = it.area.name,
-            // department = it.department.name,
-            employerImgUrl = it.employer.url,
-            employer = it.employer.name,
-            name = it.name,
-            salary = formSalaryString(it.salary),
-            type = it.type.name
-        )
-    }
+    /*    fun vacancyInfoDtoToVacancyInfo(response: List<VacancyDto>): List<Vacancy> = response.map {
+            Vacancy(
+                id = it.id,
+                area = it.area.name,
+                // department = it.department.name,
+                employerImgUrl = it.employer.logoUrls?.original?: "",
+                employer = it.employer.name,
+                name = it.name,
+                salary = formSalaryString(it.salary),
+                type = it.type.name
+            )
+        }*/
+
+    fun searchResponseToVacancyInfo(response: SearchResponse): VacancyInfo = VacancyInfo (
+        responseCodes = when (response.resultCode.code) {
+            200 -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS }
+            500 -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS }
+            else -> { ru.practicum.android.diploma.search.domain.models.ResponseCodes.SUCCESS}
+        },
+        vacancy = response.items.map{
+            Vacancy(
+                id = it.id,
+                area = it.area.name,
+                // department = it.department.name,
+                employerImgUrl = it.employer.logoUrls?.original?: "",
+                employer = it.employer.name,
+                name = it.name,
+                salary = formSalaryString(it.salary),
+                type = it.type.name
+            )
+        },
+        found = response.found,
+        page = response.page,
+        pages = response.pages
+    )
 
     fun filterToVacancyReq(filter: Filter) = SearchRequest(
         makeHasMap(filter)
     )
 
     private fun formSalaryString(salary: Salary?): String {
-        if (salary == null) return " "
-        return "от  ${salary.from}  до  ${salary.to} ${salary.currency}"
+        val symbols = DecimalFormatSymbols(Locale.getDefault())
+        symbols.groupingSeparator = ' '
+        val formatter = DecimalFormat("#,###", symbols)
+        val symbol = CurrencyDetailVacancy.getCurrency(salary?.currency.toString()).symbol
+
+        if (salary == null) return "зарплата не указана"
+        if (salary.from == null && salary.to != null) {
+            return "до  ${formatter.format(salary.to)} $symbol"
+        }
+        if (salary.from != null && salary.to == null) {
+            return "от  ${formatter.format(salary.from)}  $symbol"
+        }
+        return "от  ${formatter.format(salary.from)}  до  ${formatter.format(salary.to)} $symbol"
     }
 
     private fun makeHasMap(filter: Filter): HashMap<String, String> {
         val request = HashMap<String, String>()
         request["text"] = filter.request
+        request["page"] = filter.page.toString()
         if (!filter.area.isNullOrBlank()) request["area"] = filter.area
         if (!filter.industry.isNullOrBlank()) request["industry"] = filter.industry
-        if (!filter.salary.toString().isNullOrBlank()) request["salary"] = filter.salary.toString()
+        if (filter.onlyWithSalary == true) request["only_with_salary"] = filter.onlyWithSalary.toString()
+
+        if (!filter.salary.toString().isNullOrBlank() &&
+            Integer.parseInt(filter.salary.toString()) > 0) request["salary"] = filter.salary.toString()
 
         return request
     }

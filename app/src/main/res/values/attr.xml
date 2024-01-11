@@ -6,4 +6,5 @@
     <attr name="colorbottomNavMenuNotActive" format="reference"/>
     <attr name="colorbottomNavDivider" format="reference"/>
     <attr name="colorbottomNavBack" format="reference"/>
+    <attr name="colorredbuttom" format="reference"/>
 </resources>

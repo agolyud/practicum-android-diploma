@@ -7,9 +7,14 @@ import retrofit2.http.QueryMap
 import ru.practicum.android.diploma.BuildConfig
 import ru.practicum.android.diploma.search.data.models.SearchResponse
 import ru.practicum.android.diploma.detail.data.dto.DetailVacancyDto
+import ru.practicum.android.diploma.filter.data.model.CountryDto
+import ru.practicum.android.diploma.filter.data.model.IndustryDto
+import ru.practicum.android.diploma.filter.data.model.RegionDto
+import ru.practicum.android.diploma.detail.data.dto.SimilarVacanciesDto
 
 interface HhApiVacancy {
 
+    //Запрос списка вакансий
     @Headers(
         HEADER_AUTH,
         HH_USER
@@ -19,6 +24,7 @@ interface HhApiVacancy {
         @QueryMap options: HashMap<String, String>
     ): SearchResponse
 
+    //Запрос дет. информации по вакансии
     @Headers(
         HEADER_AUTH,
         HH_USER
@@ -28,7 +34,47 @@ interface HhApiVacancy {
         @Path("vacancy_id") vacancy: String
     ): DetailVacancyDto
 
-    // Тут свои запросы
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("vacancies/{vacancy_id}/similar_vacancies")
+    suspend fun getSimilarVacancies(
+        @Path("vacancy_id") vacancy: String
+    ): SimilarVacanciesDto
+
+    //Запрос списка отраслей
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("industries")
+    suspend fun getIndustries(): ArrayList<IndustryDto>
+
+    //Запрос списка стран
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+//    @GET("areas/countries")
+    @GET("areas")
+    suspend fun getCountries(): List<CountryDto>
+
+    //Запрос списка регионов
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("areas")
+    suspend fun getRegions(): List<RegionDto>
+
+    //Запрос списка регионов по стране
+    @Headers(
+        HEADER_AUTH,
+        HH_USER
+    )
+    @GET("areas/{area_id}")
+    suspend fun getRegionsByCountry(@Path("area_id") id: String): RegionDto
 
     companion object {
         const val HEADER_AUTH = "Authorization: Bearer ${BuildConfig.HH_ACCESS_TOKEN}"

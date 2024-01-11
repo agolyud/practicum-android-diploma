@@ -11,14 +11,28 @@
     <string name="list_empty">Список пуст</string>
     <string name="head_searh">Поиск вакансий</string>
     <string name="enter_search">Введите запрос</string>
-    <string name="no_list_vacancies">Не удалось получить список вакансий</string>
+    <string name="no_list_vacancies">Не удалось получить \n список вакансий</string>
     <string name="error_internet">Нет интернета</string>
     <string name="main">Главная</string>
+    <string name="filters">Настройки фильтрации</string>
+    <string name="place_of_work">Место работы</string>
+    <string name="industry">Отрасль</string>
+    <string name="expected_salary">Ожидаемая зарплата</string>
+    <string name="enter_amount">Введите сумму</string>
+    <string name="not_show_without_sallary">Не показывать без зарплаты</string>
+    <string name="apply">Применить</string>
+    <string name="reset">Сбросить</string>
+    <string name="choose_place_of_work">Выбор места работы</string>
+    <string name="choosing_region">Выбор региона</string>
+    <string name="enter_region">Введите регион</string>
+    <string name="enter_industry">Введите отрасль</string>
+    <string name="country">Страна</string>
+    <string name="region">Регион</string>
+    <string name="choose">Выбрать</string>
+    <string name="error">Ошибка</string>
     <string name="server_error">Ошибка сервера</string>
     <string name="internet_connection_issue">Нет интернета</string>
     <string name="vacancy_mismatch">Таких вакансий нет</string>
-
-
     <string name="vacancy_name">vacancy name</string>
     <string name="employer_name">Пятерка</string>
     <string name="from">от</string>
@@ -36,5 +50,17 @@
     <string name="comment">Комментарий</string>
     <string name="similar_vacancies">Похожие вакансии</string>
     <string name="unknown_error">Неизвестная ошибка</string>
-
+    <string name="choose_of_country">Выбор страны</string>
+    <string name="there_is_no_such_region">Такого региона нет</string>
+    <string name="there_is_no_such_country">Такой страны нет</string>
+    <string name="there_is_no_such_industry">Такой отрасли нет</string>
+    <string name="choosing_industry">Выбор отрасли</string>
+    <plurals name="search_result_number">
+        <item quantity="zero">Найдено %d вакансий</item>
+        <item quantity="one">Найдена %d вакансия</item>
+        <item quantity="two">Найдено %d вакансии</item>
+        <item quantity="few">Найдено %d вакансии</item>
+        <item quantity="many">Найдено %d вакансий</item>
+        <item quantity="other">Найдено %d вакансий</item>
+    </plurals>
 </resources>

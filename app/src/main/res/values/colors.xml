@@ -8,4 +8,7 @@
     <color name="red">#F56B6C</color>
     <color name="background_grey">#801A1B22</color>
     <color name="base_text">#1A1B22</color>
+    <color name="bottom_nav_back">#FFFDFDFD</color>
+    <color name="filter_reset_btn">#F56B6C</color>
+    <color name="detail_desc">#1A1B22</color>
 </resources>

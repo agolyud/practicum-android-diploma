@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.practicum.android.diploma.databinding.ItemViewBinding
 import ru.practicum.android.diploma.search.domain.models.Vacancy
+
 class SearchAdapter(val onVacancyClickedCB: (String) -> Unit) : RecyclerView.Adapter<SearchViewHolder>() {
 
     var vacancyList = mutableListOf<Vacancy>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return SearchViewHolder(
